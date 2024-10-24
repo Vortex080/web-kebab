@@ -7,9 +7,5 @@ class Index {
     }
 }
 
-
-
 Index::main();
 
-$comida = new Comida('kebab');
-echo $comida->nombre;
