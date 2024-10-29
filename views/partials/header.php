@@ -16,3 +16,4 @@
 <nav class="nav2">
     <p>Telefono de contacto: 667 884 922 🌯</p>
 </nav>
+
