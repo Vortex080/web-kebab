@@ -11,9 +11,10 @@
 - Ingredientes
   - id
   - nombre
-  - alergenos [Array]
+  - alergenos [VARCHAR]
 
 - Alergenos
+  - ID
   - Nombre
   - Foto
 
@@ -38,6 +39,8 @@
 ## Relaciones
 
 - Kebab e Ingredientes (muchos a muchos)
+-  Linea de pedido Kebabs 
+- Alergenos e Ingredientes
 
 ## Freatures
 
