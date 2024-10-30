@@ -8,7 +8,7 @@ class Kebab
     public static $ingredientes;
     public static $precio;
 
-    public function __construct($id = null, $nombre, $foto, $ingredientes, $precio)
+    public function __construct($id=null, $nombre, $foto, $ingredientes)
     {
         $this->id = $id;
         $this->nombre = $nombre;
