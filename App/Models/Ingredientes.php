@@ -7,7 +7,7 @@ class Ingredientes
     public static $alergenos;
     public static $precio;
 
-    public function __construct($id=null = null, $nombre, $alergenos, $precio)
+    public function __construct($id=null, $nombre, $alergenos, $precio)
     {
         $this->id = $id;
         $this->nombre = $nombre;
