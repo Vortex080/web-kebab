@@ -1,6 +1,7 @@
 <?php
 
-class UserRep implements ICRUD{
+class KebabRep implements ICRUD
+{
 
     /**
      * Saca por id
@@ -10,26 +11,25 @@ class UserRep implements ICRUD{
     {
         $con = Connection::getConection();
         $rest = $con->query('select id, nombre, foto from kebab where id =' . $id . ';');
-        $resting = $con->query('select ')
         while ($row = $rest->fetch()) {
-
-            $kebab = new Kebab($row['id'], $row['nombre'], $row['foto']);
+            $ingredientes = IngredientesRep::getAllbyKebab($id);
+            $kebab = new Kebab($row['id'], $row['nombre'], $row['foto'], $ingredientes, $row['precio']);
         }
 
         return $kebab;
     }
 
     /**
-    * getAll
-    */
+     * getAll
+     */
     static public function getAll()
     {
         $con = Connection::getConection();
         $array = [];
         $rest = $con->query('select id, nombre, foto from kebab;');
         while ($row = $rest->fetch()) {
-
-            $kebab = new Kebab($row['id'], $row['nombre'], $row['foto']);
+            $ingrediente = IngredientesRep::getAllbyKebab($row['id']);
+            $kebab = new Kebab($row['id'], $row['nombre'], $row['foto'], $ingrediente, $row['precio']);
             array_push($array, $kebab);
         }
 
@@ -45,9 +45,14 @@ class UserRep implements ICRUD{
     static public function create($kebab)
     {
         $con = Connection::getConection();
-        $sql = 'insert into kebab(id, nombre, foto) values (?, ?, ?)';
+        $sql = 'insert into kebab(id, nombre, foto, precio) values (?, ?, ?, ?)';
         $stmt = $con->prepare($sql);
-        $stmt->execute([$kebab->id, $kebab->nombre, $kebab->foto]);
+        $stmt->execute([$kebab->id, $kebab->nombre, $kebab->foto, $kebab->precio]);
+        foreach ($kebab->ingrediente as $i) {
+            $sql2 = 'insert into kebab_has_ingredientes(id_kebab, id_ingrediente) values (?, ?)';
+            $stmt = $con->prepare($sql2);
+            $stmt->execute([$kebab->id, $i->id]);
+        }
     }
 
 
@@ -75,8 +80,8 @@ class UserRep implements ICRUD{
     static public function update($kebab)
     {
         $con = Connection::getConection();
-        $sql = 'update kebab set nombre=?, foto=? where id='.$kebab->id.';';
+        $sql = 'update kebab set nombre=?, foto=?, precio=? where id=' . $kebab->id . ';';
         $stmt = $con->prepare($sql);
-        $stmt->execute($kebab->nombre, $kebab->foto);
+        $stmt->execute($kebab->nombre, $kebab->foto, $kebab->precio);
     }
 }
