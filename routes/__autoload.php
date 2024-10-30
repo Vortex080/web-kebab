@@ -10,14 +10,18 @@ class Autoload
 
             // Rutas de las carpetas donde están las clases
             $directories = [
-                '/Api/',
-                '/assets/',
-                '/class/',
-                '/config/',
-                '/helper/',
+                '/App/',
                 '/lib/',
+                '/Models/',
+                '/assets/',
+                '/css/',
+                '/img/',
+                '/config/',
                 '/routes/',
                 '/views/',
+                '/mantenimiento/',
+                '/partials/',
+
             ];
 
             // Recorremos los directorios para buscar la clase

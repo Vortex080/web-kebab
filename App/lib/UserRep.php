@@ -1,6 +1,7 @@
 <?php
 
-class UserRep implements ICRUD{
+class UserRep implements ICRUD
+{
 
     /**
      * Saca por id
@@ -19,8 +20,8 @@ class UserRep implements ICRUD{
     }
 
     /**
-    * getAll
-    */
+     * getAll
+     */
     static public function getAll()
     {
         $con = Connection::getConection();
@@ -74,7 +75,7 @@ class UserRep implements ICRUD{
     static public function update($user)
     {
         $con = Connection::getConection();
-        $sql = 'update usuario set nombre=?, pass=?, monedero=?, foto=?, direction=? where id='.$user->id.';';
+        $sql = 'update usuario set nombre=?, pass=?, monedero=?, foto=?, direction=? where id=' . $user->id . ';';
         $stmt = $con->prepare($sql);
         $stmt->execute($user->nombre, $user->pass, $user->monedero, $user->foto, $user->direction);
     }

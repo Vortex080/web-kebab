@@ -15,7 +15,7 @@
     $dr = $_SERVER['DOCUMENT_ROOT'];
     require_once $dr . '/views/partials/header.php';
     ?>
-    
+
     <section>
         <div id="cuerpo">
             <?php

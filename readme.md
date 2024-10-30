@@ -72,5 +72,10 @@
 ]
 ```
 
+**DIAGRAMA**
+![alt text](assets/img/data-base.png)
+
+
 ### Factura
 - La linea de pedido es cada producto vendido con la factura (se detalla cada producto con ingredientes, precio, etc)
+  
