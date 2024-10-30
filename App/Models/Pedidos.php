@@ -10,7 +10,7 @@ class Pedidos
     public static $user;
     public static $lineas;
 
-    public function __construct($id=null, $fecha, $estado, $precio, $direcction, $user, $lineas)
+    public function __construct($id = null, $fecha, $estado, $precio, $direcction, $user, $lineas)
     {
         $this->id = $id;
         $this->fecha = $fecha;

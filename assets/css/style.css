@@ -5,7 +5,7 @@
 }
 
 body {
-    font-family: 'Arial', sans-serif;   
+    font-family: 'Arial', sans-serif;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -199,7 +199,7 @@ button a {
 }
 
 footer {
-    margin-top: auto;
+    margin-top: auto;
     text-align: center;
     padding: 10px;
     background-color: #000000;
