@@ -10,10 +10,10 @@ class PedidosRep implements ICRUD
     static public function getbyId($id)
     {
         $con = Connection::getConection();
-        $rest = $con->query('select id, nombre, direccion, telefono, email, foto, fecha, estado, idusuario from pedido where id =' . $id . ';');
+        $rest = $con->query('select id, fecha, estado, precio, direcction, user, lineas from pedidos where id =' . $id . ';');
         while ($row = $rest->fetch()) {
 
-            $pedido = new Pedido($row['id'], $row['nombre'], $row['direccion'], $row['telefono'], $row['email'], $row['foto'], $row['fecha'], $row['estado'], $row['idusuario']);
+            $pedido = new Pedido($row['id'], $row['fecha'], $row['estado'], $row['precio'], $row['direcction'], $row['user'], $row['lineas']);
         }
 
         return $pedido;
@@ -26,10 +26,9 @@ class PedidosRep implements ICRUD
     {
         $con = Connection::getConection();
         $array = [];
-        $rest = $con->query('select id, nombre, direccion, telefono, email, foto, fecha, estado, idusuario from pedido;');
+        $rest = $con->query('select id, fecha, estado, precio, direcction, user, lineas from pedidos;');
         while ($row = $rest->fetch()) {
-
-            $pedido = new Pedido($row['id'], $row['nombre'], $row['direccion'], $row['telefono'], $row['email'], $row['foto'], $row['fecha'], $row['estado'], $row['idusuario']);
+            $pedido = new Pedido($row['id'], $row['fecha'], $row['estado'], $row['precio'], $row['direcction'], $row['user'], $row['lineas']);
             array_push($array, $pedido);
         }
 
@@ -45,9 +44,9 @@ class PedidosRep implements ICRUD
     static public function create($pedido)
     {
         $con = Connection::getConection();
-        $sql = 'insert into pedido(id, nombre, direccion, telefono, email, foto, fecha, estado, idusuario) values (?, ?, ?, ?, ?, ?, ?, ?, ?)';
+        $sql = 'insert into pedidos(id, fecha, estado, precio, direcction, user, lineas) values (?, ?, ?, ?, ?, ?, ?)';
         $stmt = $con->prepare($sql);
-        $stmt->execute([$pedido->id, $pedido->nombre, $pedido->direccion, $pedido->telefono, $pedido->email, $pedido->foto, $pedido->fecha, $pedido->estado, $pedido->idusuario]);
+        $stmt->execute([$pedido->id, $pedido->fecha, $pedido->estado, $pedido->precio, $pedido->direcction, $pedido->user, $pedido->lineas]);
     }
 
 
@@ -60,7 +59,7 @@ class PedidosRep implements ICRUD
     static public function delete($pedido)
     {
         $con = Connection::getConection();
-        $sql = 'delete from pedido where id=?';
+        $sql = 'delete from pedidos where id=?';
         $stmt = $con->prepare($sql);
         $stmt->execute([$pedido->id]);
     }
@@ -75,9 +74,27 @@ class PedidosRep implements ICRUD
     static public function update($pedido)
     {
         $con = Connection::getConection();
-        $sql = 'update pedido set nombre=?, direccion=?, telefono=?, email=?, foto=?, fecha=?, estado=?, idusuario=? where id=?';
+        $sql = 'update pedidos set fecha=?, estado=?, precio=?, direcction=?, user=?, lineas=? where id=' . $pedido->id . ';';
         $stmt = $con->prepare($sql);
-        $stmt->execute([$pedido->nombre, $pedido->direccion, $pedido->telefono, $pedido->email, $pedido->foto, $pedido->fecha, $pedido->estado, $pedido->idusuario, $pedido->id]);
+        $stmt->execute($pedido->fecha, $pedido->estado, $pedido->precio, $pedido->direcction, $pedido->user, $pedido->lineas);
     }
 
+
+    /**
+     * getbykebab
+     */
+    static public function getAllbyKebab($id)
+    {
+        $con = Connection::getConection();
+        $array = [];
+        $rest = $con->query('select id_ingrediente from kebab_has_ingredientes where id_kebab=' . $id . ';');
+        while ($row = $rest->fetch()) {
+
+            $ingrediente = IngredientesRep::getbyId($row['id_ingrediente']);
+
+            array_push($array, $ingrediente);
+        }
+
+        return $array;
+    }
 }

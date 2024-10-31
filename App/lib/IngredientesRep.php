@@ -60,13 +60,13 @@ class IngredientesRep implements ICRUD
     /**
      * delete
      *
-     * @param  mixed $kebab
+     * @param  mixed $ingrediente
      * @return void
      */
-    static public function delete($kebab)
+    static public function delete($ingrediente)
     {
         $con = Connection::getConection();
-        $sql = 'delete from kebab where id=?';
+        $sql = 'delete from ingrediente where id=?';
         $stmt = $con->prepare($sql);
         $stmt->execute([$ingrediente->id]);
     }

@@ -1,6 +1,6 @@
 <?php
 
-class Pedidos
+class Pedido
 {
     public static $id;
     public static $fecha;
