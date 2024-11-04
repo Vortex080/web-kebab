@@ -8,8 +8,8 @@ body {
     font-family: 'Arial', sans-serif;
     min-height: 100vh;
     display: flex;
+    justify-content: center;
     flex-direction: column;
-
 }
 
 
@@ -158,8 +158,12 @@ body {
 }
 
 .content {
-    margin: 0;
-    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+    height: 70vh;
+    width: 100%;
 }
 
 .caja {
@@ -381,7 +385,7 @@ footer {
     border-radius: 10px;
     overflow: hidden;
     height: 435.469px;
-     width: 929px;
+    width: 929px;
 }
 
 .carousel img {
@@ -480,3 +484,12 @@ footer {
 .feature-item p {
     font-size: 14px;
 }
+
+
+/* Registro */
+.warning{
+    color: red;
+    font-size: smaller;
+    font-weight: bolder;
+    height: 100%;
+  }

@@ -1,7 +1,11 @@
 <div class="content">
     <div class="caja">
         <h2 class="hiniciosession">Registro</h2>
-        <form action="auth.php">
+        <form action="auth.php" method="POST">
+            <?php
+                $email = $_POST['email'];
+                $pass = $_POST['password'];
+            ?>
             <label for="email">Nombre</label>
             <input type="text" id="name" placeholder="Introduce tu nombre">
             
