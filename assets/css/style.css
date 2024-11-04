@@ -12,6 +12,8 @@ body {
 
 }
 
+
+
 .navbar {
     height: 80px;
     display: flex;
@@ -156,13 +158,23 @@ body {
 }
 
 .content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+.caja {
+    width: 300px;
     padding: 20px;
+    background-color: #fff;
+    border-radius: 15px;
+    /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    /* Sombra */
+    text-align: center;
+}
+
+.hiniciosession {
+    padding: 10px;
 }
 
 .welcome {
@@ -201,8 +213,270 @@ button a {
 footer {
     margin-top: auto;
     text-align: center;
-    padding: 10px;
+    padding: 20px 0;
     background-color: #000000;
     color: white;
     width: 100%;
+
+}
+
+
+/* Título */
+.caja h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* Etiquetas y campos de entrada */
+.caja label {
+    display: block;
+    font-weight: bold;
+    margin: 10px 0 5px;
+    text-align: left;
+}
+
+.caja input[type="text"],
+.caja input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+/* Botón de enviar */
+.caja button {
+    width: 100%;
+    padding: 10px;
+    background-color: #333;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+/* Enlaces de ayuda */
+.caja a {
+    color: #007bff;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.caja a:hover {
+    text-decoration: underline;
+}
+
+/* Estilo del enlace de "¿Olvidaste tu contraseña?" */
+.enlace-contrasena {
+    float: right;
+    font-size: 12px;
+    margin-top: -20px;
+    margin-bottom: 10px;
+}
+
+/* Texto de registro */
+.registro {
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+
+/* Estilos de contenedor principal */
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+/* Estilos de cada columna */
+.footer-column {
+    flex: 1;
+    min-width: 200px;
+    margin-bottom: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+/* Estilos de los encabezados */
+.footer-column h4 {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* Estilos del texto */
+.footer-column p {
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* Estilos del logo halal */
+.halal-logo {
+    display: block;
+    margin: 10px 0;
+    width: 100px;
+}
+
+/* Estilos de enlaces de la columna derecha */
+.footer-column a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.footer-column a:hover {
+    text-decoration: underline;
+}
+
+/* Estilos de redes sociales */
+.social-links {
+    display: flex;
+    gap: 10px;
+}
+
+.social-links a {
+    color: #fff;
+    font-size: 20px;
+}
+
+/* Estilos del copyright */
+.footer-bottom {
+    background-color: #000000;
+    padding: 10px 0;
+    text-align: center;
+    font-size: 12px;
+}
+
+.footer-column h4,
+.footer-column p,
+.footer-column a {
+    text-align: left;
+}
+
+
+/* Nuevo */
+/* Contenedor del carousel */
+.carousel-container {
+    display: flex;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    gap: 20px;
+}
+
+/* Carousel de la imagen grande */
+.carousel {
+    position: relative;
+    flex: 2;
+    border-radius: 10px;
+    overflow: hidden;
+    height: 435.469px;
+     width: 929px;
+}
+
+.carousel img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+/* Controles del carousel */
+.carousel-control-prev,
+.carousel-control-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.carousel-control-prev {
+    left: 10px;
+}
+
+.carousel-control-next {
+    right: 10px;
+}
+
+/* Texto sobre la imagen */
+.carousel-text {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* Productos a la derecha del carousel */
+.products {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.product-card {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.product-card img {
+    max-width: 100%;
+    border-radius: 10px;
+}
+
+@media (max-width: 1024px) {
+    .product-card .product-title p {
+        max-width: 50%;
+    }
+}
+
+.product-title {
+    color: #ff9100;
+    font-size: 16px;
+    margin: 10px 0;
+    font-weight: bold;
+}
+
+/* Sección de características */
+.features {
+    display: flex;
+    justify-content: space-around;
+    background-color: #000000;
+    color: #fff;
+    padding: 20px 0;
+    margin-top: 20px;
+}
+
+.feature-item {
+    text-align: center;
+    max-width: 200px;
+}
+
+.feature-item h4 {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.feature-item p {
+    font-size: 14px;
 }
