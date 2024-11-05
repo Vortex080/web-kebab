@@ -52,3 +52,21 @@ será devuelto en caso de pedido cancelado. => SERVIDOR
 usuales, etc….? => CLIENTE
 
 *etc (alérgenos)
+
+
+**Mantenimiento Kebab**
+
+![alt text](../assets/img/mantenimiento_kebab.png)
+
+Api Devuelve para lista ingregientes
+- Ingredientes [Colección de objetos ingredientes]
+- Kebab vacio
+  
+(Si se esta modifiando)
+- Ingredientes 
+- Kebab ya creado
+
+>[!NOTE]
+> Los ingregientes pasan del filtro de la derecha a la sección de ingredientes de la izquierda
+
+

@@ -41,6 +41,7 @@
 - Kebab e Ingredientes (muchos a muchos)
 -  Linea de pedido Kebabs 
 - Alergenos e Ingredientes
+- Alergenos y usuarios
 
 ## Freatures
 

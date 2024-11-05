@@ -1,6 +1,6 @@
 <div class="content">
-<!-- Contenedor principal -->
-<div class="carousel-container">
+    <!-- Contenedor principal -->
+    <div class="carousel-container">
         <!-- Carousel de imágenes -->
         <div class="carousel">
             <div class="carousel-text">
@@ -15,7 +15,7 @@
         <!-- Productos a la derecha -->
         <div class="products">
             <div class="product-card">
-                <img src="https://dolciakebab.com/image/cache/catalog/DolciaKebab3/Banners/b1-320x210w-320x210.png" alt="Pinchos de Kebab id="b1product-image">
+                <img src="https://dolciakebab.com/image/cache/catalog/DolciaKebab3/Banners/b1-320x210w-320x210.png" alt="Pinchos de Kebab id=" b1product-image">
                 <div class="product-title">PINCHOS DE KEBAB</div>
                 <p>Filete<br>Pollo<br>Ternera</p>
             </div>
@@ -46,5 +46,4 @@
             <p>Consulta para tu población</p>
         </div>
     </div>
-
 </div>
