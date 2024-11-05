@@ -70,3 +70,17 @@ Api Devuelve para lista ingregientes
 > Los ingregientes pasan del filtro de la derecha a la sección de ingredientes de la izquierda
 
 
+**Api devuelta JSON**
+
+```json
+{
+    success: true, 
+    data: {
+            id: 1, 
+            nombre: "lechuga", 
+            alergenos: 1, precio: 130
+    }, 
+    href : "/App/Api/IngredienteApi.php?id=1"
+}
+
+```

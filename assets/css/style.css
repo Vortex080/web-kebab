@@ -503,7 +503,6 @@ footer {
     height: 80vh;
     background-color: #fff;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.466);
     padding: 20px;
     /* Padding para el contenedor principal */
     margin: auto;
@@ -520,7 +519,6 @@ footer {
     justify-content: center;
     background-color: #fff;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.466);
     padding: 20px;
     margin: auto;
     margin-top: 20px;
@@ -656,7 +654,6 @@ footer {
     justify-content: center;
     background-color: #fff;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.466);
     padding: 20px;
     margin: auto;
     margin-bottom: 20px;

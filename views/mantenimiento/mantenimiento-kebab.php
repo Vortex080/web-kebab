@@ -8,13 +8,13 @@
          <!-- Sección izquierda -->
          <div class="left-section">
              <div class="foto">
-                 <h2>Foto</h2>
+                 <p>Foto</p>
              </div>
              <div class="precio">
-                 <h2>Precio</h2>
+                 <p>Precio</p>
              </div>
              <div class="descripcion">
-                 <h2>Descripción</h2>
+                 <p>Descripción</p>
                  <textarea placeholder="Escribe la descripción aquí..."></textarea>
              </div>
          </div>
@@ -22,7 +22,7 @@
          <!-- Sección central -->
          <div class="middle-section">
              <div class="ingredientes">
-                 <h2>Ingredientes</h2>
+                 <p>Ingredientes</p>
                  <div class="ingredientes-lista">
                      <div class="ingrediente">
                          <input type="checkbox" id="ing1">
@@ -40,14 +40,14 @@
                  </div>
              </div>
              <div class="precio-estimado">
-                 <h2>Precio estimado</h2>
+                 <p>Precio estimado</p>
              </div>
          </div>
 
          <!-- Sección derecha -->
          <div class="right-section">
              <div class="filtro">
-                 <h2>Filtro</h2>
+                 <p>Filtro</p>
                  <input type="text" placeholder="Buscar...">
                  <select>
                      <option>Añadir</option>

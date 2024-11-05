@@ -46,13 +46,30 @@ class IngredientesRep implements ICRUD
     static public function create($ingrediente)
     {
         $con = Connection::getConection();
-        $sql = 'insert into ingredientes(id, nombre, precio) values (?, ?, ?)';
+
+        // Insertar ingrediente
+        $sql = 'INSERT INTO ingredientes(nombre, precio) VALUES (?, ?)';
         $stmt = $con->prepare($sql);
-        $stmt->execute([$ingrediente->id, $ingrediente->nombre, $ingrediente->precio]);
+        $stmt->execute([$ingrediente->nombre, $ingrediente->precio]);
+
+        // Obtener el id del ingrediente recién insertado usando parámetros preparados
+        $sql2 = 'SELECT id FROM ingredientes WHERE nombre = ?';
+        $stmt2 = $con->prepare($sql2);
+        $stmt2->execute([$ingrediente->nombre]);
+        $row = $stmt2->fetch();
+        $id ='';
+        // Si se encuentra el ingrediente, obtenemos el id
+        if ($row) {
+            $id = $row['id'];
+        }
+        var_dump($id);
+        // Insertar las relaciones entre ingredientes y alergenos
         foreach ($ingrediente->alergenos as $i) {
-            $sql2 = 'insert into ingredientes_has_alergenos(id_ingrediente, id_alergenos) values (?, ?)';
-            $stmt = $con->prepare($sql2);
-            $stmt->execute([$ingrediente->id, $i->id]);
+            var_dump($i);
+            var_dump($i->id);
+            $sql3 = 'INSERT INTO ingredientes_has_alergenos(id_ingrediente, id_alergenos) VALUES (?, ?)';
+            $stmt3 = $con->prepare($sql3);
+            $stmt3->execute([$id, $i->id]);
         }
     }
 

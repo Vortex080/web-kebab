@@ -2,12 +2,12 @@
 
 class User
 {
-    public static $id;
-    public static $nombre;
-    public static $pass;
-    public static $direcction;
-    public static $monedero;
-    public static $foto;
+    public $id;
+    public $nombre;
+    public $pass;
+    public $direcction;
+    public $monedero;
+    public $foto;
 
     public function __construct($id, $nombre, $pass, $direcction, $monedero, $foto)
     {

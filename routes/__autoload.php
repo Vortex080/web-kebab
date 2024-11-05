@@ -11,6 +11,10 @@ class Autoload
             // Rutas de las carpetas donde están las clases
             $directories = [
                 '/App/',
+                '/App/Models/',
+                '/App/lib/',
+                '/App/helpers/',
+                '/App/Api/',
                 '/lib/',
                 '/Models/',
                 '/assets/',

@@ -58,14 +58,13 @@ class AlergenosRep implements ICRUD
      * @param  mixed $alergenos
      * @return void
      */
-    static public function delete($alergenos)
+    static public function delete($id)
     {
         $con = Connection::getConection();
         $sql = 'delete from alergenos where id=?';
         $stmt = $con->prepare($sql);
-        $stmt->execute([$alergenos->id]);
+        $stmt->execute([$id]);
     }
-
 
     /**
      * update
@@ -76,9 +75,9 @@ class AlergenosRep implements ICRUD
     static public function update($alergenos)
     {
         $con = Connection::getConection();
-        $sql = 'update alergenos set nombre=?, foto=? where id=' . $alergenos->id . ';';
+        $sql = 'update alergenos set nombre=?, foto=? where id=?;';
         $stmt = $con->prepare($sql);
-        $stmt->execute($alergenos->nombre, $alergenos->foto);
+        $stmt->execute([$alergenos->nombre, $alergenos->foto, $alergenos->id]);
     }
 
     /**

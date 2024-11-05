@@ -2,13 +2,13 @@
 
 class Pedido
 {
-    public static $id;
-    public static $fecha;
-    public static $estado;
-    public static $precio;
-    public static $direcction;
-    public static $user;
-    public static $lineas;
+    public $id;
+    public $fecha;
+    public $estado;
+    public $precio;
+    public $direcction;
+    public $user;
+    public $lineas;
 
     public function __construct($id = null, $fecha, $estado, $precio, $direcction, $user, $lineas)
     {

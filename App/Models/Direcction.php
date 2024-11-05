@@ -2,10 +2,10 @@
 
 class Direcction
 {
-    public static $id;
-    public static $direction;
-    public static $status;
-    public static $userId;
+    public $id;
+    public $direction;
+    public $status;
+    public $userId;
 
 
     public function __construct($id = null, $direction, $status, $userId)

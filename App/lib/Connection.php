@@ -4,7 +4,8 @@ class Connection
 {
     // Objeto connection para conectarse a base de datos
     public static $con = null;
-    public static $config = new Config();
+    public static $config = null;
+
 
     /**
      * Crea la conexión con la base de datos
@@ -13,7 +14,7 @@ class Connection
     public static function getConection()
     {
         if (self::$con == null) {
-
+            self::$config = new Config();
             try {
                 self::$con = new PDO(self::$config->host, self::$config->user, self::$config->pass, self::$config->options);
             } catch (PDOException $e) {

@@ -1,11 +1,11 @@
 <?php
 
 class LineaPedido {
-    public static $id;
-    public static $cantidad;
-    public static $producto;
-    public static $precio;
-    public static $pedidoid;
+    public $id;
+    public $cantidad;
+    public $producto;
+    public $precio;
+    public $pedidoid;
 
     public function __construct($id=null, $cantidad, $producto, $precio, $pedidoid) {
         self::$id = $id;

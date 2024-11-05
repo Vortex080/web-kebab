@@ -2,10 +2,10 @@
 
 class Ingredientes
 {
-    public static $id;
-    public static $nombre;
-    public static $alergenos;
-    public static $precio;
+    public $id;
+    public $nombre;
+    public $alergenos;
+    public $precio;
 
     public function __construct($id=null, $nombre, $alergenos, $precio)
     {
