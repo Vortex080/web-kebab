@@ -9,7 +9,3 @@ class Index
     }
 }
 Index::main();
-
-$a = new Ingredientes(null, 'kebab', [1, 2], 130);
-$b = IngredientesRep::create($a);
-echo $b;

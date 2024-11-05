@@ -41,9 +41,9 @@ class LineaPedidoRep implements ICRUD
     static public function create($linea)
     {
         $con = Connection::getConection();
-        $sql = 'insert into lineapedido(id, cantidad, producto, precio, pedidoid) values (?, ?, ?, ?, ?)';
+        $sql = 'insert into lineapedido(cantidad, producto, precio, pedidoid) values (?, ?, ?, ?, ?)';
         $stmt = $con->prepare($sql);
-        $stmt->execute([$linea->id, $linea->cantidad, $linea->producto, $linea->precio, $linea->pedidoid]);
+        $stmt->execute([$linea->cantidad, $linea->producto, $linea->precio, $linea->pedidoid]);
     }
 
 
@@ -74,5 +74,15 @@ class LineaPedidoRep implements ICRUD
         $sql = 'update lineapedido set cantidad=?, producto=?, precio=?, pedidoid=? where id=' . $linea->id . ';';
         $stmt = $con->prepare($sql);
         $stmt->execute($linea->cantidad, $linea->producto, $linea->precio, $linea->pedidoid);
+    }
+
+    static public function addpedido($linea)
+    {
+        foreach ($linea->lineas as $l) {
+            $con = Connection::getConection();
+            $sql = 'insert into lineapedido(cantidad, producto, precio, pedidoid) values (?, ?, ?, ?, ?)';
+            $stmt = $con->prepare($sql);
+            $stmt->execute($l->cantidad, $l->producto, $l->precio, $l->pedidoid);
+        }
     }
 }

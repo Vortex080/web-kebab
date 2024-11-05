@@ -44,9 +44,9 @@ class PedidosRep implements ICRUD
     static public function create($pedido)
     {
         $con = Connection::getConection();
-        $sql = 'insert into pedidos(id, fecha, estado, precio, direcction, user, lineas) values (?, ?, ?, ?, ?, ?, ?)';
+        $sql = 'insert into pedidos(id, fecha, estado, precio, direction, userid) values (?, ?, ?, ?, ?, ?, ?)';
         $stmt = $con->prepare($sql);
-        $stmt->execute([$pedido->id, $pedido->fecha, $pedido->estado, $pedido->precio, $pedido->direcction, $pedido->user, $pedido->lineas]);
+        $stmt->execute([$pedido->id, $pedido->fecha, $pedido->estado, $pedido->precio, $pedido->direcction, $pedido->user]);
     }
 
 

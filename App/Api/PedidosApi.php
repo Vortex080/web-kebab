@@ -8,28 +8,27 @@ $requesmethod = $_SERVER['REQUEST_METHOD'];
 switch ($requesmethod) {
     case 'GET':
         $id = $_GET['id'];
-        $ingrediente = IngredientesRep::getbyId($id);
-        echo json_encode($ingrediente);
+        $pedido = PedidosRep::getbyId($id);
+        echo json_encode($pedido);
         break;
     case 'POST':
         $data = json_decode(file_get_contents('php://input'));
-        $ingrediente = new Ingredientes(null, $data->nombre, null, $data->precio);
-        $result = IngredientesRep::create($ingrediente);
+        $pedido = new Pedido(null, $data->fecha, $data->estado, $data->precio, $data->direccion, $data->user, $data->lineas);
+        //LineaPedidoRep::
+        $result = PedidosRep::create($pedido);
         echo json_encode(["success" => $result, "data" => $data]);
         break;
     case 'DELETE':
         $id = $_GET['id'];
-        $result = IngredientesRep::delete($id);
+        $result = PedidosRep::delete($id);
         echo json_encode(["success" => $result, "data" => $id]);
         break;
     case 'PUT':
-        // TODO add alergenos
         $id = $_GET['id'];
-        $nombre = $_GET['nombre'];
-        $precio = $_GET['precio'];
-        $ingrediente = new Ingredientes($id, $nombre, null, $precio);
-        $result = IngredientesRep::update($ingrediente);
-        echo json_encode(["success" => $result, "data" => $ingrediente]);
+        $json = json_decode(file_get_contents('php://input'));
+        $pedido = new Pedido($id, $json->fecha, $json->estado, $json->precio, $json->direcction, $json->user, $json->lineas);
+        $result = PedidosRep::update($pedido);
+        echo json_encode(["success" => $result, "data" => $json]);
         break;
     default:
         echo json_encode(['error' => 'Error']);

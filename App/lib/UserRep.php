@@ -47,7 +47,7 @@ class UserRep implements ICRUD
         $con = Connection::getConection();
         $sql = 'insert into usuario(id, nombre, pass, monedero, foto, direction) values (?, ?, ?, ?, ?, ?)';
         $stmt = $con->prepare($sql);
-        $stmt->execute([$user->id, $user->nombre, $user->pass, $user->monedero, $user->foto, $user->direction]);
+        $stmt->execute([$user->id, $user->nombre, $user->pass, $user->monedero, $user->foto, $user->direcction]);
     }
 
 
@@ -57,12 +57,12 @@ class UserRep implements ICRUD
      * @param  mixed $user
      * @return void
      */
-    static public function delete($user)
+    static public function delete($id)
     {
         $con = Connection::getConection();
         $sql = 'delete from usuario where id=?';
         $stmt = $con->prepare($sql);
-        $stmt->execute([$user->id]);
+        $stmt->execute([$id]);
     }
 
 
@@ -77,6 +77,6 @@ class UserRep implements ICRUD
         $con = Connection::getConection();
         $sql = 'update usuario set nombre=?, pass=?, monedero=?, foto=?, direction=? where id=' . $user->id . ';';
         $stmt = $con->prepare($sql);
-        $stmt->execute($user->nombre, $user->pass, $user->monedero, $user->foto, $user->direction);
+        $stmt->execute([$user->nombre, $user->pass, $user->monedero, $user->foto, $user->direcction]);
     }
 }

@@ -87,10 +87,10 @@ class AlergenosRep implements ICRUD
     {
         $con = Connection::getConection();
         $array = [];
-        $rest = $con->query('select id_alergeno from ingredientes_has_alergenos where id_ingrediente=' . $id . ';');
+        $rest = $con->query('select id_alergenos from ingredientes_has_alergenos where id_ingrediente=' . $id . ';');
         while ($row = $rest->fetch()) {
 
-            $alergenos = AlergenosRep::getbyId($row['id_alergeno']);
+            $alergenos = AlergenosRep::getbyId($row['id_alergenos']);
 
             array_push($array, $alergenos);
         }

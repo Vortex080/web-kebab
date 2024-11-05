@@ -45,9 +45,9 @@ class DirectionRep implements ICRUD
     static public function create($direction)
     {
         $con = Connection::getConection();
-        $sql = 'insert into direction(id, direction, estado) values (?, ?, ?)';
+        $sql = 'insert into direction(direction, estado) values (?, ?)';
         $stmt = $con->prepare($sql);
-        $stmt->execute([$direction->id, $direction->direction, $direction->estado]);
+        $stmt->execute([$direction->direction, $direction->status]);
     }
 
 
@@ -57,12 +57,12 @@ class DirectionRep implements ICRUD
      * @param  mixed $direction
      * @return void
      */
-    static public function delete($direction)
+    static public function delete($id)
     {
         $con = Connection::getConection();
         $sql = 'delete from direction where id=?';
         $stmt = $con->prepare($sql);
-        $stmt->execute([$direction->id]);
+        $stmt->execute([$id]);
     }
 
 
@@ -77,6 +77,6 @@ class DirectionRep implements ICRUD
         $con = Connection::getConection();
         $sql = 'update direction set direction=?, estado=? where id=' . $direction->id . ';';
         $stmt = $con->prepare($sql);
-        $stmt->execute($direction->direction, $direction->estado);
+        $stmt->execute([$direction->direction, $direction->status]);
     }
 }

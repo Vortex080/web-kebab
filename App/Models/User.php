@@ -9,7 +9,7 @@ class User
     public $monedero;
     public $foto;
 
-    public function __construct($id, $nombre, $pass, $direcction, $monedero, $foto)
+    public function __construct($id=null, $nombre, $pass, $direcction, $monedero, $foto)
     {
         $this->id = $id;
         $this->nombre = $nombre;

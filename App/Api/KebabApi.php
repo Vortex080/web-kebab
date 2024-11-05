@@ -8,28 +8,29 @@ $requesmethod = $_SERVER['REQUEST_METHOD'];
 switch ($requesmethod) {
     case 'GET':
         $id = $_GET['id'];
-        $ingrediente = IngredientesRep::getbyId($id);
-        echo json_encode($ingrediente);
+        $kebab = KebabRep::getbyId($id);
+        echo json_encode($kebab);
         break;
     case 'POST':
         $data = json_decode(file_get_contents('php://input'));
-        $ingrediente = new Ingredientes(null, $data->nombre, null, $data->precio);
-        $result = IngredientesRep::create($ingrediente);
+        $kebab = new Kebab(null, $data->nombre, $data->foto, $data->ingredientes, $data->precio);
+        $result = KebabRep::create($kebab);
         echo json_encode(["success" => $result, "data" => $data]);
         break;
     case 'DELETE':
         $id = $_GET['id'];
-        $result = IngredientesRep::delete($id);
+        $result = KebabRep::delete($id);
         echo json_encode(["success" => $result, "data" => $id]);
         break;
     case 'PUT':
-        // TODO add alergenos
         $id = $_GET['id'];
         $nombre = $_GET['nombre'];
+        $foto = $_GET['foto'];
+        $ingredientes = $_GET['ingredientes'];
         $precio = $_GET['precio'];
-        $ingrediente = new Ingredientes($id, $nombre, null, $precio);
-        $result = IngredientesRep::update($ingrediente);
-        echo json_encode(["success" => $result, "data" => $ingrediente]);
+        $kebab = new Kebab($id, $nombre, $foto, $ingredientes, $precio);
+        $result = KebabRep::update($kebab);
+        echo json_encode(["success" => $result, "data" => $kebab]);
         break;
     default:
         echo json_encode(['error' => 'Error']);
