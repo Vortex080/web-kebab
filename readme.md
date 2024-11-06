@@ -79,4 +79,67 @@
 
 ### Factura
 - La linea de pedido es cada producto vendido con la factura (se detalla cada producto con ingredientes, precio, etc)
+
+**Mantenimiento Kebab**
+
+![alt text](assets/img/mantenimiento_kebab.png)
+
+Api Devuelve para lista ingregientes
+- Ingredientes [Colección de objetos ingredientes]
+- Kebab vacio
   
+(Si se esta modifiando)
+- Ingredientes 
+- Kebab ya creado
+
+>[!NOTE]
+> Los ingregientes pasan del filtro de la derecha a la sección de ingredientes de la izquierda
+
+**Formato de la conexión con la API**
+```js
+async function NombreFuntion(variales) {
+
+    try {
+        // Asegurarnos de que los parámetros no sean undefined o null
+        if (!variable || !variable) {
+            throw new Error('Los valores son requeridos');
+        }
+
+        // Hacemos la solicitud GET usando fetch
+        const response = await fetch(baseUrlUser, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ variable: variable })
+        }); 
+        // Verificamos si la respuesta fue exitosa
+        if (!response.ok) {
+            const errorMessage = await response.text(); // Obtener texto de la respuesta si hay error
+            throw new Error(`Error ${response.status}: ${errorMessage}`);
+        }
+
+        const data = await response.json();
+        console.log(data);
+    } catch (error) {
+        console.log('Error al crear el user ', error);
+    }
+}
+
+```
+
+
+**Api devuelta JSON**
+
+```json
+{
+    success: true, 
+    data: {
+            id: 1, 
+            nombre: "lechuga", 
+            alergenos: 1, precio: 130
+    }, 
+    href : "/App/Api/IngredienteApi.php?id=1"
+}
+
+```

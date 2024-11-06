@@ -320,7 +320,7 @@ async function createUser(nombre, pass, direcction, monedero, foto) {
     }
 }
 
-deleteUser(17);
+//deleteUser(17);
 // Función para hacer la solicitud a la API en PHP
 async function getUser(id) {
 
