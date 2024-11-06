@@ -133,13 +133,14 @@ async function NombreFuntion(variales) {
 
 ```json
 {
-    success: true, 
-    data: {
-            id: 1, 
-            nombre: "lechuga", 
-            alergenos: 1, precio: 130
+    "success": true, 
+    "data": {
+            "id": 1, 
+            "nombre": "lechuga", 
+            "alergenos": 1, 
+            "precio": 130
     }, 
-    href : "/App/Api/IngredienteApi.php?id=1"
+    "href" : "/App/Api/IngredienteApi.php?id=1"
 }
 
 ```
