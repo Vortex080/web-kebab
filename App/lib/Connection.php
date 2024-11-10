@@ -18,10 +18,12 @@ class Connection
             try {
                 self::$con = new PDO(self::$config->host, self::$config->user, self::$config->pass, self::$config->options);
             } catch (PDOException $e) {
-                echo $e->getMessage();
+                error_log($e->getMessage());
+                exit('Esta mal :'. $e->getMessage());
             }
         }
 
         return self::$con;
     }
+    
 }

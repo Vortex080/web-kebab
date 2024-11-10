@@ -13,7 +13,7 @@ switch ($requesmethod) {
         break;
     case 'POST':
         $data = json_decode(file_get_contents('php://input'));
-        $pedido = new Pedido(null, $data->fecha, $data->estado, $data->precio, $data->direccion, $data->user, $data->lineas);
+        $pedido = new Pedido($data->fecha, $data->estado, $data->precio, $data->direccion, $data->user, $data->lineas, null);
         //LineaPedidoRep::
         $result = PedidosRep::create($pedido);
         echo json_encode(["success" => $result, "data" => $data]);

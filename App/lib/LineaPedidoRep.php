@@ -76,13 +76,13 @@ class LineaPedidoRep implements ICRUD
         $stmt->execute($linea->cantidad, $linea->producto, $linea->precio, $linea->pedidoid);
     }
 
-    static public function addpedido($linea)
+    static public function addpedido($l)
     {
-        foreach ($linea->lineas as $l) {
-            $con = Connection::getConection();
-            $sql = 'insert into lineapedido(cantidad, producto, precio, pedidoid) values (?, ?, ?, ?, ?)';
-            $stmt = $con->prepare($sql);
-            $stmt->execute($l->cantidad, $l->producto, $l->precio, $l->pedidoid);
-        }
+        $con = Connection::getConection();
+
+        $sql = 'insert into lineapedido(cantidad, producto, precio, pedidoid) values (?, ?, ?, ?)';
+        $stmt = $con->prepare($sql);
+        $producto = json_encode($l->producto);
+        $stmt->execute([$l->cantidad, $producto, $l->precio, $l->pedidoid]);
     }
 }

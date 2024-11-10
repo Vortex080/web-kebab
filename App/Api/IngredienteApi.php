@@ -13,7 +13,7 @@ switch ($requesmethod) {
         break;
     case 'POST':
         $data = json_decode(file_get_contents('php://input'));
-        $ingrediente = new Ingredientes(null, $data->nombre, null, $data->precio);
+        $ingrediente = new Ingredientes($data->nombre, $data->precio, null, $data->alergenos);
         $result = IngredientesRep::create($ingrediente);
         echo json_encode(["success" => $result, "data" => $data]);
         break;
@@ -23,11 +23,11 @@ switch ($requesmethod) {
         echo json_encode(["success" => $result, "data" => $id]);
         break;
     case 'PUT':
-        // TODO add alergenos
         $id = $_GET['id'];
         $nombre = $_GET['nombre'];
         $precio = $_GET['precio'];
-        $ingrediente = new Ingredientes($id, $nombre, null, $precio);
+        $alergenos = AlergenosRep::getAllbyingrediente($id);
+        $ingrediente = new Ingredientes($nombre, $precio, $id, $alergenos);
         $result = IngredientesRep::update($ingrediente);
         echo json_encode(["success" => $result, "data" => $ingrediente]);
         break;

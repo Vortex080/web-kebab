@@ -12,8 +12,8 @@ class UserRep implements ICRUD
         $con = Connection::getConection();
         $rest = $con->query('select id, nombre, pass, monedero, foto, direction from usuario where id =' . $id . ';');
         while ($row = $rest->fetch()) {
-
-            $user = new User($row['id'], $row['nombre'], $row['pass'], $row['monedero'], $row['foto'], $row['direction']);
+            $alergenos = self::getAlergenosbyId($row['id']);
+            $user = new User($row['nombre'], $row['pass'], $row['monedero'], $row['foto'], $row['direction'], $alergenos, $row['id']);
         }
 
         return $user;
@@ -28,8 +28,8 @@ class UserRep implements ICRUD
         $array = [];
         $rest = $con->query('select id, nombre, pass, monedero, foto, direction from usuario;');
         while ($row = $rest->fetch()) {
-
-            $user = new User($row['id'], $row['nombre'], $row['pass'], $row['monedero'], $row['foto'], $row['direction']);
+            $alergenos = self::getAlergenosbyId($row['id']);
+            $user = new User($row['nombre'], $row['pass'], $row['monedero'], $row['foto'], $row['direction'], $alergenos, $row['id']);
             array_push($array, $user);
         }
 
@@ -45,9 +45,31 @@ class UserRep implements ICRUD
     static public function create($user)
     {
         $con = Connection::getConection();
-        $sql = 'insert into usuario(id, nombre, pass, monedero, foto, direction) values (?, ?, ?, ?, ?, ?)';
-        $stmt = $con->prepare($sql);
-        $stmt->execute([$user->id, $user->nombre, $user->pass, $user->monedero, $user->foto, $user->direcction]);
+
+        try {
+
+            $con->beginTransaction();
+
+            // Insertar usuario
+            $sql = 'insert into usuario(nombre, pass, monedero, foto, direction) values (?, ?, ?, ?, ?)';
+            $stmt = $con->prepare($sql);
+            $stmt->execute([$user->nombre, $user->pass, $user->monedero, $user->foto, $user->direcction->id]);
+
+            $nuevoID = $con->lastInsertId();
+
+
+            $user->id = $nuevoID;
+            self::addAlergenos($user);
+
+
+            $con->commit();
+
+            return $nuevoID;
+        } catch (Exception $e) {
+            $con->rollBack();
+            echo "Ocurrio un error: " . $e->getMessage();
+            return null;
+        }
     }
 
 
@@ -77,6 +99,39 @@ class UserRep implements ICRUD
         $con = Connection::getConection();
         $sql = 'update usuario set nombre=?, pass=?, monedero=?, foto=?, direction=? where id=' . $user->id . ';';
         $stmt = $con->prepare($sql);
-        $stmt->execute([$user->nombre, $user->pass, $user->monedero, $user->foto, $user->direcction]);
+        $stmt->execute([$user->nombre, $user->pass, $user->monedero, $user->foto, $user->direcction->id]);
+    }
+
+
+    static public function getAlergenosbyId($id)
+    {
+        $con = Connection::getConection();
+        $rest = $con->query('select idUsuario, idAlergeno from usuario_has_alergenos where idUsuario =' . $id . ';');
+        while ($row = $rest->fetch()) {
+
+            $idaleg = $row['idAlergeno'];
+            $alergeno = AlergenosRep::getbyId($idaleg);
+        }
+
+        return $alergeno;
+    }
+
+
+    static public function addAlergenos($user)
+    {
+        $con = Connection::getConection();
+        try {
+            $sql = 'insert into usuario_has_alergenos(idUsuario, idAlergeno) values (?, ?)';
+            $stmt = $con->prepare($sql);
+            foreach ($user->alergenos as $a) {
+                $stmt->execute([$user->id, $a->id]);
+            }
+
+            return $user->alergenos;
+        } catch (Exception $e) {
+            $con->rollBack();
+            echo "Ocurrio un error: " . $e->getMessage();
+            return null;
+        }
     }
 }

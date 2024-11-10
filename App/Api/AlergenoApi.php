@@ -13,7 +13,7 @@ switch ($requesmethod) {
         break;
     case 'POST':
         $data = json_decode(file_get_contents('php://input'));
-        $alergeno = new Alergenos(null, $data->nombre, $data->foto);
+        $alergeno = new Alergenos($data->nombre, $data->foto, null);
         $result = AlergenosRep::create($alergeno);
         echo json_encode(["success" => $result, "data" => $data]);
         break;
@@ -25,7 +25,7 @@ switch ($requesmethod) {
     case 'PUT':
         $id = $_GET['id'];
         $json = json_decode(file_get_contents('php://input'));
-        $alergeno = new Alergenos($id, $json->nombre, $json->foto);
+        $alergeno = new Alergenos($json->nombre, $json->foto, $id);
         $result = AlergenosRep::update($alergeno);
         echo json_encode(["success" => $result, "data" => $json]);
         break;

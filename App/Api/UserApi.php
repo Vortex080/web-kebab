@@ -13,9 +13,9 @@ switch ($requesmethod) {
         break;
     case 'POST':
         $data = json_decode(file_get_contents('php://input'));
-        $user = new User(null, $data->nombre, $data->pass, $data->direcction, $data->monedero, $data->foto);
+        $user = new User($data->nombre, $data->pass, $data->monedero, $data->foto, $data->direcction, $data->alergenos, null);
         $result = UserRep::create($user);
-        echo json_encode(["success" => true, "data" => $data]);
+        echo json_encode(["success" => true, "data" => $user]);
         break;
     case 'DELETE':
         $id = $_GET['id'];
@@ -24,13 +24,8 @@ switch ($requesmethod) {
         break;
     case 'PUT':
         $id = $_GET['id'];
-        $nombre = $_GET['nombre'];
-        $pass = $_GET['pass'];
-        $direcction = $_GET['direcction'];
-        $monedero = $_GET['monedero'];
-        $foto = $_GET['foto'];
-        $json = json_decode(file_get_contents('php://input'));
-        $user = new User($id, $nombre, $pass, $direcction, $monedero, $foto);
+        $data = json_decode(file_get_contents('php://input'));
+        $user = new User($data->nombre, $data->pass, $data->monedero, $data->foto, $data->direcction, $data->alergenos, $id);
         $result = UserRep::update($user);
         echo json_encode(["success" => $result, "data" => $user]);
         break;

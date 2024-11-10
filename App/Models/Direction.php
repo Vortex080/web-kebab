@@ -7,7 +7,7 @@ class Direction
     public $status;
 
 
-    public function __construct($id = null, $direction, $status)
+    public function __construct($direction, $status, $id = null)
     {
         $this->id = $id;
         $this->direction = $direction;

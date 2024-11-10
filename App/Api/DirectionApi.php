@@ -13,7 +13,7 @@ switch ($requesmethod) {
         break;
     case 'POST':
         $data = json_decode(file_get_contents('php://input'));
-        $direction = new Direction(null, $data->direction, $data->status);
+        $direction = new Direction($data->direction, $data->status, null);
         $result = DirectionRep::create($direction);
         echo json_encode(["success" => true, "data" => $data]);
         break;
@@ -26,7 +26,7 @@ switch ($requesmethod) {
         $id = $_GET['id'];
         $direction = $_GET['direction'];
         $status = $_GET['status'];
-        $direction = new Direction($id, $direction, $status);
+        $direction = new Direction($direction, $status, $id);
         $result = DirectionRep::update($direction);
         echo json_encode(["success" => true, "data" => $direction]);
         break;

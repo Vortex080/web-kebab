@@ -6,7 +6,7 @@ class Alergenos
     public $nombre;
     public $foto;
 
-    public function __construct($id = null, $nombre, $foto)
+    public function __construct($nombre, $foto, $id = null)
     {
         $this->id = $id;
         $this->nombre = $nombre;

@@ -13,7 +13,7 @@ class DirectionRep implements ICRUD
         $rest = $con->query('select id, direction, estado from direction where id =' . $id . ';');
         while ($row = $rest->fetch()) {
 
-            $direction = new Direction($row['id'], $row['direction'], $row['estado']);
+            $direction = new Direction($row['direction'], $row['estado'], $row['id']);
         }
 
         return $direction;
@@ -45,9 +45,22 @@ class DirectionRep implements ICRUD
     static public function create($direction)
     {
         $con = Connection::getConection();
-        $sql = 'insert into direction(direction, estado) values (?, ?)';
-        $stmt = $con->prepare($sql);
-        $stmt->execute([$direction->direction, $direction->status]);
+        try {
+            $con->beginTransaction();
+            $sql = 'insert into direction(direction, estado) values (?, ?)';
+            $stmt = $con->prepare($sql);
+            $stmt->execute([$direction->direction, $direction->status]);
+
+            $lastId = $con->lastInsertId();
+
+            $con->commit();
+
+            return $lastId;
+        } catch (Exception $e) {
+            $con->rollBack();
+            echo "Ocurrio un error: " . $e->getMessage();
+            return null;
+        }
     }
 
 

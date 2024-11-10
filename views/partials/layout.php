@@ -7,6 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Amigo KEBAB</title>
     <link rel="stylesheet" href="../../assets/css/style.css">
+    <!--<script src="../../assets/js/autoload.js"></script>-->
+    <<script type="module"src="../../assets/js/script.js"></script>
 
 </head>
 
@@ -29,7 +31,7 @@
     $dr = $_SERVER['DOCUMENT_ROOT'];
     require_once $dr . '/views/partials/footer.php';
     ?>
-    <script src="../../assets/js/script.js"></script>
+
 </body>
 
 </html>

@@ -10,13 +10,13 @@ class Pedido
     public $user;
     public $lineas;
 
-    public function __construct($id = null, $fecha, $estado, $precio, $direcction, $user, $lineas)
+    public function __construct($fecha, $estado, $precio, $direction, $user, $lineas=null, $id = null)
     {
         $this->id = $id;
         $this->fecha = $fecha;
         $this->estado = $estado;
         $this->precio = $precio;
-        $this->direcction = $direcction;
+        $this->direcction = $direction;
         $this->user = $user;
         $this->lineas = $lineas;
     }

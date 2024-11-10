@@ -13,7 +13,7 @@ switch ($requesmethod) {
         break;
     case 'POST':
         $data = json_decode(file_get_contents('php://input'));
-        $kebab = new Kebab(null, $data->nombre, $data->foto, $data->ingredientes, $data->precio);
+        $kebab = new Kebab($data->nombre, $data->foto, $data->ingredientes, $data->precio, null);
         $result = KebabRep::create($kebab);
         echo json_encode(["success" => $result, "data" => $data]);
         break;
@@ -28,7 +28,8 @@ switch ($requesmethod) {
         $foto = $_GET['foto'];
         $ingredientes = $_GET['ingredientes'];
         $precio = $_GET['precio'];
-        $kebab = new Kebab($id, $nombre, $foto, $ingredientes, $precio);
+        $kebab = new Kebab($nombre, $foto, $ingredientes, $precio, $id);
+        var_dump($kebab);
         $result = KebabRep::update($kebab);
         echo json_encode(["success" => $result, "data" => $kebab]);
         break;

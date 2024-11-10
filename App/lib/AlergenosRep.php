@@ -14,7 +14,7 @@ class AlergenosRep implements ICRUD
         $rest = $con->query('select id, nombre, foto from alergenos where id =' . $id . ';');
         while ($row = $rest->fetch()) {
 
-            $alergeno = new Alergenos($row['id'], $row['nombre'], $row['foto']);
+            $alergeno = new Alergenos($row['nombre'], $row['foto'], $row['id']);
         }
 
         return $alergeno;
@@ -30,7 +30,7 @@ class AlergenosRep implements ICRUD
         $rest = $con->query('select id, nombre, foto from alergenos;');
         while ($row = $rest->fetch()) {
 
-            $alergenos = new Alergenos($row['id'], $row['nombre'], $row['foto']);
+            $alergenos = new Alergenos($row['nombre'], $row['foto'], $row['id']);
             array_push($array, $alergenos);
         }
 

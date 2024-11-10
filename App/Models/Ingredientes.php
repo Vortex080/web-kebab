@@ -7,11 +7,11 @@ class Ingredientes
     public $alergenos;
     public $precio;
 
-    public function __construct($id = null, $nombre, $alergenos = null, $precio)
+    public function __construct($nombre, $precio, $id = null, $alergenos = null)
     {
-        $this->id = $id;
         $this->nombre = $nombre;
-        $this->alergenos = $alergenos;
         $this->precio = $precio;
+        $this->id = $id;
+        $this->alergenos = $alergenos;
     }
 }

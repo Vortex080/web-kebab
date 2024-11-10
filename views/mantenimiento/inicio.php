@@ -9,18 +9,18 @@
             </div>
             <button class="carousel-control-prev" onclick="prevSlide()">&#10094;</button>
             <button class="carousel-control-next" onclick="nextSlide()">&#10095;</button>
-            <img src="https://dolciakebab.com/image/cache/catalog/DolciaKebab3/Banners/carne-de-kebab-960x450.jpg" alt="Kebab 1" id="carouselImage">
+            <!---img src="https://dolciakebab.com/image/cache/catalog/DolciaKebab3/Banners/carne-de-kebab-960x450.jpg" alt="Kebab 1" id="carouselImage">--->
         </div>
 
         <!-- Productos a la derecha -->
         <div class="products">
             <div class="product-card">
-                <img src="https://dolciakebab.com/image/cache/catalog/DolciaKebab3/Banners/b1-320x210w-320x210.png" alt="Pinchos de Kebab id=" b1product-image">
+                <!--<img src="https://dolciakebab.com/image/cache/catalog/DolciaKebab3/Banners/b1-320x210w-320x210.png" alt="Pinchos de Kebab id=" b1product-image">-->
                 <div class="product-title">PINCHOS DE KEBAB</div>
                 <p>Filete<br>Pollo<br>Ternera</p>
             </div>
             <div class="product-card">
-                <img src="https://dolciakebab.com/image/cache/catalog/DolciaKebab3/Banners/b1-320x21ddd0w-320x210.png" alt="Loncheado de Kebab" id="b1product-image">
+                <!--<img src="https://dolciakebab.com/image/cache/catalog/DolciaKebab3/Banners/b1-320x21ddd0w-320x210.png" alt="Loncheado de Kebab" id="b1product-image">
                 <div class="product-title">LONCHEADO DE KEBAB</div>
                 <p>Carne de Kebab<br>Pollo<br>Ternera</p>
             </div>
