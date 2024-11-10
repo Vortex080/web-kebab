@@ -2,13 +2,13 @@
 
 class Kebab
 {
-    public static $id;
-    public static $nombre;
-    public static $foto;
-    public static $ingredientes;
-    public static $precio;
+    public $id;
+    public $nombre;
+    public $foto;
+    public $ingredientes;
+    public $precio;
 
-    public function __construct($id=null, $nombre, $foto, $ingredientes)
+    public function __construct($nombre, $foto, $ingredientes, $precio, $id = null)
     {
         $this->id = $id;
         $this->nombre = $nombre;

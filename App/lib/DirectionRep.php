@@ -13,7 +13,7 @@ class DirectionRep implements ICRUD
         $rest = $con->query('select id, direction, estado from direction where id =' . $id . ';');
         while ($row = $rest->fetch()) {
 
-            $direction = new Direction($row['id'], $row['direction'], $row['estado']);
+            $direction = new Direction($row['direction'], $row['estado'], $row['id']);
         }
 
         return $direction;
@@ -45,9 +45,22 @@ class DirectionRep implements ICRUD
     static public function create($direction)
     {
         $con = Connection::getConection();
-        $sql = 'insert into direction(id, direction, estado) values (?, ?, ?)';
-        $stmt = $con->prepare($sql);
-        $stmt->execute([$direction->id, $direction->direction, $direction->estado]);
+        try {
+            $con->beginTransaction();
+            $sql = 'insert into direction(direction, estado) values (?, ?)';
+            $stmt = $con->prepare($sql);
+            $stmt->execute([$direction->direction, $direction->status]);
+
+            $lastId = $con->lastInsertId();
+
+            $con->commit();
+
+            return $lastId;
+        } catch (Exception $e) {
+            $con->rollBack();
+            echo "Ocurrio un error: " . $e->getMessage();
+            return null;
+        }
     }
 
 
@@ -57,12 +70,12 @@ class DirectionRep implements ICRUD
      * @param  mixed $direction
      * @return void
      */
-    static public function delete($direction)
+    static public function delete($id)
     {
         $con = Connection::getConection();
         $sql = 'delete from direction where id=?';
         $stmt = $con->prepare($sql);
-        $stmt->execute([$direction->id]);
+        $stmt->execute([$id]);
     }
 
 
@@ -77,6 +90,6 @@ class DirectionRep implements ICRUD
         $con = Connection::getConection();
         $sql = 'update direction set direction=?, estado=? where id=' . $direction->id . ';';
         $stmt = $con->prepare($sql);
-        $stmt->execute($direction->direction, $direction->estado);
+        $stmt->execute([$direction->direction, $direction->status]);
     }
 }

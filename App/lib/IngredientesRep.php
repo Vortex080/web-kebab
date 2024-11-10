@@ -1,5 +1,6 @@
 <?php
 
+
 class IngredientesRep implements ICRUD
 {
 
@@ -10,15 +11,33 @@ class IngredientesRep implements ICRUD
     static public function getbyId($id)
     {
         $con = Connection::getConection();
-        $rest = $con->query('select id, nombre from ingredientes where id =' . $id . ';');
+        $rest = $con->query('select id, nombre, precio from ingredientes where id =' . $id . ';');
         while ($row = $rest->fetch()) {
 
             $alergenos = AlergenosRep::getAllbyingrediente($id);
-            $ingrediente = new Ingredientes($row['id'], $row['nombre'], $alergenos, $row['precio']);
+            $ingrediente = new Ingredientes($row['nombre'], $row['precio'], $row['id'], $alergenos);
         }
 
         return $ingrediente;
     }
+
+    /**
+     * Saca por nombre
+     * @var $nombre
+     */
+    static public function getbyName($nombre)
+    {
+        $con = Connection::getConection();
+        $rest = $con->query('select id, nombre from ingredientes where nombre =' . $nombre . ';');
+        while ($row = $rest->fetch()) {
+
+            $alergenos = AlergenosRep::getAllbyingrediente($row['id']);
+            $ingrediente = new Ingredientes($row['nombre'], $row['precio'], $row['id'], $alergenos);
+        }
+
+        return $ingrediente;
+    }
+
 
     /**
      * getAll
@@ -27,10 +46,10 @@ class IngredientesRep implements ICRUD
     {
         $con = Connection::getConection();
         $array = [];
-        $rest = $con->query('select id, nombre from ingredientes;');
+        $rest = $con->query('select id, nombre, precio from ingredientes;');
         while ($row = $rest->fetch()) {
             $alergenos = AlergenosRep::getAllbyingrediente($row['id']);
-            $ingrediente = new Ingredientes($row['id'], $row['nombre'], $alergenos, $row['precio']);
+            $ingrediente = new Ingredientes($row['nombre'], $row['precio'], $row['id'], $alergenos);
             array_push($array, $ingrediente);
         }
 
@@ -46,16 +65,51 @@ class IngredientesRep implements ICRUD
     static public function create($ingrediente)
     {
         $con = Connection::getConection();
-        $sql = 'insert into ingredientes(id, nombre, precio) values (?, ?, ?)';
-        $stmt = $con->prepare($sql);
-        $stmt->execute([$ingrediente->id, $ingrediente->nombre, $ingrediente->precio]);
-        foreach ($ingrediente->alergenos as $i) {
-            $sql2 = 'insert into ingredientes_has_alergenos(id_ingrediente, id_alergenos) values (?, ?)';
-            $stmt = $con->prepare($sql2);
-            $stmt->execute([$ingrediente->id, $i->id]);
+
+        try {
+
+            $con->beginTransaction();
+
+            // Insertar ingrediente
+            $sql = 'insert into ingredientes(id, nombre, precio) values (?, ?, ?)';
+            $stmt = $con->prepare($sql);
+            $stmt->execute([$ingrediente->id, $ingrediente->nombre, $ingrediente->precio]);
+
+            $nuevoID = $con->lastInsertId();
+
+
+            $ingrediente->id = $nuevoID;
+            self::insertIngredienteHasAlergenos($ingrediente);
+
+
+            $con->commit();
+
+            return $nuevoID;
+        } catch (Exception $e) {
+            $con->rollBack();
+            echo "Ocurrio un error: " . $e->getMessage();
+            return null;
         }
     }
 
+
+    public static function insertIngredienteHasAlergenos($i)
+    {
+        $con = Connection::getConection();
+        try {
+            $sql = 'insert into ingredientes_has_alergenos(id_ingrediente, id_alergenos) values (?, ?)';
+            $stmt = $con->prepare($sql);
+            foreach ($i->alergenos as $a) {
+                $stmt->execute([$i->id, $a->id]);
+            }
+
+            return $i->alergenos;
+        } catch (Exception $e) {
+            $con->rollBack();
+            echo "Ocurrio un error: " . $e->getMessage();
+            return null;
+        }
+    }
 
     /**
      * delete
@@ -63,12 +117,12 @@ class IngredientesRep implements ICRUD
      * @param  mixed $ingrediente
      * @return void
      */
-    static public function delete($ingrediente)
+    static public function delete($id)
     {
         $con = Connection::getConection();
-        $sql = 'delete from ingrediente where id=?';
+        $sql = 'delete from ingredientes where id=?';
         $stmt = $con->prepare($sql);
-        $stmt->execute([$ingrediente->id]);
+        $stmt->execute([$id]);
     }
 
 
@@ -81,9 +135,9 @@ class IngredientesRep implements ICRUD
     static public function update($ingrediente)
     {
         $con = Connection::getConection();
-        $sql = 'update ingrediente set nombre=?, precio=? where id=' . $ingrediente->id . ';';
+        $sql = 'update ingredientes set nombre=?, precio=? where id=?;';
         $stmt = $con->prepare($sql);
-        $stmt->execute($ingrediente->nombre, $ingrediente->precio);
+        $stmt->execute([$ingrediente->nombre, $ingrediente->precio, $ingrediente->id]);
     }
 
 

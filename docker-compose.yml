@@ -1,0 +1,28 @@
+
+services:
+  apache-php:
+      build: .
+      container_name: php-conection-mariadb
+      depends_on:
+        - db
+      networks:
+        - conection
+      volumes:
+        - C:\xampp\htdocs\2º\proyectos\web-kebab:/var/www/html/
+      ports:
+        - "8000:80"
+
+  db:
+    image: mariadb:11.6.1-rc
+    container_name: mariadbtest
+    restart: always
+    networks:
+      - conection
+    ports:
+      - "3306:3306"
+    environment:
+      MARIADB_ROOT_PASSWORD: root
+
+networks:
+  conection:
+    driver: bridge

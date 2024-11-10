@@ -14,7 +14,7 @@ class AlergenosRep implements ICRUD
         $rest = $con->query('select id, nombre, foto from alergenos where id =' . $id . ';');
         while ($row = $rest->fetch()) {
 
-            $alergeno = new Alergenos($row['id'], $row['nombre'], $row['foto']);
+            $alergeno = new Alergenos($row['nombre'], $row['foto'], $row['id']);
         }
 
         return $alergeno;
@@ -30,7 +30,7 @@ class AlergenosRep implements ICRUD
         $rest = $con->query('select id, nombre, foto from alergenos;');
         while ($row = $rest->fetch()) {
 
-            $alergenos = new Alergenos($row['id'], $row['nombre'], $row['foto']);
+            $alergenos = new Alergenos($row['nombre'], $row['foto'], $row['id']);
             array_push($array, $alergenos);
         }
 
@@ -58,14 +58,13 @@ class AlergenosRep implements ICRUD
      * @param  mixed $alergenos
      * @return void
      */
-    static public function delete($alergenos)
+    static public function delete($id)
     {
         $con = Connection::getConection();
         $sql = 'delete from alergenos where id=?';
         $stmt = $con->prepare($sql);
-        $stmt->execute([$alergenos->id]);
+        $stmt->execute([$id]);
     }
-
 
     /**
      * update
@@ -76,9 +75,9 @@ class AlergenosRep implements ICRUD
     static public function update($alergenos)
     {
         $con = Connection::getConection();
-        $sql = 'update alergenos set nombre=?, foto=? where id=' . $alergenos->id . ';';
+        $sql = 'update alergenos set nombre=?, foto=? where id=?;';
         $stmt = $con->prepare($sql);
-        $stmt->execute($alergenos->nombre, $alergenos->foto);
+        $stmt->execute([$alergenos->nombre, $alergenos->foto, $alergenos->id]);
     }
 
     /**
@@ -88,10 +87,10 @@ class AlergenosRep implements ICRUD
     {
         $con = Connection::getConection();
         $array = [];
-        $rest = $con->query('select id_alergeno from ingredientes_has_alergenos where id_ingrediente=' . $id . ';');
+        $rest = $con->query('select id_alergenos from ingredientes_has_alergenos where id_ingrediente=' . $id . ';');
         while ($row = $rest->fetch()) {
 
-            $alergenos = AlergenosRep::getbyId($row['id_alergeno']);
+            $alergenos = AlergenosRep::getbyId($row['id_alergenos']);
 
             array_push($array, $alergenos);
         }

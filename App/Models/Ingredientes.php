@@ -2,16 +2,16 @@
 
 class Ingredientes
 {
-    public static $id;
-    public static $nombre;
-    public static $alergenos;
-    public static $precio;
+    public $id;
+    public $nombre;
+    public $alergenos;
+    public $precio;
 
-    public function __construct($id=null, $nombre, $alergenos, $precio)
+    public function __construct($nombre, $precio, $id = null, $alergenos = null)
     {
-        $this->id = $id;
         $this->nombre = $nombre;
-        $this->alergenos = $alergenos;
         $this->precio = $precio;
+        $this->id = $id;
+        $this->alergenos = $alergenos;
     }
 }

@@ -2,11 +2,11 @@
 
 class Alergenos
 {
-    public static $id;
-    public static $nombre;
-    public static $foto;
+    public $id;
+    public $nombre;
+    public $foto;
 
-    public function __construct($id=null, $nombre, $foto)
+    public function __construct($nombre, $foto, $id = null)
     {
         $this->id = $id;
         $this->nombre = $nombre;

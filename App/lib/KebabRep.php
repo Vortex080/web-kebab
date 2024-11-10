@@ -10,10 +10,10 @@ class KebabRep implements ICRUD
     static public function getbyId($id)
     {
         $con = Connection::getConection();
-        $rest = $con->query('select id, nombre, foto from kebab where id =' . $id . ';');
+        $rest = $con->query('select id, nombre, foto, precio from kebab where id =' . $id . ';');
         while ($row = $rest->fetch()) {
             $ingredientes = IngredientesRep::getAllbyKebab($id);
-            $kebab = new Kebab($row['id'], $row['nombre'], $row['foto'], $ingredientes, $row['precio']);
+            $kebab = new Kebab($row['nombre'], $row['foto'], $ingredientes, $row['precio'], $row['id']);
         }
 
         return $kebab;
@@ -45,13 +45,22 @@ class KebabRep implements ICRUD
     static public function create($kebab)
     {
         $con = Connection::getConection();
-        $sql = 'insert into kebab(id, nombre, foto, precio) values (?, ?, ?, ?)';
-        $stmt = $con->prepare($sql);
-        $stmt->execute([$kebab->id, $kebab->nombre, $kebab->foto, $kebab->precio]);
-        foreach ($kebab->ingrediente as $i) {
-            $sql2 = 'insert into kebab_has_ingredientes(id_kebab, id_ingrediente) values (?, ?)';
-            $stmt = $con->prepare($sql2);
-            $stmt->execute([$kebab->id, $i->id]);
+        try {
+
+            $con->beginTransaction();
+
+            $sql = 'insert into kebab(nombre, foto, precio) values (?, ?, ?)';
+            $stmt = $con->prepare($sql);
+            $stmt->execute([$kebab->nombre, $kebab->foto, $kebab->precio]);
+            $lastId = $con->lastInsertId();
+            $kebab->id = $lastId;
+            self::addIngredienteKebab($kebab);
+
+            $con->commit();
+        } catch (Exception $e) {
+            $con->rollBack();
+            echo "Ocurrio un error: " . $e->getMessage();
+            return null;
         }
     }
 
@@ -62,12 +71,12 @@ class KebabRep implements ICRUD
      * @param  mixed $kebab
      * @return void
      */
-    static public function delete($kebab)
+    static public function delete($id)
     {
         $con = Connection::getConection();
         $sql = 'delete from kebab where id=?';
         $stmt = $con->prepare($sql);
-        $stmt->execute([$kebab->id]);
+        $stmt->execute([$id]);
     }
 
 
@@ -80,8 +89,19 @@ class KebabRep implements ICRUD
     static public function update($kebab)
     {
         $con = Connection::getConection();
-        $sql = 'update kebab set nombre=?, foto=?, precio=? where id=' . $kebab->id . ';';
+        $sql = 'update kebab set nombre=?, foto=?, precio=? where id=?;';
         $stmt = $con->prepare($sql);
-        $stmt->execute($kebab->nombre, $kebab->foto, $kebab->precio);
+        $stmt->execute([$kebab->nombre, $kebab->foto, $kebab->precio, $kebab->id]);
+    }
+
+    static public function addIngredienteKebab($kebab)
+    {
+        $con = Connection::getConection();
+
+        $sql = 'insert into kebab_has_ingredientes(id_kebab, id_ingrediente) values (?, ?)';
+        $stmt = $con->prepare($sql);
+        foreach ($kebab->ingredientes as $a) {
+            $stmt->execute([$kebab->id, $a->id]);
+        }
     }
 }

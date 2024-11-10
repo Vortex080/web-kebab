@@ -10,10 +10,10 @@ class PedidosRep implements ICRUD
     static public function getbyId($id)
     {
         $con = Connection::getConection();
-        $rest = $con->query('select id, fecha, estado, precio, direcction, user, lineas from pedidos where id =' . $id . ';');
+        $rest = $con->query('select id, fecha, estado, precio, direction, userid from pedidos where id =' . $id . ';');
         while ($row = $rest->fetch()) {
-
-            $pedido = new Pedido($row['id'], $row['fecha'], $row['estado'], $row['precio'], $row['direcction'], $row['user'], $row['lineas']);
+            $lineas = self::getAllByPedido($row['id']);
+            $pedido = new Pedido($row['fecha'], $row['estado'], $row['precio'], $row['direction'], $row['userid'], $lineas, $row['id']);
         }
 
         return $pedido;
@@ -44,9 +44,27 @@ class PedidosRep implements ICRUD
     static public function create($pedido)
     {
         $con = Connection::getConection();
-        $sql = 'insert into pedidos(id, fecha, estado, precio, direcction, user, lineas) values (?, ?, ?, ?, ?, ?, ?)';
-        $stmt = $con->prepare($sql);
-        $stmt->execute([$pedido->id, $pedido->fecha, $pedido->estado, $pedido->precio, $pedido->direcction, $pedido->user, $pedido->lineas]);
+        try {
+            $con->beginTransaction();
+
+            $sql = 'insert into pedidos(id, fecha, estado, precio, direction, userid) values (?, ?, ?, ?, ?, ?)';
+            $stmt = $con->prepare($sql);
+            $direcion = json_encode($pedido->direcction);
+            $stmt->execute([$pedido->id, $pedido->fecha, $pedido->estado, $pedido->precio, $direcion, $pedido->user->id]);
+
+            $nuevoIdPedido = $con->lastInsertId();
+            foreach ($pedido->lineas as $a) {
+
+                $linea = new LineaPedido($a->cantidad, $a->producto, $a->precio, $nuevoIdPedido, null);
+                LineaPedidoRep::addpedido($linea);
+            }
+
+            $con->commit();
+        } catch (Exception $e) {
+            $con->rollBack();
+            echo "Ocurrio un error: " . $e->getMessage();
+            return null;
+        }
     }
 
 
@@ -83,16 +101,14 @@ class PedidosRep implements ICRUD
     /**
      * getbykebab
      */
-    static public function getAllbyKebab($id)
+    static public function getAllByPedido($id)
     {
         $con = Connection::getConection();
         $array = [];
-        $rest = $con->query('select id_ingrediente from kebab_has_ingredientes where id_kebab=' . $id . ';');
+        $rest = $con->query('select id, cantidad, producto, precio from lineapedido where pedidoid=' . $id . ';');
         while ($row = $rest->fetch()) {
-
-            $ingrediente = IngredientesRep::getbyId($row['id_ingrediente']);
-
-            array_push($array, $ingrediente);
+            $pedido = new LineaPedido($row['cantidad'], $row['producto'], $row['precio'], $id, $row['id']);
+            array_push($array, $pedido);
         }
 
         return $array;

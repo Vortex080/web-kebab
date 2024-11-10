@@ -1,18 +1,16 @@
 <?php
 
-class Direcction
+class Direction
 {
-    public static $id;
-    public static $direction;
-    public static $status;
-    public static $userId;
+    public $id;
+    public $direction;
+    public $status;
 
 
-    public function __construct($id = null, $direction, $status, $userId)
+    public function __construct($direction, $status, $id = null)
     {
         $this->id = $id;
         $this->direction = $direction;
         $this->status = $status;
-        $this->userId = $userId;
     }
 }

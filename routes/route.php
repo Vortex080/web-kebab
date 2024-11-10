@@ -22,4 +22,7 @@ if (isset($_GET['menu'])) {
     if ($_GET['menu'] == "register-name") {
         require_once './views/mantenimiento/register-name.php';
     }
+    if ($_GET['menu'] == "mantenimiento-kebab") {
+        require_once './views/mantenimiento/mantenimiento-kebab.php';
+    }
 }

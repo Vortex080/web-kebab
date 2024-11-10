@@ -8,8 +8,8 @@ body {
     font-family: 'Arial', sans-serif;
     min-height: 100vh;
     display: flex;
+    justify-content: center;
     flex-direction: column;
-
 }
 
 
@@ -158,8 +158,12 @@ body {
 }
 
 .content {
-    margin: 0;
-    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+    height: 70vh;
+    width: 100%;
 }
 
 .caja {
@@ -479,4 +483,207 @@ footer {
 
 .feature-item p {
     font-size: 14px;
+}
+
+
+/* Registro */
+.warning {
+    color: red;
+    font-size: smaller;
+    font-weight: bolder;
+    height: 100%;
+}
+
+/* Mantenimiento Kebab */
+
+.container-kebab {
+    display: flex;
+    width: 90%;
+    max-width: 1200px;
+    height: 80vh;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    /* Padding para el contenedor principal */
+    margin: auto;
+    overflow: hidden;
+
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+/* Título principal */
+.titulo-container {
+    width: fit-content;
+    display: flex;
+    justify-content: center;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    margin: auto;
+    margin-top: 20px;
+    /* Espacio entre el título y el contenido */
+}
+
+.titulo-principal {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Estilos para la sección izquierda */
+.left-section {
+    width: 25%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    border-right: 1px solid #ddd;
+}
+
+.left-section .foto,
+.left-section .precio,
+.left-section .descripcion {
+    background-color: #ececec;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.left-section .descripcion textarea {
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.1);
+    resize: none;
+}
+
+/* Estilos para la sección central */
+.middle-section {
+    width: 50%;
+    padding: 20px;
+    border-right: 1px solid #ddd;
+}
+
+.middle-section .ingredientes {
+    background-color: #ececec;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+}
+
+.middle-section .ingredientes-lista {
+    max-height: 200px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+}
+
+.middle-section .ingrediente {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+
+.middle-section .ingrediente input[type="checkbox"] {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+    border: 2px solid #ccc;
+    cursor: pointer;
+    position: relative;
+    outline: none;
+}
+
+.middle-section .ingrediente input[type="checkbox"]:checked {
+    background-color: #4caf50;
+    border-color: #4caf50;
+}
+
+.middle-section .ingrediente input[type="checkbox"]:checked::before {
+    content: "✓";
+    color: white;
+    font-size: 14px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.middle-section .precio-estimado {
+    background-color: #ececec;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+/* Estilos para la sección derecha */
+.right-section {
+    width: 25%;
+    padding: 20px;
+}
+
+.right-section .filtro {
+    background-color: #ececec;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.right-section .filtro input,
+.right-section .filtro select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Sección de botones */
+.botones-container {
+    width: fit-content;
+    display: flex;
+    justify-content: center;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    margin: auto;
+    margin-bottom: 20px;
+    /* Un poco de espacio debajo de los botones */
+}
+
+.botones-container button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin: 0 10px;
+    transition: background-color 0.3s ease;
+}
+
+.botones-container .cancelar-btn {
+    background-color: #f44336;
+    color: white;
+}
+
+.botones-container .cancelar-btn:hover {
+    background-color: #d32f2f;
+}
+
+.botones-container .guardar-btn {
+    background-color: #4caf50;
+    color: white;
+}
+
+.botones-container .guardar-btn:hover {
+    background-color: #388e3c;
 }

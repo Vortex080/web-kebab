@@ -6,7 +6,9 @@ class Index
     {
         require_once './routes/__autoload.php';
         require_once './views/partials/layout.php';
+
+
+
     }
 }
-
 Index::main();
