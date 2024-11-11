@@ -8,9 +8,11 @@ class User
     public $direcction;
     public $monedero;
     public $foto;
+    public $email;
+    public $rol;
     public $alergenos;
 
-    public function __construct($nombre, $pass, $monedero, $foto, $direcction = null, $alergenos = null, $id = null)
+    public function __construct($nombre, $pass, $monedero, $foto, $email, $rol = 'usuario', $direcction = null, $alergenos = null, $id = null)
     {
         $this->id = $id;
         $this->nombre = $nombre;
@@ -19,5 +21,7 @@ class User
         $this->monedero = $monedero;
         $this->foto = $foto;
         $this->alergenos = $alergenos;
+        $this->email = $email;
+        $this->rol = $rol;
     }
 }

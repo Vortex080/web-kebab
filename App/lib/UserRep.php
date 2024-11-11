@@ -10,10 +10,10 @@ class UserRep implements ICRUD
     static public function getbyId($id)
     {
         $con = Connection::getConection();
-        $rest = $con->query('select id, nombre, pass, monedero, foto, direction from usuario where id =' . $id . ';');
+        $rest = $con->query('select id, nombre, pass, monedero, foto, direction, email, rol from usuario where id =' . $id . ';');
         while ($row = $rest->fetch()) {
             $alergenos = self::getAlergenosbyId($row['id']);
-            $user = new User($row['nombre'], $row['pass'], $row['monedero'], $row['foto'], $row['direction'], $alergenos, $row['id']);
+            $user = new User($row['nombre'], $row['pass'], $row['monedero'], $row['foto'], $row['email'], $row['rol'], $row['direction'], $alergenos, $row['id']);
         }
 
         return $user;
@@ -26,10 +26,10 @@ class UserRep implements ICRUD
     {
         $con = Connection::getConection();
         $array = [];
-        $rest = $con->query('select id, nombre, pass, monedero, foto, direction from usuario;');
+        $rest = $con->query('select id, nombre, pass, monedero, foto, direction, emaul, rol from usuario;');
         while ($row = $rest->fetch()) {
             $alergenos = self::getAlergenosbyId($row['id']);
-            $user = new User($row['nombre'], $row['pass'], $row['monedero'], $row['foto'], $row['direction'], $alergenos, $row['id']);
+            $user = new User($row['nombre'], $row['pass'], $row['monedero'], $row['foto'], $row['email'], $row['rol'], $row['direction'], $alergenos, $row['id']);
             array_push($array, $user);
         }
 
@@ -51,9 +51,9 @@ class UserRep implements ICRUD
             $con->beginTransaction();
 
             // Insertar usuario
-            $sql = 'insert into usuario(nombre, pass, monedero, foto, direction) values (?, ?, ?, ?, ?)';
+            $sql = 'insert into usuario(nombre, pass, monedero, foto, direction, rol, email) values (?, ?, ?, ?, ?, ?, ?)';
             $stmt = $con->prepare($sql);
-            $stmt->execute([$user->nombre, $user->pass, $user->monedero, $user->foto, $user->direcction->id]);
+            $stmt->execute([$user->nombre, $user->pass, $user->monedero, $user->foto, $user->direcction->id, $user->rol, $user->email]);
 
             $nuevoID = $con->lastInsertId();
 
@@ -97,9 +97,9 @@ class UserRep implements ICRUD
     static public function update($user)
     {
         $con = Connection::getConection();
-        $sql = 'update usuario set nombre=?, pass=?, monedero=?, foto=?, direction=? where id=' . $user->id . ';';
+        $sql = 'update usuario set nombre=?, pass=?, monedero=?, foto=?, direction=?, rol=?, email=? where id=' . $user->id . ';';
         $stmt = $con->prepare($sql);
-        $stmt->execute([$user->nombre, $user->pass, $user->monedero, $user->foto, $user->direcction->id]);
+        $stmt->execute([$user->nombre, $user->pass, $user->monedero, $user->foto, $user->direcction->id, $user->rol, $user->email]);
     }
 
 

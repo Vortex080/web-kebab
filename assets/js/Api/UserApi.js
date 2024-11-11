@@ -1,11 +1,11 @@
 // User
 let baseUrlUser = '/App/Api/UserApi.php';
 // Función para hacer la solicitud a la API en PHP
-export async function createUser(nombre, pass, monedero, foto, direcction, alergenos) {
+export async function createUser(nombre, pass, monedero, foto, direcction, alergenos, email, rol) {
 
     try {
         // Asegurarnos de que los parámetros no sean undefined o null
-        if (!nombre || !pass || !direcction || !monedero || !foto) {
+        if (!nombre || !pass || !direcction || !monedero || !foto || !email || !rol) {
             throw new Error('Los valores de nombre y precio son requeridos');
         }
 
@@ -15,7 +15,7 @@ export async function createUser(nombre, pass, monedero, foto, direcction, alerg
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ nombre: nombre, pass: pass, monedero: monedero, foto: foto, direcction: direcction, alergenos: alergenos })
+            body: JSON.stringify({ nombre: nombre, pass: pass, monedero: monedero, foto: foto, direcction: direcction, alergenos: alergenos, email: email, rol: rol })
         });
         // Verificamos si la respuesta fue exitosa
         if (!request.ok) {
@@ -29,6 +29,12 @@ export async function createUser(nombre, pass, monedero, foto, direcction, alerg
     }
 }
 
+
+export async function getAll() {
+    let response = await fetch(baseUrlUser+'?id=All');
+    return response.json();
+}
+
 // Función para hacer la solicitud a la API en PHP
 export async function getUser(id) {
 
@@ -36,7 +42,7 @@ export async function getUser(id) {
     return response.json();
 }
 // Función para hacer la solicitud a la API en PHP
-export async function updateUser(id, nombre, pass, monedero, foto, direcction, alergenos) {
+export async function updateUser(id, nombre, pass, monedero, foto, direcction, alergenos, email, rol) {
     try {
         // Hacemos la solicitud PUT usando fetch
         const response = await fetch(`${baseUrlUser}?id=${id}`, {
@@ -44,7 +50,7 @@ export async function updateUser(id, nombre, pass, monedero, foto, direcction, a
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ nombre: nombre, pass: pass, monedero: monedero, foto: foto, direcction: direcction, alergenos: alergenos })
+            body: JSON.stringify({ nombre: nombre, pass: pass, monedero: monedero, foto: foto, direcction: direcction, alergenos: alergenos, email: email, rol: rol })
         });
 
         // Verificamos si la respuesta es exitosa
