@@ -89,7 +89,7 @@ console.log(dir1);
 
 // Get
 let keb1 = await Kebab.getKebab(16);
-//console.log(keb1);
+console.log(keb1);
 
 
 // Update
@@ -106,7 +106,7 @@ let keb1 = await Kebab.getKebab(16);
 
 // Get
 let user1 = await User.getUser(30);   
-//console.log(user1);
+console.log(user1);
 
 // Update
 //User.updateUser(28, 'Miguel', '12345', 5000, 'foto.png', dir1, [aleg1, aleg2], null);
@@ -123,14 +123,19 @@ let user1 = await User.getUser(30);
 //console.log('linea')
 //console.log(linea1);
 
-let lineas = [linea1];
 //let pedido = await Pedido.createPedido('2020-10-10', 'En preparacion', 10, dir1, user1, lineas);
 //let json = JSON.stringify({ fecha: '2020-10-10', estado: 'En preparación', precio: 10, direccion: dir1, user: user1, lineas: lineas });
 //console.log(json);
 
 // Get
-//let pedido1 = await Pedido.getPedido(16);
-//console.log(pedido1);
+let pedido1 = await Pedido.getPedido(16);
+let linea1 = pedido1.lineas[0];
+console.log(linea1);
+let lineas = [linea1];
 
 // Update
-//Pedido.updatePedido(16, '2020-10-10', 'En preparación', 10, dir1, user1, lineas);
+//Pedido.updatePedido('10', 'finalizado', 10, dir1, user1, lineas, 16);
+
+// Delete
+Pedido.deletePedido(16);
+

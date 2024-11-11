@@ -26,7 +26,7 @@ switch ($requesmethod) {
     case 'PUT':
         $id = $_GET['id'];
         $json = json_decode(file_get_contents('php://input'));
-        $pedido = new Pedido($id, $json->fecha, $json->estado, $json->precio, $json->direcction, $json->user, $json->lineas);
+        $pedido = new Pedido($json->fecha, $json->estado, $json->precio, $json->direccion, $json->user, $json->lineas, $id);
         $result = PedidosRep::update($pedido);
         echo json_encode(["success" => $result, "data" => $json]);
         break;

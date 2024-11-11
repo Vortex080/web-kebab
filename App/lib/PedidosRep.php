@@ -74,12 +74,12 @@ class PedidosRep implements ICRUD
      * @param  mixed $pedido
      * @return void
      */
-    static public function delete($pedido)
+    static public function delete($id)
     {
         $con = Connection::getConection();
         $sql = 'delete from pedidos where id=?';
         $stmt = $con->prepare($sql);
-        $stmt->execute([$pedido->id]);
+        $stmt->execute([$id]);
     }
 
 
@@ -92,9 +92,14 @@ class PedidosRep implements ICRUD
     static public function update($pedido)
     {
         $con = Connection::getConection();
-        $sql = 'update pedidos set fecha=?, estado=?, precio=?, direcction=?, user=?, lineas=? where id=' . $pedido->id . ';';
+        $sql = 'update pedidos set fecha=?,estado=?,precio=?,direction=?,userid=? where id=?;';
         $stmt = $con->prepare($sql);
-        $stmt->execute($pedido->fecha, $pedido->estado, $pedido->precio, $pedido->direcction, $pedido->user, $pedido->lineas);
+        $direcction = json_encode($pedido->direcction);
+        $stmt->execute([$pedido->fecha, $pedido->estado, $pedido->precio, $direcction, $pedido->user->id, $pedido->id]);
+        foreach ($pedido->lineas as $linea) {
+            var_dump($linea);
+            LineaPedidoRep::update($linea);
+        }
     }
 
 

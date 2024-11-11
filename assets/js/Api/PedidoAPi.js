@@ -38,20 +38,23 @@ export async function getPedido(id) {
     return response.json();
 }
 // Función para hacer la solicitud a la API en PHP
-export async function updatePedido(id, fecha, estado, precio, direcction, user, lineas) {
+export async function updatePedido( fecha, estado, precio, direcction, user, lineas, id) {
     try {
         // Hacemos la solicitud PUT usando fetch
-        const response = await fetch(`${baseUrlPedido}?id=${id}&fecha=${fecha}&estado=${estado}&precio=${precio}&direcction=${direcction}&user=${user}&lineas=${lineas}`, {
+        const response = await fetch(`${baseUrlPedido}?id=${id}`, {
             method: 'PUT', // Usamos PUT para actualizar el recurso
+            headers: {
+                'Content-Type': 'application/json' // Indicamos que estamos enviando JSON
+            },
+            body: JSON.stringify({ fecha: fecha, estado: estado, precio: precio, direccion: direcction, user: user, lineas: lineas })
         });
-
         // Verificamos si la respuesta es exitosa
         if (!response.ok) {
             throw new Error(`Error en la respuesta: ${response.statusText}`);
         }
 
         // Procesamos la respuesta del servidor
-        const data = await response.json();
+        const data = await response.text();
         console.log('Pedido actualizado:', data);
     } catch (error) {
         console.log('Error al actualizar el pedido:', error);
