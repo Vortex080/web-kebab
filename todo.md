@@ -12,6 +12,10 @@
       - [x] Movimiento ingredientes personalización kebab
 - [ ] Mantenimiento de kebab
     - [x] Redistribución html y css
+    - [ ] Botones funcionamiento
+      - [x] Limpiar datos
+      - [ ] Cancelar
+      - [ ] Guardar datos
     - [ ] Coger datos de la base de datos
 - [ ] Menu usuario
     - [ ] Monedero
