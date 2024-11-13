@@ -131,35 +131,32 @@
 
     .todos-ingredientes {
         display: none;
-    }
-
-    .ingredientes-list {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        max-width: 400px;
-        height: auto;
-        overflow-y: auto;
-        background-color: #f9f9f9;
         margin-left: 50px;
     }
 
-    .ingredientes-list .ingrediente {
-        padding: 10px;
-        background-color: #cac7c7;
+    .todos-ingredientes label {
         font-weight: bold;
-        border: 1px solid #ff9100;
+    }
+
+    .ingredientes-list {
+        width: 300px;       /* Ancho del contenedor */
+        height: 400px;      /* Alto del contenedor */
+        overflow-y: auto;   /* Activa el scroll vertical */
+        border: 1px solid #ccc;
+        padding: 20px;
         border-radius: 5px;
-        min-width: 100px;
-        text-align: center;
-        cursor: pointer;
+    }
+
+    .ingrediente {
+        margin: 10px 0;
+        padding: 10px;
+        background-color: #f0f0f0;
+        border-radius: 5px;
         transition: 0.5s;
     }
 
-    .ingredientes-list .ingrediente:hover {
+
+    .ingrediente:hover {
         background-color: #ff9100;
     }
 </style>
@@ -184,8 +181,7 @@ $ingredientes = IngredientesRep::getAll();
 
         <div class="product-ingredients">
             <h2>Ingredientes</h2>
-            <ul id="ingredientes">
-            </ul>
+            <div id="ingredientes"></div>
         </div>
 
         <div class="product-allergens">
@@ -225,64 +221,4 @@ $ingredientes = IngredientesRep::getAll();
 
 
 
-<script>
-    const ingredientes = document.getElementById('ingredientes');
-    const ingredientesLista = JSON.parse(document.getElementById('productophp').value);
-    ingredientesLista.forEach(ingrediente => {
-        const ingredienteLi = document.createElement('li');
-        ingredienteLi.innerHTML = `- ${ingrediente.nombre} -> ${ingrediente.precio} €`;
-        ingredientes.appendChild(ingredienteLi);
-    });
-
-    const allergen = document.getElementById('lista-alergenos');
-    const allergens = JSON.parse('<?php echo json_encode($kebab->ingredientes); ?>');
-    allergens.forEach(Ingrediente => {
-        Ingrediente.alergenos.forEach(alergeno => {
-            const icon = document.createElement('img');
-            icon.src = '../../assets/img/alergenos/' + alergeno.foto;
-            icon.alt = alergeno.nombre;
-            icon.title = alergeno.nombre;
-            allergen.appendChild(icon);
-        });
-    });
-
-    const personalizarbtn = document.getElementById('per-btn');
-    const allingredientes = JSON.parse(document.getElementById('allingredientes').value);
-    const ingredientesdiv = document.getElementById('ingredientes-div');
-    const ingredienteslist = document.getElementById('todos-ingredientes-list');
-    const productdeatils = document.getElementById('product-window');
-    let val = false;
-
-    personalizarbtn.addEventListener('click', function() {
-        productdeatils.style.maxWidth = "1000px";
-        ingredientesdiv.style.display = 'block';
-
-        if (val == false) {
-            allingredientes.forEach(element => {
-                val = true;
-                // Crea un nuevo div para cada ingrediente
-                const divIngrediente = document.createElement("div");
-
-                // Asigna la clase "ingrediente" al div
-                divIngrediente.className = "ingrediente";
-
-                // Asigna el nombre del ingrediente como contenido del div
-                divIngrediente.textContent = element.nombre + ' -> ' + element.precio + ' €';
-
-                // Añade el div al contenedor
-                ingredienteslist.appendChild(divIngrediente);
-            });
-        }
-
-        personalizarbtn.textContent = "Guardar";
-
-        personalizarbtn.addEventListener('click', function() {
-            productdeatils.style.maxWidth = "600px";
-            ingredientesdiv.style.display = 'none';
-            val = false;
-            personalizarbtn.textContent = "Personalizar";
-        });
-
-
-    });
-</script>
+<script src="../../assets/js/producto.js"></script>

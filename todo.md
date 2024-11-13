@@ -4,10 +4,12 @@
 - [x] Añadir session user
 - [ ] Pantalla producto
     - [x] Coger datos de la base de datos
-    - [ ] Sección de personalización
+    - [x] Sección de personalización
     - [ ] Funcionamiento de botones
+      - [ ] Agregar al carrito
+      - [x] Personalizar
     - [x] Corregir datos de for each
-      - [ ] Movimiento ingredientes personalización kebab
+      - [x] Movimiento ingredientes personalización kebab
 - [ ] Mantenimiento de kebab
     - [x] Redistribución html y css
     - [ ] Coger datos de la base de datos
