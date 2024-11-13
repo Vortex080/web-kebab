@@ -8,8 +8,14 @@ $requesmethod = $_SERVER['REQUEST_METHOD'];
 switch ($requesmethod) {
     case 'GET':
         $id = $_GET['id'];
-        $kebab = KebabRep::getbyId($id);
-        echo json_encode($kebab);
+        if ($id == 'All') {
+            $kebabs = KebabRep::getAll();
+            echo json_encode($kebabs);
+        } else {
+            $id = $_GET['id'];
+            $kebab = KebabRep::getbyId($id);
+            echo json_encode($kebab);           
+        }
         break;
     case 'POST':
         $data = json_decode(file_get_contents('php://input'));

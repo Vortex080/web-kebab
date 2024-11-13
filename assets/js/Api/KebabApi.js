@@ -31,7 +31,11 @@ export async function createKebab(nombre, foto, ingredientes, precio) {
     }
 }
 
+export async function getAll() {
 
+    let response = await fetch(baseUrlKebab + '?id=All');
+    return response.json();
+}
 // Función para hacer la solicitud a la API en PHP
 export async function getKebab(id) {
 

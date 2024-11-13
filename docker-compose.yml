@@ -1,16 +1,18 @@
-
 services:
   apache-php:
-      build: .
-      container_name: php-conection-mariadb
-      depends_on:
-        - db
-      networks:
-        - conection
-      volumes:
-        - C:\xampp\htdocs\2º\proyectos\web-kebab:/var/www/html/
-      ports:
-        - "8000:80"
+    build:
+      context: ./Docker/App
+      dockerfile: Dockerfile
+    container_name: php-conection-mariadb
+    depends_on:
+      - db
+      - mail
+    networks:
+      - conection
+    volumes:
+      - C:\xampp\htdocs\2º\proyectos\web-kebab:/var/www/html
+    ports:
+      - "8000:80"
 
   db:
     image: mariadb:11.6.1-rc
@@ -22,7 +24,16 @@ services:
       - "3306:3306"
     environment:
       MARIADB_ROOT_PASSWORD: root
-
+  mail:
+    image: mailhog/mailhog
+    container_name: mailhog
+    restart: always
+    networks:
+      - conection
+    ports:
+      - "8025:8025"
+      - "1025:1025"
+      - "8025:8025/udp"
 networks:
   conection:
     driver: bridge

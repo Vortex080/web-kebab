@@ -26,10 +26,10 @@ class KebabRep implements ICRUD
     {
         $con = Connection::getConection();
         $array = [];
-        $rest = $con->query('select id, nombre, foto from kebab;');
+        $rest = $con->query('select id, nombre, foto, precio from kebab;');
         while ($row = $rest->fetch()) {
             $ingrediente = IngredientesRep::getAllbyKebab($row['id']);
-            $kebab = new Kebab($row['id'], $row['nombre'], $row['foto'], $ingrediente, $row['precio']);
+            $kebab = new Kebab($row['nombre'], $row['foto'], $ingrediente, $row['precio'], $row['id']);
             array_push($array, $kebab);
         }
 

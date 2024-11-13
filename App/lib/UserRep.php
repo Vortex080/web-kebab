@@ -26,7 +26,7 @@ class UserRep implements ICRUD
     {
         $con = Connection::getConection();
         $array = [];
-        $rest = $con->query('select id, nombre, pass, monedero, foto, direction, emaul, rol from usuario;');
+        $rest = $con->query('select id, nombre, pass, monedero, foto, direction, email, rol from usuario;');
         while ($row = $rest->fetch()) {
             $alergenos = self::getAlergenosbyId($row['id']);
             $user = new User($row['nombre'], $row['pass'], $row['monedero'], $row['foto'], $row['email'], $row['rol'], $row['direction'], $alergenos, $row['id']);
@@ -63,6 +63,8 @@ class UserRep implements ICRUD
 
 
             $con->commit();
+
+            MailHog::sendMail('admin@mailhog.com', 'Bienvenido ', $user->nombre . ' Ya te has rergistrado en KebabAmigo, disfruta de nuestros maravillosos productos y de nuestras ofertas');
 
             return $nuevoID;
         } catch (Exception $e) {
@@ -106,14 +108,15 @@ class UserRep implements ICRUD
     static public function getAlergenosbyId($id)
     {
         $con = Connection::getConection();
+        $alergenos = [];
         $rest = $con->query('select idUsuario, idAlergeno from usuario_has_alergenos where idUsuario =' . $id . ';');
         while ($row = $rest->fetch()) {
 
             $idaleg = $row['idAlergeno'];
-            $alergeno = AlergenosRep::getbyId($idaleg);
+            $alergenos = AlergenosRep::getbyId($idaleg);
         }
 
-        return $alergeno;
+        return $alergenos;
     }
 
 

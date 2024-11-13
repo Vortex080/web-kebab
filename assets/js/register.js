@@ -6,13 +6,17 @@ const emailr = document.getElementById('email');
 const password = document.getElementById('password');
 const ewarning = document.getElementById('ewarning');
 const password2 = document.getElementById('password2');
+const namer = document.getElementById('name');
+const lastname = document.getElementById('lastname');
+const nwarnings = document.getElementById('nwarning');
 import * as User from "./Api/UserApi.js";
-
+import * as Direction from "./Api/DirectionApi.js";
 
 // Variables temporales
 let temp = 0;
 
-nextBtn.addEventListener('click', function(e) {
+
+nextBtn.addEventListener('click', async function (e) {
     e.preventDefault();
     temp = 0;
     let warning = "";
@@ -22,18 +26,22 @@ nextBtn.addEventListener('click', function(e) {
     if (!regex.test(emailr.value)) {
         warning += "El email ingresado no es valido";
         ewarning.innerHTML = warning;
-        const usuarios = User.getAll();
+
+    } else {
+        ewarning.innerHTML = "";
+        const usuarios = await User.getAll();
         for (const element of usuarios) {
             if (element.email === emailr.value) {
                 warning += "El email ya esta en uso";
                 ewarning.innerHTML = warning;
                 break;
+            } else {
+                ewarning.innerHTML = "";
+                console.log('Email valida');
+                temp++;
             }
         }
-    } else {
-        ewarning.innerHTML = "";
-        temp++;
-        console.log('Email valida');
+
     }
     warning = "";
     // Verificar si la contraseña es valida
@@ -57,7 +65,7 @@ nextBtn.addEventListener('click', function(e) {
         console.log('pass2 valida');
     }
     warning = "";
-    if (namer.value.length < 6) {
+    if (namer.value.length < 3) {
         warning += `El nombre no puede ser menor a 6 caracteres <br>`;
         nwarnings.innerHTML = warning;
     } else {
@@ -65,7 +73,9 @@ nextBtn.addEventListener('click', function(e) {
         nwarnings.innerHTML = '';
     }
     console.log(temp);
-    if (temp === 5) {
+    if (temp >= 4) {
+        let dir = await Direction.getDirection(1);
+        User.createUser(namer.value, password.value, 0.1, 'foto', dir, [], emailr.value, 'usuario')
         form.submit();
     }
 

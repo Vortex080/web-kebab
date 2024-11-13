@@ -10,16 +10,15 @@ body {
     display: flex;
     justify-content: center;
     flex-direction: column;
+
 }
-
-
 
 .navbar {
     height: 80px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: rgb(20 40 60 / 72%);
+    background-color: rgb(88, 111, 133);
     padding: 5px 30px;
 }
 
@@ -157,12 +156,13 @@ body {
 }
 
 .content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     margin-top: 50px;
     height: 70vh;
     width: 100%;
+}
+
+.bienvenido {
+    text-align: center;
 }
 
 .caja {
@@ -685,4 +685,129 @@ footer {
 
 .botones-container .guardar-btn:hover {
     background-color: #388e3c;
+}
+
+
+/* Header usuario foto */
+
+.user-btn {
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+}
+
+.user-menu {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-photo {
+    width: 60px;
+    /* Ajusta según el tamaño deseado */
+    height: 60px;
+    border-radius: 50%;
+    overflow: hidden;
+    /* Asegura que la imagen quede recortada en un círculo */
+}
+
+.user-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Hace que la imagen se ajuste al contenedor sin distorsionarse */
+}
+
+.menu-toggle {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.monedero {
+    width: 50px;
+    height: 100px;
+
+}
+
+.monedero-img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+}
+
+/* MENU */
+
+.product-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    /* Espacio entre los productos */
+    justify-content: flex-start;
+    margin-left: 200px;
+    margin-right: 200px;
+    margin-top: 20px;
+}
+
+
+.product {
+    flex: 1 1 calc(25% - 16px);
+    /* Para tener 4 productos por fila */
+    box-sizing: border-box;
+    padding: 16px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-width: calc(25% - 16px);
+    height: fit-content;
+}
+
+.text-menu {
+    margin-left: 10px;
+    display: flex;
+    text-align: left;
+}
+
+.product img {
+    max-width: 300px;
+    border-radius: 4px;
+}
+
+.producto {
+    font-size: 1.2em;
+    margin: 10px 0;
+    color: #ff9100;
+    font-weight: bolder;
+}
+
+.product .price {
+    margin-left: 10px;
+    text-align: left;
+    font-size: 1em;
+    color: #333;
+}
+
+.btn-menu {
+    background-color: #ff9100;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button:hover {
+    background-color: #e57f00;
+    /* Un poco más oscuro al pasar el cursor */
+}
+
+.button:active {
+    background-color: #cc6f00;
+    /* Un poco más oscuro al hacer clic */
 }

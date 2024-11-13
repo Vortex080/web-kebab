@@ -16,6 +16,9 @@ if (isset($_GET['menu'])) {
     if ($_GET['menu'] == "session") {
         require_once './views/mantenimiento/iniciasession.php';
     }
+    if ($_GET['menu'] == "sessionr") {
+        require_once './App/helpers/session.php';
+    }
     if ($_GET['menu'] == "register") {
         require_once './views/mantenimiento/register.php';
     }
@@ -24,5 +27,11 @@ if (isset($_GET['menu'])) {
     }
     if ($_GET['menu'] == "mantenimiento-kebab") {
         require_once './views/mantenimiento/mantenimiento-kebab.php';
+    }
+    if ($_GET['menu'] == "producto") {
+        require_once './views/mantenimiento/producto.php';
+    }
+    if ($_GET['menu'] == "cierrarsession") {
+        require_once './App/helpers/cierrarsession.php';
     }
 }

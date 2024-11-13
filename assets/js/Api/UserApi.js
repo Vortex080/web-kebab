@@ -5,7 +5,7 @@ export async function createUser(nombre, pass, monedero, foto, direcction, alerg
 
     try {
         // Asegurarnos de que los parámetros no sean undefined o null
-        if (!nombre || !pass || !direcction || !monedero || !foto || !email || !rol) {
+        if (!nombre || !pass || !direcction || !foto || !email || !rol) {
             throw new Error('Los valores de nombre y precio son requeridos');
         }
 
@@ -22,7 +22,7 @@ export async function createUser(nombre, pass, monedero, foto, direcction, alerg
             const errorMessage = await request.json(); // Obtener texto de la respuesta si hay error
             throw new Error(`Error ${request.status}: ${errorMessage}`);
         }
-        const data = await request.json();
+        const data = await request.text();
         console.log(data);
     } catch (error) {
         console.log('Error al crear el user ', error);

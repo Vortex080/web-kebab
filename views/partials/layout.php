@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -8,7 +9,7 @@
     <title>Amigo KEBAB</title>
     <link rel="stylesheet" href="../../assets/css/style.css">
     <!--<script src="../../assets/js/autoload.js"></script>-->
-    <<script type="module"src="../../assets/js/script.js"></script>
+    <script type="module" src="../../assets/js/script.js"></script>
 
 </head>
 
