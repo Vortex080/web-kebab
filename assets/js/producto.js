@@ -124,6 +124,7 @@ function calcularPrecio(precio, selectedIngredients) {
 
 btnaddcart.addEventListener('click', async function () {
     const name = document.getElementById('product-title').innerHTML;
+    const quantity = document.getElementById('quantity').value;
     ingredientes.querySelectorAll('.ingrediente').forEach(ingrediente => {
         selectedIngredients.push({
             name: ingrediente.dataset.name,
@@ -140,10 +141,9 @@ btnaddcart.addEventListener('click', async function () {
     }
 
     const foto = document.getElementById('foto').src;
-
-    const producto = JSON.stringify({ nombre: name, precio: final, ingredientes: ingredientesjson, foto: foto });
-    console.log(JSON.parse(producto));
+    console.log(quantity);
+    const producto = JSON.stringify({ nombre: name, precio: final, ingredientes: ingredientesjson, foto: foto, cantidad: quantity });
     let user = await User.getsession();
-    console.log(user.id);
-    User.carritoSession(producto);
+    let id = parseInt(user.id);
+    User.carritoSession(id, producto);
 });

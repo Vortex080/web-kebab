@@ -119,7 +119,7 @@ export async function getsession() {
     return response.json();
 }
 
-export async function carritoSession(carrito) {
+export async function carritoSession(id, carrito) {
     try {
         // Asegurarnos de que los parámetros no sean undefined o null
         if (!carrito) {
@@ -127,12 +127,12 @@ export async function carritoSession(carrito) {
         }
 
         // Hacemos la solicitud GET usando fetch
-        const request = await fetch('/App/Api/SessionApi.php', {
-            method: 'POST',
+        const request = await fetch('/App/Api/SessionApi.php?id=' + id, {
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ carrito: carrito })
+            body: JSON.stringify({ id: id, carrito: carrito })
         });
         // Verificamos si la respuesta fue exitosa
         if (!request.ok) {

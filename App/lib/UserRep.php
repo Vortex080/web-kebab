@@ -99,9 +99,15 @@ class UserRep implements ICRUD
     static public function update($user)
     {
         $con = Connection::getConection();
-        $sql = 'update usuario set nombre=?, pass=?, monedero=?, foto=?, direction=?, rol=?, email=?, carrito=?where id=' . $user->id . ';';
+        $sql = 'update usuario set nombre=?, pass=?, monedero=?, foto=?, direction=?, rol=?, email=?, carrito=? where id=' . $user->id . ';';
         $stmt = $con->prepare($sql);
-        $stmt->execute([$user->nombre, $user->pass, $user->monedero, $user->foto, $user->direcction->id, $user->rol, $user->email, $user->carrito]);
+        if(isset($user->direction->id)){
+            $direction = $user->direcction->id;
+        } else{
+            $direction = $user->direcction;
+        }
+
+        $stmt->execute([$user->nombre, $user->pass, $user->monedero, $user->foto, $direction, $user->rol, $user->email, $user->carrito]);
     }
 
 
