@@ -20,9 +20,9 @@
                 </div>
             </button>
             <div class="submenu">
-                <a href="#">Opción 1</a>
-                <a href="#">Opción 2</a>
-                <a href="#">Opción 3</a>
+                <a>Monedero: ' . $user->monedero . ' €</a>
+                <a href="?menu=perfil">Mi perfil</a>
+                <a style="color:red" href="?menu=cierrarsession">Cerrar Sesión</a>
             </div>
         </div>
         ';
@@ -37,12 +37,12 @@
 </nav>
 <?php
 
-switch (LogIn::statusLogin()){
+switch (LogIn::statusLogin()) {
     case true:
-        if($_SESSION['user']->rol == 'administrador'){
+        if ($_SESSION['user']->rol == 'administrador') {
             echo '
             <nav class="nav2">
-                <p>'.$_SESSION['user']->rol.'</p>
+                <p>' . $_SESSION['user']->rol . '</p>
             </nav>';
         }
         break;
@@ -58,6 +58,5 @@ switch (LogIn::statusLogin()){
             <p>e - Telefono de contacto: 667 884 922 🌯</p>
         </nav>';
         break;
-
 }
 ?>
