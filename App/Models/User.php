@@ -11,8 +11,9 @@ class User
     public $email;
     public $rol;
     public $alergenos;
+    public $carrito;
 
-    public function __construct($nombre, $pass, $monedero, $foto, $email, $rol = 'usuario', $direcction = null, $alergenos = null, $id = null)
+    public function __construct($nombre, $pass, $monedero, $foto, $email, $rol = 'usuario', $direcction = null, $alergenos = null, $carrito = [], $id = null)
     {
         $this->id = $id;
         $this->nombre = $nombre;
@@ -23,5 +24,6 @@ class User
         $this->alergenos = $alergenos;
         $this->email = $email;
         $this->rol = $rol;
+        $this->carrito = $carrito;
     }
 }

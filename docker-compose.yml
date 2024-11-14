@@ -1,7 +1,7 @@
 services:
   apache-php:
     build:
-      context: ./Docker/App
+      context: ./Docker/app
       dockerfile: Dockerfile
     container_name: php-conection-mariadb
     depends_on:

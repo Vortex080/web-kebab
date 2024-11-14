@@ -6,7 +6,9 @@
     - [x] Coger datos de la base de datos
     - [x] Sección de personalización
     - [ ] Funcionamiento de botones
+      - [x] Calculo de precio
       - [ ] Agregar al carrito
+        - [ ] Guarda json del kebab en el session y base de datos
       - [x] Personalizar
     - [x] Corregir datos de for each
       - [x] Movimiento ingredientes personalización kebab
@@ -29,3 +31,4 @@
 
 ## Features
 - [x] PHP Mailer
+- [ ] Contenedores divididos docker-compose

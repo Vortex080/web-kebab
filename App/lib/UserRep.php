@@ -10,10 +10,10 @@ class UserRep implements ICRUD
     static public function getbyId($id)
     {
         $con = Connection::getConection();
-        $rest = $con->query('select id, nombre, pass, monedero, foto, direction, email, rol from usuario where id =' . $id . ';');
+        $rest = $con->query('select id, nombre, pass, monedero, foto, direction, email, rol, carrito from usuario where id =' . $id . ';');
         while ($row = $rest->fetch()) {
             $alergenos = self::getAlergenosbyId($row['id']);
-            $user = new User($row['nombre'], $row['pass'], $row['monedero'], $row['foto'], $row['email'], $row['rol'], $row['direction'], $alergenos, $row['id']);
+            $user = new User($row['nombre'], $row['pass'], $row['monedero'], $row['foto'], $row['email'], $row['rol'], $row['direction'], $alergenos, $row['carrito'], $row['id']);
         }
 
         return $user;
@@ -26,10 +26,10 @@ class UserRep implements ICRUD
     {
         $con = Connection::getConection();
         $array = [];
-        $rest = $con->query('select id, nombre, pass, monedero, foto, direction, email, rol from usuario;');
+        $rest = $con->query('select id, nombre, pass, monedero, foto, direction, email, rol, carrito from usuario;');
         while ($row = $rest->fetch()) {
             $alergenos = self::getAlergenosbyId($row['id']);
-            $user = new User($row['nombre'], $row['pass'], $row['monedero'], $row['foto'], $row['email'], $row['rol'], $row['direction'], $alergenos, $row['id']);
+            $user = new User($row['nombre'], $row['pass'], $row['monedero'], $row['foto'], $row['email'], $row['rol'], $row['direction'], $alergenos, $row['carrito'], $row['id']);
             array_push($array, $user);
         }
 
@@ -51,9 +51,9 @@ class UserRep implements ICRUD
             $con->beginTransaction();
 
             // Insertar usuario
-            $sql = 'insert into usuario(nombre, pass, monedero, foto, direction, rol, email) values (?, ?, ?, ?, ?, ?, ?)';
+            $sql = 'insert into usuario(nombre, pass, monedero, foto, direction, rol, email, carrito) values (?, ?, ?, ?, ?, ?, ?)';
             $stmt = $con->prepare($sql);
-            $stmt->execute([$user->nombre, $user->pass, $user->monedero, $user->foto, $user->direcction->id, $user->rol, $user->email]);
+            $stmt->execute([$user->nombre, $user->pass, $user->monedero, $user->foto, $user->direcction->id, $user->rol, $user->email, $user->carrito->id]);
 
             $nuevoID = $con->lastInsertId();
 
@@ -99,9 +99,9 @@ class UserRep implements ICRUD
     static public function update($user)
     {
         $con = Connection::getConection();
-        $sql = 'update usuario set nombre=?, pass=?, monedero=?, foto=?, direction=?, rol=?, email=? where id=' . $user->id . ';';
+        $sql = 'update usuario set nombre=?, pass=?, monedero=?, foto=?, direction=?, rol=?, email=?, carrito=?where id=' . $user->id . ';';
         $stmt = $con->prepare($sql);
-        $stmt->execute([$user->nombre, $user->pass, $user->monedero, $user->foto, $user->direcction->id, $user->rol, $user->email]);
+        $stmt->execute([$user->nombre, $user->pass, $user->monedero, $user->foto, $user->direcction->id, $user->rol, $user->email, $user->carrito]);
     }
 
 
@@ -136,5 +136,23 @@ class UserRep implements ICRUD
             echo "Ocurrio un error: " . $e->getMessage();
             return null;
         }
+    }
+
+
+    public static function addcarrito($id, $carrito)
+    {
+        $con = Connection::getConection();
+
+        $user = self::getbyId($id);
+
+        if ($user->carrito == null) {
+            $user->carrito = $carrito;
+        } else {
+            $user->carrito = array_push($user->carrito, $carrito);
+        }
+        // Insertar usuario
+        $sql = 'insert into usuario(nombre, pass, monedero, foto, direction, rol, email, carrito) values (?, ?, ?, ?, ?, ?, ?)';
+        $stmt = $con->prepare($sql);
+        $stmt->execute([$user->nombre, $user->pass, $user->monedero, $user->foto, $user->direcction->id, $user->rol, $user->email, $user->carrito]);
     }
 }

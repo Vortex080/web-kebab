@@ -9,6 +9,7 @@ import * as User from "./Api/UserApi.js";
 btn.addEventListener('click', async function (e) {
     e.preventDefault();
     const usuarios = await User.getAll();
+    console.log(usuarios);
     let warning = "";
     // Verificar si el email es valido
     let temp = 0;

@@ -22,6 +22,8 @@ body {
     padding: 5px 30px;
 }
 
+
+
 .nav2 {
     height: 40px;
     display: flex;
@@ -50,27 +52,33 @@ body {
     margin-left: 20px;
 }
 
-.nav-links a {
-    color: #ffffff;
+/* Estilo de los enlaces en el nav */
+nav .nav-links a {
+    color: white;
+    /* Color del texto */
     text-decoration: none;
-    font-size: 18px;
-    transition: 0.2s ease;
-    border-radius: 10px;
-    padding: 8px;
+    /* Elimina el subrayado */
+    background-color: rgb(88, 111, 133);
+    /* Color base de los enlaces */
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    display: inline-block;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.nav-links a:active {
-    background-color: #fff;
-    color: #000000;
-}
-
-.nav-links a:hover {
+nav .nav-links a:hover {
     background-color: #ff9100;
-
-    box-shadow: 7px 10px 5px -6px rgba(0, 0, 0, 0.75);
-    color: #000000;
-    padding: 8px;
+    /* Color hover */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
+
+nav .nav-links a:active {
+    background-color: #cc7300;
+    /* Color al presionar */
+    box-shadow: none;
+}
+
 
 .cta .btn {
     background-color: #ffa500;

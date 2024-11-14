@@ -8,6 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Amigo KEBAB</title>
     <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="icon" href="../../assets/img/logo-kebab.png">
     <!--<script src="../../assets/js/autoload.js"></script>-->
     <script type="module" src="../../assets/js/script.js"></script>
 
