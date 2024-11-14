@@ -41,8 +41,14 @@ switch (LogIn::statusLogin()) {
     case true:
         if ($_SESSION['user']->rol == 'administrador') {
             echo '
-            <nav class="nav2">
-                <p>' . $_SESSION['user']->rol . '</p>
+            <nav class="nav2-admin">
+                <ul class="nav-links-admin">
+                    <li><a href="?admin=kebab">Kebabs</a></li>
+                    <li><a href="?admin=usuarios">Usuarios</a></li>
+                    <li><a href="?admin=alergenos">Alegenos</a></li>
+                    <li><a href="?admin=ingredientes">Ingredientes</a></li>
+                    <li><a href="?admin=pedidos">pedidos</a></li>
+                </ul>
             </nav>';
         }
         break;

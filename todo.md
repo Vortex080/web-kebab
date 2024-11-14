@@ -20,7 +20,7 @@
       - [ ] Guardar datos
     - [x] Coger datos de la base de datos
 - [ ] Menu usuario
-    - [ ] Monedero
+    - [x] Monedero
     - [ ] Mantenimiento usuario
     - [ ] Entrada a la intranet
 - [ ] Mantenimiento Ingredientes

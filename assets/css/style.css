@@ -36,6 +36,45 @@ body {
     font-weight: 900;
 }
 
+.nav2-admin {
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    /* Centra horizontalmente */
+    align-items: center;
+    /* Centra verticalmente si es necesario */
+    background-color: #ff9100;
+    padding: 5px 30px;
+    font-weight: 900;
+}
+
+.nav-links-admin {
+    list-style: none;
+    display: flex;
+}
+/* Estilo de los enlaces en el nav */
+nav .nav-links-admin a {
+    color: black;
+    /* Color del texto */
+    text-decoration: none;
+    /* Elimina el subrayado */
+    background-color: #ff9100;
+    /* Color base de los enlaces */
+    padding: 10px 15px;
+    margin-left: 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    display: inline-block;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+nav .nav-links-admin a:hover {
+    color: white;
+    background-color: #333;
+    /* Color hover */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
 .logo a {
     color: #fff;
     font-size: 24px;
