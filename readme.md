@@ -1,5 +1,6 @@
-# KEBAB AMIGO
+![Badge en Desarollo](https://img.shields.io/badge/STATUS-DESARROLLO-red)
 
+# KEBAB AMIGO
 ## Indice
 
 - [KEBAB AMIGO](#kebab-amigo)
