@@ -27,6 +27,7 @@
 - [ ] Mantenimiento Alergenos
 - [ ] Vistas Administrador (Plantear)
 - [ ] Vista Contacto para envia correo
+- [x] Descripción producto en menu
 
 
 ## Features
