@@ -18,7 +18,7 @@
       - [x] Limpiar datos
       - [ ] Cancelar
       - [ ] Guardar datos
-    - [ ] Coger datos de la base de datos
+    - [x] Coger datos de la base de datos
 - [ ] Menu usuario
     - [ ] Monedero
     - [ ] Mantenimiento usuario
