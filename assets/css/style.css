@@ -52,6 +52,7 @@ body {
     list-style: none;
     display: flex;
 }
+
 /* Estilo de los enlaces en el nav */
 nav .nav-links-admin a {
     color: black;
@@ -85,6 +86,19 @@ nav .nav-links-admin a:hover {
 .nav-links {
     list-style: none;
     display: flex;
+}
+
+.carrito {
+    height: 40px;
+    width: 40px;
+    position: absolute;
+    /* Permite colocar el carrito sin afectar otros elementos */
+    top: 4%;
+    /* Centra verticalmente en el navbar */
+    transform: translateY(-50%);
+    right: 120px;
+    /* Ajusta la distancia a la derecha del contenedor */
+    cursor: pointer;
 }
 
 .nav-links li {

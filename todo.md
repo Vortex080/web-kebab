@@ -2,7 +2,7 @@
 
 ## VISTAS KEBAB WEB
 - [x] Añadir session user
-- [ ] Pantalla producto
+- [x] Pantalla producto
     - [x] Coger datos de la base de datos
     - [x] Sección de personalización
     - [x] Funcionamiento de botones
@@ -22,7 +22,7 @@
 - [ ] Menu usuario
     - [x] Monedero
     - [ ] Mantenimiento usuario
-    - [ ] Entrada a la intranet
+    - [x] Entrada a la intranet
 - [ ] Mantenimiento Ingredientes
 - [ ] Mantenimiento Alergenos
 - [ ] Vistas Administrador (Plantear)

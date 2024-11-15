@@ -4,6 +4,12 @@ const ingredientes = document.getElementById('ingredientes');
 const ingredientesLista = JSON.parse(document.getElementById('productophp').value);
 const precio = document.getElementById('product-price');
 const btnaddcart = document.getElementById('carrito-btn');
+const kebab = JSON.parse(document.getElementById('productosql').value);
+const iduser = document.getElementById('user').value;
+
+
+const user = await User.getUser(iduser);
+
 ingredientesLista.forEach(ingrediente => {
     const ingredienteDiv = document.createElement('div');
     ingredienteDiv.className = "ingrediente";
@@ -127,11 +133,10 @@ btnaddcart.addEventListener('click', async function () {
     const quantity = document.getElementById('quantity').value;
     ingredientes.querySelectorAll('.ingrediente').forEach(ingrediente => {
         selectedIngredients.push({
-            name: ingrediente.dataset.name,
-            id: ingrediente.id
+            id: ingrediente.dataset.name[0],
         });
     });
-    let ingredientesjson = JSON.parse(JSON.stringify(selectedIngredients));
+    let ingredientesjson = selectedIngredients;
     let final = '';
     if (preciocaltulado === 0) {
         let temp = precio.innerHTML.split('€')
@@ -141,9 +146,29 @@ btnaddcart.addEventListener('click', async function () {
     }
 
     const foto = document.getElementById('foto').src;
-    console.log(quantity);
-    const producto = JSON.stringify({ nombre: name, precio: final, ingredientes: ingredientesjson, foto: foto, cantidad: quantity });
-    let user = await User.getsession();
-    let id = parseInt(user.id);
-    User.carritoSession(id, producto);
+    const producto = JSON.stringify({ nombre: name, precio: parseInt(final), ingredientes: ingredientesjson, foto: foto, cantidad: parseInt(quantity) });
+    kebab.precio = parseInt(final);
+    let ids = [];
+    allingredientes.forEach(ingrediente => {
+        selectedIngredients.forEach(element => {
+            if (ingrediente.id === parseInt(element.id)) {
+                ids.push(ingrediente);
+            }
+        });
+    });
+
+    kebab.ingredientes = ids;
+    //console.log('kebab modificado');
+    //console.log(JSON.stringify(kebab));
+    let array = [];
+    if (user.carrito.length > 0) {
+        array = JSON.parse(user.carrito);
+        array.push(kebab);
+        user.carrito = array;
+    } else {
+        array.push(kebab);
+    }
+
+    user.carrito = array;
+    User.updateUserUser(user);
 });

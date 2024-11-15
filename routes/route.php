@@ -34,6 +34,9 @@ if (isset($_GET['menu'])) {
     if ($_GET['menu'] == "cierrarsession") {
         require_once './App/helpers/cierrarsession.php';
     }
+    if ($_GET['menu'] == "carrito") {
+        require_once './views/mantenimiento/carrito.php';
+    }
 }
 
 if (isset($_GET['admin'])) {

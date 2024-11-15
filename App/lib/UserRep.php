@@ -19,6 +19,18 @@ class UserRep implements ICRUD
         return $user;
     }
 
+    static public function getbyCorreo($email)
+    {
+        $con = Connection::getConection();
+        $rest = $con->query('select id, nombre, pass, monedero, foto, direction, email, rol, carrito from usuario where email ="' . $email . '";');
+        while ($row = $rest->fetch()) {
+            $alergenos = self::getAlergenosbyId($row['id']);
+            $user = new User($row['nombre'], $row['pass'], $row['monedero'], $row['foto'], $row['email'], $row['rol'], $row['direction'], $alergenos, $row['carrito'], $row['id']);
+        }
+
+        return $user;
+    }
+
     /**
      * getAll
      */
@@ -101,13 +113,13 @@ class UserRep implements ICRUD
         $con = Connection::getConection();
         $sql = 'update usuario set nombre=?, pass=?, monedero=?, foto=?, direction=?, rol=?, email=?, carrito=? where id=' . $user->id . ';';
         $stmt = $con->prepare($sql);
-        if(isset($user->direction->id)){
+        if (isset($user->direction->id)) {
             $direction = $user->direcction->id;
-        } else{
+        } else {
             $direction = $user->direcction;
         }
 
-        $stmt->execute([$user->nombre, $user->pass, $user->monedero, $user->foto, $direction, $user->rol, $user->email, $user->carrito]);
+        $stmt->execute([$user->nombre, $user->pass, $user->monedero, $user->foto, $direction, $user->rol, $user->email, json_encode($user->carrito)]);
     }
 
 
@@ -148,17 +160,39 @@ class UserRep implements ICRUD
     public static function addcarrito($id, $carrito)
     {
         $con = Connection::getConection();
-
+        $decode = [];
         $user = self::getbyId($id);
-
-        if ($user->carrito == null) {
-            $user->carrito = $carrito;
+        if (empty($user->carrito)) {
+            $decode = $carrito;
         } else {
-            $user->carrito = array_push($user->carrito, $carrito);
+
+            $data = json_decode($user->carrito, true);
+            if (is_array($data)) {
+                foreach ($data as $key => $value) {
+                    $data[$key] = stripslashes($value);
+                }
+            } elseif (is_string($data)) {
+                // Limpiar barras invertidas duplicadas
+                $data = stripslashes($data);
+            }
+            echo 'carrito ';
+            var_dump($data);
+            echo '<br>';
+            array_push($decode, $user->carrito);
+            echo '<br>';
+
+            array_push($decode, $carrito);
+            echo '<br>';
+            //echo 'decode' . var_dump($decode);
         }
         // Insertar usuario
-        $sql = 'insert into usuario(nombre, pass, monedero, foto, direction, rol, email, carrito) values (?, ?, ?, ?, ?, ?, ?)';
+        $sql = 'update usuario set nombre=?, pass=?, monedero=?, foto=?, direction=?, rol=?, email=?, carrito=? where id=' . $user->id . ';';
         $stmt = $con->prepare($sql);
-        $stmt->execute([$user->nombre, $user->pass, $user->monedero, $user->foto, $user->direcction->id, $user->rol, $user->email, $user->carrito]);
+        if (isset($user->direction->id)) {
+            $direction = $user->direcction->id;
+        } else {
+            $direction = $user->direcction;
+        }
+        $stmt->execute([$user->nombre, $user->pass, $user->monedero, $user->foto, $direction, $user->rol, $user->email, json_encode($decode)]);
     }
 }

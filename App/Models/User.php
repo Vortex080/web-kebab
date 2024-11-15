@@ -13,7 +13,7 @@ class User
     public $alergenos;
     public $carrito;
 
-    public function __construct($nombre, $pass, $monedero, $foto, $email, $rol = 'usuario', $direcction = null, $alergenos = null, $carrito = [], $id = null)
+    public function __construct($nombre, $pass, $monedero, $foto, $email, $rol = 'usuario', $direcction = null, $alergenos = null, $carrito = null, $id = null)
     {
         $this->id = $id;
         $this->nombre = $nombre;

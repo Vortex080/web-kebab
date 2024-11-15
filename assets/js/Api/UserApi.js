@@ -59,12 +59,38 @@ export async function updateUser(id, nombre, pass, monedero, foto, direcction, a
         }
 
         // Procesamos la respuesta del servidor
-        const data = await response.json();
+        const data = await response.text();
         console.log('User actualizado:', data);
     } catch (error) {
         console.log('Error al actualizar el user:', error);
     }
 }
+
+export async function updateUserUser(user) {
+    try {
+        // Hacemos la solicitud PUT usando fetch
+        const response = await fetch(`${baseUrlUser}?id=${user.id}`, {
+            method: 'PUT', // Usamos PUT para actualizar el recursoç
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ nombre: user.nombre, pass: user.pass, monedero: user.monedero, foto: user.foto, direcction: user.direcction, alergenos: user.alergenos, email: user.email, rol: user.rol, carrito: user.carrito })
+        });
+
+        // Verificamos si la respuesta es exitosa
+        if (!response.ok) {
+            throw new Error(`Error en la respuesta: ${response.statusText}`);
+        }
+
+        // Procesamos la respuesta del servidor
+        const data = await response.text();
+        console.log('User actualizado:', data);
+    } catch (error) {
+        console.log('Error al actualizar el user:', error);
+    }
+}
+
+
 
 // Función para hacer la solicitud a la API en PHP
 export async function deleteUser(id) {
@@ -119,7 +145,7 @@ export async function getsession() {
     return response.json();
 }
 
-export async function carritoSession(id, carrito) {
+export async function carritoSession(kebab) {
     try {
         // Asegurarnos de que los parámetros no sean undefined o null
         if (!carrito) {
@@ -127,16 +153,16 @@ export async function carritoSession(id, carrito) {
         }
 
         // Hacemos la solicitud GET usando fetch
-        const request = await fetch('/App/Api/SessionApi.php?id=' + id, {
+        const request = await fetch('/App/Api/SessionApi.php', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ id: id, carrito: carrito })
+            body: kebab
         });
         // Verificamos si la respuesta fue exitosa
         if (!request.ok) {
-            const errorMessage = await request.json(); // Obtener texto de la respuesta si hay error
+            const errorMessage = await request.text(); // Obtener texto de la respuesta si hay error
             throw new Error(`Error ${request.status}: ${errorMessage}`);
         }
         const data = await request.text();
@@ -145,3 +171,4 @@ export async function carritoSession(id, carrito) {
         console.log('Error al crear el user ', error);
     }
 }
+

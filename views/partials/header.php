@@ -13,6 +13,8 @@
     if (LogIn::statusLogin()) {
         $user = $_SESSION['user'];
         echo '
+        <input type="hidden" id="user" value=' . $user->id . '>
+        <img id="carrito" class="carrito" src="../../assets/img/carrito.png" alt="user" loading="lazy" >
         <div class="user-menu">
             <button class="user-btn" id="user-btn">
                 <div class="user-photo" id="userphoto">
