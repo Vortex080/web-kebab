@@ -12,6 +12,7 @@
       - [x] Personalizar
     - [x] Corregir datos de for each
       - [x] Movimiento ingredientes personalización kebab
+    - [ ] Actualizar los alergenos cuando se cambien los ingredientes
 - [ ] Mantenimiento de kebab
     - [x] Redistribución html y css
     - [ ] Botones funcionamiento
@@ -28,6 +29,10 @@
 - [ ] Vistas Administrador (Plantear)
 - [ ] Vista Contacto para envia correo
 - [x] Descripción producto en menu
+- [ ] Carrito
+  - [ ] Eliminar producto
+  - [ ] Guardar carrito
+  - [ ] Pago carrito
 
 
 ## Features

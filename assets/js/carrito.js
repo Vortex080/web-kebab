@@ -1,19 +1,14 @@
 import * as User from './Api/UserApi.js';
 
-const Iduser = await User.getsession();
 const contenedor = document.querySelector(".product-list");
+const iduser = document.getElementById('user').value;
+const closeCart = document.getElementById('close-cart');
 
-console.log(Iduser.id);
-
-const user = await User.getUser(Iduser.id);
+const user = await User.getUser(iduser);
 
 console.log(JSON.parse(user.carrito));
 
-let carrito = [];
-
-carrito.push(JSON.parse(user.carrito));
-
-console.log(carrito);
+let carrito = JSON.parse(user.carrito);
 
 carrito.forEach(producto => {
 
@@ -23,7 +18,7 @@ carrito.forEach(producto => {
 
     // Crear la imagen del producto
     const imagen = document.createElement("img");
-    imagen.src = producto.imagen;
+    imagen.src = '../../assets/img/' + producto.foto;
     imagen.alt = producto.nombre;
 
     // Crear el contenedor de información del producto
@@ -31,9 +26,17 @@ carrito.forEach(producto => {
     productInfo.classList.add("product-info");
 
     // Crear el nombre del producto
-    const nombre = document.createElement("p");
+    const nombre = document.createElement("a");
     nombre.classList.add("product-name");
+    nombre.href = "?menu=producto&id=" + producto.id + "&v=carrito";
     nombre.textContent = producto.nombre;
+
+    // Ingredientes
+    const ingredientes = document.createElement("p");
+    ingredientes.classList.add("product-ingredients");
+    producto.ingredientes.forEach(ingrediente => {
+        ingredientes.textContent += ingrediente.nombre + ", ";
+    });
 
     // Crear el precio del producto
     const precio = document.createElement("p");
@@ -53,6 +56,7 @@ carrito.forEach(producto => {
 
     // Agregar el label y el input al contenedor de información
     productInfo.appendChild(nombre);
+    productInfo.appendChild(ingredientes);
     productInfo.appendChild(precio);
     productInfo.appendChild(label);
     productInfo.appendChild(inputCantidad);
@@ -62,6 +66,13 @@ carrito.forEach(producto => {
     botonEliminar.classList.add("remove-product");
     botonEliminar.textContent = "Eliminar";
 
+    botonEliminar.addEventListener('click', function () {
+        // TODO
+        console.log(producto.id);
+        console.log(user.carrito);
+        let eliminado = user.carrito.find(producto => producto.id === producto.id);
+    });
+
     // Agregar los elementos al contenedor del producto
     productItem.appendChild(imagen);
     productItem.appendChild(productInfo);
@@ -69,4 +80,9 @@ carrito.forEach(producto => {
 
     // Agregar el producto al contenedor principal
     contenedor.appendChild(productItem);
+});
+
+closeCart.addEventListener('click', function () {
+    // Manda al menu
+    closeCart.href = '?menu=menu';
 });

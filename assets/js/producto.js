@@ -13,9 +13,23 @@ const user = await User.getUser(iduser);
 ingredientesLista.forEach(ingrediente => {
     const ingredienteDiv = document.createElement('div');
     ingredienteDiv.className = "ingrediente";
-    ingredienteDiv.innerHTML = `${ingrediente.nombre} -> ${ingrediente.precio} €`;
+    // Crear la imagen
+    const foto = document.createElement('img');
+    foto.src = '../../assets/img/ingrediente/' + ingrediente.foto;
+    foto.alt = ingrediente.nombre;
+    foto.style.width = '40px';  // Opcional: establecer tamaño de la imagen
+    foto.style.height = '40px'; // Opcional: establecer tamaño de la imagen
+
+    // Añadir la imagen al div
+    ingredienteDiv.appendChild(foto);
+    // Añadir el nombre y precio
+    const nombrePrecio = document.createElement('p');
+    nombrePrecio.textContent = ` ${ingrediente.nombre} -> ${ingrediente.precio} €`;
+
+    // Añadir el texto al div
+    ingredienteDiv.appendChild(nombrePrecio);
     ingredienteDiv.draggable = true;
-    ingredienteDiv.dataset.name = [ingrediente.id, ingrediente.nombre, ingrediente.precio]; // Identificador único
+    ingredienteDiv.dataset.name = [ingrediente.id, ingrediente.nombre, ingrediente.precio];
     ingredientes.appendChild(ingredienteDiv);
 });
 
@@ -31,6 +45,36 @@ allergens.forEach(Ingrediente => {
         allergen.appendChild(icon);
     });
 });
+
+function alergenos(ingredientesLista) {
+    let allergen = document.getElementById('lista-alergenos');
+    allergen.innerHTML = '';
+    let arrayingselec = [];
+    let iding = [];
+    ingredientesLista.forEach(ingrediente => {
+        iding.push(ingrediente.name[0]);
+    });
+    allingredientes.forEach(ing => {
+        iding.forEach(id => {
+            if (ing.id == id) {
+                arrayingselec.push(ing);
+            }
+        });
+    });
+    arrayingselec.forEach(element => {
+        if (element.alergenos.length > 0) {
+            element.alergenos.forEach(alerg => {
+                const icon = document.createElement('img');
+                console.log(alerg.foto);
+                icon.src = '../../assets/img/alergenos/' + alerg.foto;
+                icon.alt = alerg.nombre;
+                icon.title = alerg.nombre;
+                allergen.appendChild(icon);
+                console.log(element);
+            });
+        }
+    });
+}
 
 const personalizarbtn = document.getElementById('per-btn');
 const allingredientes = JSON.parse(document.getElementById('allingredientes').value);
@@ -54,7 +98,21 @@ personalizarbtn.addEventListener('click', function () {
                 val = true;
                 const divIngrediente = document.createElement("div");
                 divIngrediente.className = "ingrediente";
-                divIngrediente.innerHTML = `${all.nombre} -> ${all.precio} €`;
+                // Crear la imagen
+                const foto = document.createElement('img');
+                foto.src = '../../assets/img/ingrediente/' + all.foto;
+                foto.alt = all.nombre;
+                foto.style.width = '40px';  // Opcional: establecer tamaño de la imagen
+                foto.style.height = '40px'; // Opcional: establecer tamaño de la imagen
+
+                // Añadir la imagen al div
+                divIngrediente.appendChild(foto);
+                // Añadir el nombre y precio
+                const nombrePrecio = document.createElement('p');
+                nombrePrecio.textContent = ` ${all.nombre} -> ${all.precio} €`;
+
+                // Añadir el texto al div
+                divIngrediente.appendChild(nombrePrecio);
                 divIngrediente.draggable = true;
                 divIngrediente.dataset.name = [all.id, all.nombre, all.precio];
                 ingredienteslist.appendChild(divIngrediente);
@@ -81,6 +139,7 @@ personalizarbtn.addEventListener('click', function () {
             });
         });
         preciocaltulado = calcularPrecio(precio, selectedIngredients);
+        alergenos(selectedIngredients);
     });
 
     // Funciones de arrastrar y soltar

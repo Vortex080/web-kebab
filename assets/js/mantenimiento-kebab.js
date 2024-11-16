@@ -48,9 +48,28 @@ btnClear.addEventListener('click', function () {
 Allingredientes.forEach(ingrediente => {
     const ingredienteDiv = document.createElement('div');
     ingredienteDiv.className = "ingrediente";
-    ingredienteDiv.innerHTML = `${ingrediente.nombre} -> ${ingrediente.precio} €`;
+
+    // Crear la imagen
+    const foto = document.createElement('img');
+    foto.src = '../../assets/img/ingrediente/' + ingrediente.foto;
+    foto.alt = ingrediente.nombre;
+    foto.style.width = '40px';  // Opcional: establecer tamaño de la imagen
+    foto.style.height = '40px'; // Opcional: establecer tamaño de la imagen
+
+    // Añadir la imagen al div
+    ingredienteDiv.appendChild(foto);
+
+    // Añadir el nombre y precio
+    const nombrePrecio = document.createElement('p');
+    nombrePrecio.textContent = ` ${ingrediente.nombre} -> ${ingrediente.precio} €`;
+
+    // Añadir el texto al div
+    ingredienteDiv.appendChild(nombrePrecio);
+
     ingredienteDiv.draggable = true;
-    ingredienteDiv.dataset.name = [ingrediente.id, ingrediente.nombre, ingrediente.precio]; // Identificador único
+    ingredienteDiv.dataset.name = ingrediente.nombre; // Identificador único
+
+    // Añadir el div con todo el contenido a la lista de ingredientes
     ingredientesList.appendChild(ingredienteDiv);
 });
 

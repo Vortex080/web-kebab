@@ -149,11 +149,24 @@
 }
 
 .ingrediente {
+    display: flex;
+    align-items: center;
+    /* Centra el contenido verticalmente */
     margin: 10px 0;
     padding: 10px;
     background-color: #f0f0f0;
     border-radius: 5px;
     transition: 0.5s;
+}
+
+.ingrediente img {
+    margin-right: 10px;
+    /* Añade separación entre la imagen y el texto */
+}
+
+.ingrediente p {
+    margin: 0;
+    /* Elimina el margen del párrafo para centrarlo correctamente */
 }
 
 

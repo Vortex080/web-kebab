@@ -11,7 +11,7 @@
             <h2>Resumen</h2>
             <p>Total: <span>50€</span></p>
             <button class="checkout">Finalizar Compra</button>
-            <button class="close-cart">Seguir Comprando</button>
+            <button class="close-cart" id="close-cart">Seguir Comprando</button>
         </div>
     </div>
 </div>

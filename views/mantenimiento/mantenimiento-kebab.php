@@ -1,41 +1,62 @@
 <link rel="stylesheet" href="../../assets/css/mantenimiento-kebab.css">
 <style>
-        .preview img {
-            max-width: 200px;
-            max-height: 200px;
-            width: auto;
-            height: auto;
-            display: block;
-            margin-bottom: 10px;
-            border: 2px solid #ccc; /* Borde de la imagen */
-            border-radius: 5px; /* Bordes redondeados para la imagen */
-            object-fit: contain;
-        }
-        #remove-photo {
-            display: none;
-            background-color: #ff4d4d; /* Color de fondo rojo */
-            color: white;
-            border: none;
-            padding: 8px 12px;
-            margin-top: 10px; /* Margen entre la imagen y el botón */
-            cursor: pointer;
-            border-radius: 5px;
-            font-size: 14px;
-            transition: background-color 0.3s;
-        }
-        #remove-photo:hover {
-            background-color: #e60000; /* Color al pasar el cursor */
-        }
-        .error {
-            color: red;
-            font-size: 0.9em;
-        }
+    .preview img {
+        max-width: 200px;
+        max-height: 200px;
+        width: auto;
+        height: auto;
+        display: block;
+        margin-bottom: 10px;
+        border: 2px solid #ccc;
+        /* Borde de la imagen */
+        border-radius: 5px;
+        /* Bordes redondeados para la imagen */
+        object-fit: contain;
+    }
+
+    #remove-photo {
+        display: none;
+        background-color: #ff4d4d;
+        /* Color de fondo rojo */
+        color: white;
+        border: none;
+        padding: 8px 12px;
+        margin-top: 10px;
+        /* Margen entre la imagen y el botón */
+        cursor: pointer;
+        border-radius: 5px;
+        font-size: 14px;
+        transition: background-color 0.3s;
+    }
+
+    #remove-photo:hover {
+        background-color: #e60000;
+        /* Color al pasar el cursor */
+    }
+
+    .error {
+        color: red;
+        font-size: 0.9em;
+    }
 </style>
 <input type="hidden" id="allingredientes" value='<?php echo json_encode(IngredientesRep::getAll()); ?>'>
 <div class="centering-container">
+    <!-- Modal -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Lista de Kebabs</h2>
+                <button class="close-btn" id="closeModalBtn">&times;</button>
+            </div>
+            <div class="list-container" id="listContainer">
+                <!-- Los elementos dinámicos se agregarán aquí -->
+            </div>
+        </div>
+    </div>
     <div class="container">
         <!-- Foto y Nombre en la misma línea -->
         <h2 class="container-title">Mantenimiento Kebab</h2>
+        <button id="openModalBtn">Editar Kebab</button>
         <div class="flex-row">
             <div class="foto-section">
                 <label for="foto">Foto</label>
@@ -89,3 +110,51 @@
 
 
 <script src="../../assets/js/mantenimiento-kebab.js"></script>
+<script>
+    // Referencias a elementos
+    const modal = document.getElementById('modal');
+    const openModalBtn = document.getElementById('openModalBtn');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    const listContainer = document.getElementById('listContainer');
+
+    // Mostrar el modal
+    openModalBtn.addEventListener('click', () => {
+        modal.style.display = 'flex';
+    });
+
+    // Ocultar el modal
+    closeModalBtn.addEventListener('click', () => {
+        modal.style.display = 'none';
+    });
+
+    // Agregar elementos dinámicos a la lista
+    function addListItem(name, data) {
+        const listItem = document.createElement('div');
+        listItem.className = 'list-item';
+
+        const itemName = document.createElement('span');
+        itemName.textContent = name;
+
+        const chooseButton = document.createElement('button');
+        chooseButton.textContent = 'Elegir';
+        chooseButton.addEventListener('click', () => {
+            console.log(`Elemento elegido: ${name}`, data);
+            alert(`Has elegido: ${name}`);
+        });
+
+        listItem.appendChild(itemName);
+        listItem.appendChild(chooseButton);
+        listContainer.appendChild(listItem);
+    }
+
+    // Ejemplo: Agregar elementos a la lista
+    addListItem('Elemento 1', {
+        id: 1
+    });
+    addListItem('Elemento 2', {
+        id: 2
+    });
+    addListItem('Elemento 3', {
+        id: 3
+    });
+</script>
