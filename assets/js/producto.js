@@ -89,7 +89,7 @@ const selectedIngredients = [];
 personalizarbtn.addEventListener('click', function () {
     productdeatils.style.maxWidth = "1000px";
     ingredientesdiv.style.display = 'block';
-
+    val = false;
     if (val == false) {
         allingredientes.forEach(all => {
             if (ingredientesLista.find(element => element.nombre === all.nombre)) {

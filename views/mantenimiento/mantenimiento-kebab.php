@@ -39,7 +39,6 @@
         font-size: 0.9em;
     }
 </style>
-<input type="hidden" id="allingredientes" value='<?php echo json_encode(IngredientesRep::getAll()); ?>'>
 <div class="centering-container">
     <!-- Modal -->
     <div id="modal" class="modal">
@@ -109,52 +108,4 @@
 </div>
 
 
-<script src="../../assets/js/mantenimiento-kebab.js"></script>
-<script>
-    // Referencias a elementos
-    const modal = document.getElementById('modal');
-    const openModalBtn = document.getElementById('openModalBtn');
-    const closeModalBtn = document.getElementById('closeModalBtn');
-    const listContainer = document.getElementById('listContainer');
-
-    // Mostrar el modal
-    openModalBtn.addEventListener('click', () => {
-        modal.style.display = 'flex';
-    });
-
-    // Ocultar el modal
-    closeModalBtn.addEventListener('click', () => {
-        modal.style.display = 'none';
-    });
-
-    // Agregar elementos dinámicos a la lista
-    function addListItem(name, data) {
-        const listItem = document.createElement('div');
-        listItem.className = 'list-item';
-
-        const itemName = document.createElement('span');
-        itemName.textContent = name;
-
-        const chooseButton = document.createElement('button');
-        chooseButton.textContent = 'Elegir';
-        chooseButton.addEventListener('click', () => {
-            console.log(`Elemento elegido: ${name}`, data);
-            alert(`Has elegido: ${name}`);
-        });
-
-        listItem.appendChild(itemName);
-        listItem.appendChild(chooseButton);
-        listContainer.appendChild(listItem);
-    }
-
-    // Ejemplo: Agregar elementos a la lista
-    addListItem('Elemento 1', {
-        id: 1
-    });
-    addListItem('Elemento 2', {
-        id: 2
-    });
-    addListItem('Elemento 3', {
-        id: 3
-    });
-</script>
+<script type="module" src="../../assets/js/mantenimiento-kebab.js"></script>

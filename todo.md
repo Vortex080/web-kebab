@@ -12,7 +12,7 @@
       - [x] Personalizar
     - [x] Corregir datos de for each
       - [x] Movimiento ingredientes personalización kebab
-    - [ ] Actualizar los alergenos cuando se cambien los ingredientes
+    - [x] Actualizar los alergenos cuando se cambien los ingredientes
 - [ ] Mantenimiento de kebab
     - [x] Redistribución html y css
     - [ ] Botones funcionamiento
@@ -20,6 +20,7 @@
       - [ ] Cancelar
       - [ ] Guardar datos
     - [x] Coger datos de la base de datos
+    - [x] Poder elegir el kebab y editarlo
 - [ ] Menu usuario
     - [x] Monedero
     - [ ] Mantenimiento usuario

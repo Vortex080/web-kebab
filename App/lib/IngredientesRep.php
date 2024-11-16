@@ -28,7 +28,7 @@ class IngredientesRep implements ICRUD
     static public function getbyName($nombre)
     {
         $con = Connection::getConection();
-        $rest = $con->query('select id, nombre, foto from ingredientes where nombre =' . $nombre . ';');
+        $rest = $con->query('select id, nombre, precio, foto from ingredientes where nombre =' . $nombre . ';');
         while ($row = $rest->fetch()) {
 
             $alergenos = AlergenosRep::getAllbyingrediente($row['id']);

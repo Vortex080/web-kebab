@@ -37,6 +37,13 @@ export async function getIngrediente(id) {
     return response.json();
 }
 
+export async function getAll() {
+
+    let response = await fetch(baseUrlIngr + '?id=All');
+    return response.json();
+}
+
+
 // Función para hacer la solicitud a la API en PHP
 export async function updateIngrediente(id, nombre, precio) {
     try {
