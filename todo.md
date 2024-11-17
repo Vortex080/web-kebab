@@ -17,8 +17,10 @@
     - [x] Redistribución html y css
     - [ ] Botones funcionamiento
       - [x] Limpiar datos
-      - [ ] Cancelar
-      - [ ] Guardar datos
+      - [x] Cancelar
+      - [x] Guardar datos
+        - [x] Guarda datos de kebabs creados
+        - [x] Crear kebabs
     - [x] Coger datos de la base de datos
     - [x] Poder elegir el kebab y editarlo
 - [ ] Menu usuario
@@ -34,7 +36,7 @@
   - [ ] Eliminar producto
   - [ ] Guardar carrito
   - [ ] Pago carrito
-
+- [ ] Guardar fotos
 
 ## Features
 - [x] PHP Mailer

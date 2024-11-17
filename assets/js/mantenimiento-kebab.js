@@ -10,6 +10,9 @@ const todosIngredientesList = document.getElementById('todos-ingredientes-list')
 const precioestimado = document.getElementById('precio-estimado');
 const name = document.getElementById('name');
 const precio = document.getElementById('precio');
+const btnguardar = document.getElementById('btn-save');
+const id = document.getElementById('id');
+const btnEliminar = document.getElementById('btn-delete');
 
 // Función para limpiar los campos del formulario
 btnClear.addEventListener('click', function () {
@@ -25,6 +28,12 @@ btnClear.addEventListener('click', function () {
             input.value = '';
         }
     });
+
+    previewContainer.innerHTML = '';
+    photoInput.value = ''; // Reinicia el valor del input de archivo
+    photoInput.style.display = 'block'; // Muestra el input de archivo
+    removePhotoButton.style.display = 'none'; // Oculta el botón de eliminar
+    errorMessage.textContent = ''; // Limpia cualquier mensaje de error
 
     // Limpiar la lista de ingredientes incluidos (si se requiere)
 
@@ -147,6 +156,7 @@ photoInput.addEventListener('change', (event) => {
 
             const reader = new FileReader();
             reader.onload = function (e) {
+
                 previewContainer.innerHTML = `<img src="${e.target.result}" alt="Vista previa de la foto">`;
             }
             reader.readAsDataURL(file);
@@ -204,10 +214,13 @@ closeModalBtn.addEventListener('click', () => {
 });
 
 // Agregar elementos dinámicos a la list
-
+let photoid = '';
 AllKebabs.forEach(kebab => {
     const listItem = document.createElement('div');
     listItem.className = 'list-item';
+
+
+
 
     const itemName = document.createElement('span');
     itemName.textContent = kebab.nombre;
@@ -217,15 +230,15 @@ AllKebabs.forEach(kebab => {
     chooseButton.addEventListener('click', () => {
         name.value = kebab.nombre;
         precio.value = kebab.precio;
-
+        id.value = kebab.id;
         // Limpia el mensaje de error
         errorMessage.textContent = '';
+
+        photoid = kebab.foto;
         previewContainer.innerHTML = `<img src="../../assets/img/${kebab.foto}" alt="Vista previa de la foto">`;
 
         ingredientesList.querySelectorAll('.ingrediente').forEach(ingrediente => {
-            console.log(ingrediente.dataset.name[0]);
             kebab.ingredientes.forEach(element => {
-                console.log(element.id);
                 if (ingrediente.dataset.name[0] == element.id) {
                     ingredientesList.removeChild(ingrediente);
                     ingredientesIncluidosList.appendChild(ingrediente);
@@ -242,4 +255,117 @@ AllKebabs.forEach(kebab => {
     listItem.appendChild(itemName);
     listItem.appendChild(chooseButton);
     listContainer.appendChild(listItem);
+});
+
+btnguardar.addEventListener('click', function () {
+    if (id.value.length > 0) {
+        AllKebabs.forEach(kebab => {
+            if (kebab.id == id.value) {
+                let ingredientes = [];
+                kebab.nombre = name.value;
+                kebab.precio = precio.value;
+                kebab.foto = kebab.nombre + '.png';
+                ingredientesIncluidosList.querySelectorAll('.ingrediente').forEach(ingrediente => {
+                    Allingredientes.forEach(element => {
+                        if (ingrediente.dataset.name[0] == element.id) {
+                            ingredientes.push(element);
+                        }
+                    });
+                });
+                const photoInput = document.getElementById('foto');
+                const responseDiv = document.getElementById('error-message');
+
+                if (photoInput.files.length > 0) {
+                    const file = photoInput.files[0];
+                    const allowedExtensions = ['image/jpeg', 'image/png'];
+
+                    // Validar tipo de archivo
+                    if (!allowedExtensions.includes(file.type)) {
+                        responseDiv.innerHTML = `<p style="color: red;">Solo se permiten archivos JPG o PNG.</p>`;
+                        return;
+                    }
+
+                    // const formfoto = document.getElementById('form-foto');
+                    // formfoto.action = '../../App/Helpers/upload.php?name=' + name.value;
+                    // formfoto.submit();
+                } else {
+                    responseDiv.innerHTML = `<p>No has seleccionado ninguna foto.</p>`;
+                }
+
+                kebab.ingredientes = ingredientes;
+                Kebab.updateKebab(kebab);
+            }
+        });
+    } else {
+        let ingredientes = [];
+        ingredientesIncluidosList.querySelectorAll('.ingrediente').forEach(ingrediente => {
+            Allingredientes.forEach(element => {
+                if (ingrediente.dataset.name[0] == element.id) {
+                    ingredientes.push(element);
+                }
+            });
+        });
+        console.log(name.value + ' ' + ingredientes + ' ' + precio.value);
+        Kebab.createKebab(name.value, name.value + '.png', ingredientes, precio.value);
+    }
+});
+
+btnEliminar.addEventListener('click', function () {
+    if (id.value.length > 0) {
+        Kebab.deleteKebab(id.value);
+
+        // Limpiar todos los campos de texto (input) y áreas de texto (textarea)
+        const inputs = document.querySelectorAll('input[type="text"], input[type="file"], textarea');
+
+        inputs.forEach(input => {
+            if (input.type === "file") {
+                // Si es un input de tipo file, reiniciamos el valor
+                input.value = '';
+            } else {
+                // Limpiar los campos de texto y textarea
+                input.value = '';
+            }
+        });
+
+        previewContainer.innerHTML = '';
+        photoInput.value = ''; // Reinicia el valor del input de archivo
+        photoInput.style.display = 'block'; // Muestra el input de archivo
+        removePhotoButton.style.display = 'none'; // Oculta el botón de eliminar
+        errorMessage.textContent = ''; // Limpia cualquier mensaje de error
+
+        // Limpiar la lista de ingredientes incluidos (si se requiere)
+
+        ingredientesIncluidosList.innerHTML = ''; // Borra los ingredientes incluidos
+        ingredientesList.innerHTML = ''; // Borra Todos los ingredientes
+
+        Allingredientes.forEach(ingrediente => {
+            const ingredienteDiv = document.createElement('div');
+            ingredienteDiv.className = "ingrediente";
+
+            // Crear la imagen
+            const foto = document.createElement('img');
+            foto.src = '../../assets/img/ingrediente/' + ingrediente.foto;
+            foto.alt = ingrediente.nombre;
+            foto.style.width = '40px';  // Opcional: establecer tamaño de la imagen
+            foto.style.height = '40px'; // Opcional: establecer tamaño de la imagen
+
+            // Añadir la imagen al div
+            ingredienteDiv.appendChild(foto);
+
+            // Añadir el nombre y precio
+            const nombrePrecio = document.createElement('p');
+            nombrePrecio.textContent = ` ${ingrediente.nombre} -> ${ingrediente.precio} €`;
+
+            // Añadir el texto al div
+            ingredienteDiv.appendChild(nombrePrecio);
+
+            ingredienteDiv.draggable = true;
+            ingredienteDiv.dataset.name = ingrediente.id; // Identificador único
+
+            ingredientesList.appendChild(ingredienteDiv);
+        });
+
+        precio.innerHTML = ''; // Borra el precio
+        name.innerHTML = '';
+    }
 });

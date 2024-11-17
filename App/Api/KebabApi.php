@@ -14,7 +14,7 @@ switch ($requesmethod) {
         } else {
             $id = $_GET['id'];
             $kebab = KebabRep::getbyId($id);
-            echo json_encode($kebab);           
+            echo json_encode($kebab);
         }
         break;
     case 'POST':
@@ -30,11 +30,8 @@ switch ($requesmethod) {
         break;
     case 'PUT':
         $id = $_GET['id'];
-        $nombre = $_GET['nombre'];
-        $foto = $_GET['foto'];
-        $ingredientes = $_GET['ingredientes'];
-        $precio = $_GET['precio'];
-        $kebab = new Kebab($nombre, $foto, $ingredientes, $precio, $id);
+        $data = json_decode(file_get_contents('php://input'));
+        $kebab = new Kebab($data->nombre, $data->foto, $data->ingredientes, $data->precio, $id);
         var_dump($kebab);
         $result = KebabRep::update($kebab);
         echo json_encode(["success" => $result, "data" => $kebab]);

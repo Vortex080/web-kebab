@@ -37,6 +37,9 @@ if (isset($_GET['menu'])) {
     if ($_GET['menu'] == "carrito") {
         require_once './views/mantenimiento/carrito.php';
     }
+    if ($_GET['menu'] == "perfil") {
+        require_once './views/mantenimiento/perfil.php';
+    }
 }
 
 if (isset($_GET['admin'])) {

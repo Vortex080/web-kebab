@@ -54,13 +54,16 @@
     </div>
     <div class="container">
         <!-- Foto y Nombre en la misma línea -->
+        <input type="hidden" name="id" id="id">
         <h2 class="container-title">Mantenimiento Kebab</h2>
         <button id="openModalBtn">Editar Kebab</button>
         <div class="flex-row">
             <div class="foto-section">
                 <label for="foto">Foto</label>
                 <button type="button" id="remove-photo">Eliminar Foto</button>
-                <input type="file" id="foto" accept="image/*" />
+                <form action="../../App/Helpers/upload.php" method="POST" enctype="multipart/form-data" id="form-foto">
+                    <input type="file" id="foto" accept="image/*" />
+                </form>
                 <div id="preview" class="preview">
                     <!-- La imagen seleccionada aparecerá aquí -->
                 </div>
@@ -100,9 +103,9 @@
         </div>
         <!-- Contenedor para los botones -->
         <div class="buttons-container">
-            <button type="button" class="btn-save">Guardar</button>
+            <button type="button" class="btn-save" id="btn-save">Guardar</button>
             <button type="button" class="btn-clear">Limpiar</button>
-            <button type="button" class="btn-delete">Cancelar</button>
+            <button type="button" class="btn-delete" id="btn-delete">Eliminar</button>
         </div>
     </div>
 </div>
