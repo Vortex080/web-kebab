@@ -42,15 +42,15 @@ export async function getUser(id) {
     return response.json();
 }
 // Función para hacer la solicitud a la API en PHP
-export async function updateUser(id, nombre, pass, monedero, foto, direcction, alergenos, email, rol, carrito) {
+export async function updateUser(user) {
     try {
         // Hacemos la solicitud PUT usando fetch
-        const response = await fetch(`${baseUrlUser}?id=${id}`, {
+        const response = await fetch(`${baseUrlUser}?id=${user.id}`, {
             method: 'PUT', // Usamos PUT para actualizar el recursoç
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ nombre: nombre, pass: pass, monedero: monedero, foto: foto, direcction: direcction, alergenos: alergenos, email: email, rol: rol, carrito: carrito })
+            body: JSON.stringify({ nombre: user.nombre, pass: user.pass, monedero: user.monedero, foto: user.foto, direcction: user.direcction, alergenos: user.alergenos, email: user.email, rol: user.rol, carrito: user.carrito })
         });
 
         // Verificamos si la respuesta es exitosa
@@ -59,7 +59,7 @@ export async function updateUser(id, nombre, pass, monedero, foto, direcction, a
         }
 
         // Procesamos la respuesta del servidor
-        const data = await response.text();
+        const data = await response.json();
         console.log('User actualizado:', data);
     } catch (error) {
         console.log('Error al actualizar el user:', error);
@@ -83,7 +83,7 @@ export async function updateUserUser(user) {
         }
 
         // Procesamos la respuesta del servidor
-        const data = await response.text();
+        const data = await response.json();
         console.log('User actualizado:', data);
     } catch (error) {
         console.log('Error al actualizar el user:', error);

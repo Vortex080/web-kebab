@@ -1,0 +1,249 @@
+.centering-container {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    /* Asegura que ocupe toda la altura visible del navegador */
+    display: flex;
+    justify-content: center;
+    /* Centrado horizontal */
+    align-items: center;
+    /* Centrado vertical */
+    overflow: hidden;
+    /* Opcional: evita barras de desplazamiento adicionales */
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    /* Centrado horizontal */
+    align-items: center;
+    /* Centrado vertical */
+    gap: 20px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    width: 100%;
+    /* O ajusta a un ancho fijo si necesitas */
+    max-width: 1200px;
+    /* Puedes limitar el ancho máximo si es necesario */
+    overflow-y: auto;
+    /* Permite el desplazamiento vertical dentro del contenedor */
+}
+
+
+.menu,
+.main {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.menu {
+    width: 300px;
+    /* Ancho del menú */
+    height: 700px;
+    /* Alto del menú */
+    margin-right: 20px;
+    /* Separación del div principal */
+}
+
+.main {
+    width: 800px;
+    /* Ancho del div principal */
+    height: 700px;
+    /* Alto del div principal */
+}
+
+/* Estilo para el usuario */
+.secction {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    max-width: 600px;
+    margin-left: 8vh;
+    width: 100%;
+}
+
+.profile-edit-container h2 {
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 24px;
+    color: #333;
+}
+
+.profile-edit-form .form-group {
+    margin-bottom: 15px;
+}
+
+.profile-edit-form label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.profile-edit-form input[type="text"],
+.profile-edit-form input[type="email"],
+.profile-edit-form input[type="password"],
+.profile-edit-form input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.preview-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.preview-container img {
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border: 2px solid #ccc;
+}
+
+.btn {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.save-btn {
+    background-color: #28a745;
+    color: white;
+    margin-bottom: 10px;
+}
+
+.cancel-btn {
+    background-color: #dc3545;
+    color: white;
+}
+
+.save-btn:hover {
+    background-color: #218838;
+}
+
+.cancel-btn:hover {
+    background-color: #c82333;
+}
+
+
+/* Inicialmente ocultamos el input de foto de perfil */
+#profile-picture-container {
+    display: none;
+}
+
+/* Estilos generales para los botones */
+button {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+/* Estilo para el botón "Editar" */
+.edit-btn {
+    background-color: #4CAF50;
+    /* Verde brillante */
+    color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* Sombra sutil */
+    border: 2px solid transparent;
+    /* Borde inicial transparente */
+}
+
+/* Efecto de hover para el botón "Editar" */
+.edit-btn:hover {
+    background-color: #45a049;
+    /* Verde más oscuro en hover */
+    transform: translateY(-3px);
+    /* Levanta el botón al pasar el mouse */
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+    /* Sombra más pronunciada */
+}
+
+/* Efecto de focus (cuando el botón es seleccionado o tiene el foco) */
+.edit-btn:focus {
+    outline: none;
+    border-color: #fff;
+    box-shadow: 0 0 0 4px rgba(76, 175, 80, 0.4);
+    /* Resaltado sutil al hacer clic */
+}
+
+/* Efecto para cuando el botón es deshabilitado (cuando el formulario está en estado de solo lectura) */
+.edit-btn:disabled {
+    background-color: #ccc;
+    /* Color gris */
+    color: #777;
+    /* Texto gris */
+    cursor: not-allowed;
+    box-shadow: none;
+    /* Sin sombra */
+}
+
+
+/* Estilos del fondo del modal */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* Estilos del contenedor del modal */
+.modal {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    width: 300px;
+    text-align: center;
+}
+
+.modal input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.modal button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.modal button:hover {
+    background-color: #0056b3;
+}
+
+/* Mostrar el modal */
+.modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
