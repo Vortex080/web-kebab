@@ -7,6 +7,7 @@ const cancelButton = document.getElementById('cancelButton');
 const profileForm = document.getElementById('profileForm');
 const inputs = profileForm.querySelectorAll('input');
 const profilePictureContainer = document.getElementById('profile-picture-container');
+const inpuitfoto = document.getElementById('profile-picture');
 
 const user = await User.getUser(iduser);
 
@@ -19,11 +20,43 @@ const añadirMonedero = document.getElementById('añadirMonedero');
 
 const dineroinp = document.getElementById('dineroinp');
 const cerrarbtn = document.getElementById('cerrarbtn');
+const previewContainer = document.getElementById('preview');
+let imagenEn64 = '';
+const RecortarModal = document.getElementById('imageModal');
+const closeModal = document.getElementById('closeModalBtnPhoto');
+// Nodo donde estará el editor
+const editor = document.querySelector('#editor');
+// El canvas donde se mostrará la previa
+const miCanvas = document.querySelector('#preview-final');
+// Contexto del canvas
+const contexto = miCanvas.getContext('2d');
+// Ruta de la imagen seleccionada
+let urlImage = undefined;
 
 monedero.value = user.monedero;
 username.value = user.nombre;
 email.value = user.email;
-foto.src = '../../assets/img/users/' + user.id + '.jpg';
+// Crear un elemento canvas
+const canvas = document.createElement('canvas');
+const ctx = canvas.getContext('2d');
+
+// Establecer las dimensiones del canvas (ajústalas a lo que necesites)
+canvas.width = 150;
+canvas.height = 150;
+
+// Crear un objeto de imagen
+const img = new Image();
+
+// Establecer la URL de la imagen usando la propiedad 'Ingrediente.foto'
+img.onload = function () {
+    // Dibujar la imagen en el canvas cuando la carga esté completa
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+};
+// Establecer el src de la imagen (ruta de la foto)
+img.src = user.foto;
+
+// Agregar el canvas al contenedor
+previewContainer.appendChild(canvas);
 password.value = user.pass;
 
 
@@ -36,7 +69,7 @@ function enableEditing() {
     email.disabled = false;
     password.disabled = false;
     foto.disabled = false;
-    profilePictureContainer.style.display = 'block'; // Mostrar el campo de foto de perfil
+    inpuitfoto.disabled = false;
     editButton.style.display = 'none'; // Ocultar el botón "Editar"
     saveButton.style.display = 'inline-block'; // Mostrar el botón "Guardar"
     cancelButton.style.display = 'inline-block'; // Mostrar el botón "Cancelar"
@@ -48,6 +81,7 @@ function cancelEditing() {
     email.disabled = true;
     password.disabled = true;
     foto.disabled = true;
+    inpuitfoto.disabled = true;
     profilePictureContainer.style.display = 'none'; // Ocultar el campo de foto de perfil
     editButton.style.display = 'inline-block'; // Mostrar el botón "Editar"
     saveButton.style.display = 'none'; // Ocultar el botón "Guardar"
@@ -63,8 +97,8 @@ function saveChanges(event) {
     console.log(password.value);
     user.pass = password.value;
     user.monedero = parseInt(monedero.value);
-    //user.foto = foto.src;
-    console.log(user.pass)
+    console.log(imagenEn64);
+    user.foto = imagenEn64;
     User.updateUser(user);
 
     cancelEditing(); // Después de guardar, volver al estado de edición desactivado
@@ -86,7 +120,7 @@ cerrarbtn.addEventListener('click', () => {
 editButton.addEventListener('click', enableEditing);
 cancelButton.addEventListener('click', cancelEditing);
 profileForm.addEventListener('submit', saveChanges);
-
+inpuitfoto.addEventListener('change', abrirEditor, false);
 
 const modalOverlay = document.getElementById('modalOverlay');
 
@@ -97,3 +131,74 @@ function showModal() {
 function hideModal() {
     modalOverlay.classList.remove('active');
 }
+
+/**
+   * Método que abre el editor con la imagen seleccionada
+   */
+function abrirEditor(e) {
+    RecortarModal.style.display = 'flex ';
+    // Obtiene la imagen
+    urlImage = URL.createObjectURL(e.target.files[0]);
+
+    // Borra editor en caso que existiera una imagen previa
+    editor.innerHTML = '';
+    let cropprImg = document.createElement('img');
+    cropprImg.setAttribute('id', 'croppr');
+    editor.appendChild(cropprImg);
+
+    // Limpia la previa en caso que existiera algún elemento previo
+    contexto.clearRect(0, 0, miCanvas.width, miCanvas.height);
+
+    // Envia la imagen al editor para su recorte
+    document.querySelector('#croppr').setAttribute('src', urlImage);
+
+    // Crea el editor
+    new Croppr('#croppr', {
+        aspectRatio: 1,
+        maxSize: [600, 600],
+        minSize: [300, 300],
+        startSize: [300, 300, 'px'], // Tamaño inicial del recorte
+        onCropStart: () => false, // Evita que el usuario cambie el tamaño
+        onCropEnd: recortarImagen
+    })
+}
+
+/**
+* Método que recorta la imagen con las coordenadas proporcionadas con croppr.js
+*/
+function recortarImagen(data) {
+    // Variables
+    const inicioX = data.x;
+    const inicioY = data.y;
+    const nuevoAncho = data.width;
+    const nuevaAltura = data.height;
+    const zoom = 1;
+
+    // La imprimo
+    miCanvas.width = nuevoAncho;
+    miCanvas.height = nuevaAltura;
+    // La declaro
+    let miNuevaImagenTemp = new Image();
+    // Cuando la imagen se carge se procederá al recorte
+    miNuevaImagenTemp.onload = function () {
+        // Se recorta
+        contexto.drawImage(miNuevaImagenTemp, inicioX, inicioY, nuevoAncho * zoom, nuevaAltura * zoom, 0, 0, nuevoAncho, nuevaAltura);
+        // Se transforma a base64
+        imagenEn64 = miCanvas.toDataURL("image/jpeg");
+
+
+        // Mostramos el código generado
+        //document.querySelector('#base64').textContent = imagenEn64;
+        //document.querySelector('#base64HTML').textContent = '<img src="' + imagenEn64.slice(0, 40) + '...">';
+
+    }
+    // Proporciona la imagen cruda, sin editarla por ahora
+    miNuevaImagenTemp.src = urlImage;
+}
+
+
+closeModal.addEventListener('click', () => {
+    RecortarModal.style.display = 'none';
+
+
+});

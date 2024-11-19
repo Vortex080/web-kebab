@@ -43,15 +43,15 @@ if (isset($_GET['menu'])) {
 }
 
 if (isset($_GET['admin'])) {
-    switch (isset($_GET['admin'])) {
+    switch ($_GET['admin']) {
+        case "ingredientes":
+            require_once './views/mantenimiento/ingredientes.php';
+            break;
         case "kebab":
             require_once './views/mantenimiento/mantenimiento-kebab.php';
             break;
         case "usuarios":
             require_once './views/mantenimiento/usuarios.php';
-            break;
-        case "ingredientes":
-            require_once './views/mantenimiento/ingredientes.php';
             break;
         case "alergenos":
             require_once './views/mantenimiento/alergenos.php';

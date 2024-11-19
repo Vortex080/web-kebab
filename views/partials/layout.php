@@ -1,4 +1,4 @@
-<?php session_start(); ?>
+<?php LogIn::iniciaSession(); ?>
 <!DOCTYPE html>
 <html lang="es">
 

@@ -761,10 +761,21 @@ footer {
     color: #fff;
 }
 
-/* Estilo para los enlaces de navegación */
+
+/* Estilo para centrar los enlaces de navegación */
+.nav-links {
+    display: flex;
+    justify-content: center;
+    flex: 1;
+    list-style: none;
+    /* Eliminar los puntos de la lista */
+    margin: 0;
+    padding: 0;
+}
+
 .nav-links li {
-    display: inline;
-    margin-right: 20px;
+    margin: 0 20px;
+    /* Separación entre los elementos */
 }
 
 .nav-links a {
@@ -785,7 +796,7 @@ footer {
     cursor: pointer;
 }
 
-.user-photo img {
+.user-photo canvas {
     width: 60px;
     height: 60px;
     border-radius: 50%;
@@ -836,6 +847,7 @@ footer {
     margin-left: 200px;
     margin-right: 200px;
     margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 

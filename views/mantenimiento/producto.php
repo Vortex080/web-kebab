@@ -10,8 +10,8 @@ $ingredientes = IngredientesRep::getAll();
     <input type="hidden" id="productophp" value='<?php echo json_encode($kebab->ingredientes); ?>'>
     <input type="hidden" id="allingredientes" value='<?php echo json_encode($ingredientes); ?>'>
     <input type="hidden" id="productosql" value='<?php echo json_encode($kebab); ?>'>
-    <div class="product-image">
-        <img src="../../assets/img/<?php echo $kebab->foto; ?>" id="foto" alt="Imagen del producto">
+    <div class="product-image" id="product-image">
+        
     </div>
     <div class="product-details">
         <h1 class="product-title" id="product-title"><?php echo $kebab->nombre; ?></h1>

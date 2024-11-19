@@ -1,13 +1,12 @@
 import * as Ingredientes from './Api/IngredienteApi.js';
+import * as Alergenos from './Api/AlergenosApi.js';
 
 // Obtener el botón de limpiar
 const btnClear = document.querySelector('.btn-clear');
-const ingredientes = document.getElementById('ingredientes');
-const ingredientesIncluidosList = document.getElementById('ingredientes-incluidos-list');
-const Allingredientes = await Ingredientes.getAll();
-const ingredientesList = document.getElementById('todos-ingredientes-list');
-const todosIngredientesList = document.getElementById('todos-ingredientes-list');
-const precioestimado = document.getElementById('precio-estimado');
+const alergenos = document.getElementById('alergenos');
+const alergenosIncluidosList = document.getElementById('alergenos-incluidos-list');
+const Allalergenos = await Alergenos.getAll();
+const alergenosList = document.getElementById('todos-alergenos-list');
 const name = document.getElementById('name');
 const precio = document.getElementById('precio');
 const btnguardar = document.getElementById('btn-save');
@@ -37,14 +36,169 @@ btnClear.addEventListener('click', function () {
     removePhotoButton.style.display = 'none'; // Oculta el botón de eliminar
     errorMessage.textContent = ''; // Limpia cualquier mensaje de error
 
-    // Limpiar la lista de ingredientes incluidos (si se requiere)
+    // Limpiar la lista de alergenos incluidos (si se requiere)
 
-    ingredientesIncluidosList.innerHTML = ''; // Borra los ingredientes incluidos
-    ingredientesList.innerHTML = ''; // Borra Todos los ingredientes
+    alergenosIncluidosList.innerHTML = ''; // Borra los alergenos incluidos
+    alergenosList.innerHTML = ''; // Borra Todos los alergenos
 
-    Allingredientes.forEach(ingrediente => {
-        const ingredienteDiv = document.createElement('div');
-        ingredienteDiv.className = "ingrediente";
+    Allalergenos.forEach(alergeno => {
+        const alergenosDiv = document.createElement('div');
+        alergenosDiv.className = "ingrediente";
+
+        // Crear la imagen
+        const foto = document.createElement('canvas');
+        foto.src = '../../assets/img/alergenos/' + alergeno.foto;
+        foto.alt = alergeno.nombre;
+        foto.style.width = '40px';  // Opcional: establecer tamaño de la imagen
+        foto.style.height = '40px'; // Opcional: establecer tamaño de la imagen
+
+        // Añadir la imagen al div
+        alergenosDiv.appendChild(foto);
+
+        // Añadir el nombre y precio
+        const nombrePrecio = document.createElement('p');
+        nombrePrecio.textContent = ` ${alergeno.nombre}`;
+
+        // Añadir el texto al div
+        alergenosDiv.appendChild(nombrePrecio);
+
+        alergenosDiv.draggable = true;
+        alergenosDiv.dataset.name = alergeno.id; // Identificador único
+
+        alergenosList.appendChild(alergenosDiv);
+    });
+
+    precio.innerHTML = ''; // Borra el precio
+    name.innerHTML = '';
+
+    // NOTA: La sección de "Todos los Ingredientes" se mantendrá intacta
+});
+
+Allalergenos.forEach(alergeno => {
+    const alergenosDiv = document.createElement('div');
+    alergenosDiv.className = "ingrediente";
+
+    // Crear la imagen
+    const foto = document.createElement('img');
+    foto.src = '../../assets/img/alergenos/' + alergeno.foto;
+    foto.alt = alergeno.nombre;
+    foto.style.width = '40px';  // Opcional: establecer tamaño de la imagen
+    foto.style.height = '40px'; // Opcional: establecer tamaño de la imagen
+
+    // Añadir la imagen al div
+    alergenosDiv.appendChild(foto);
+
+    // Añadir el nombre y precio
+    const nombrePrecio = document.createElement('p');
+    nombrePrecio.textContent = ` ${alergeno.nombre}`;
+
+    // Añadir el texto al div
+    alergenosDiv.appendChild(nombrePrecio);
+
+    alergenosDiv.draggable = true;
+    alergenosDiv.dataset.name = alergeno.id; // Identificador único
+
+    // Añadir el div con todo el contenido a la lista de alergenos
+    alergenosList.appendChild(alergenosDiv);
+});
+
+
+// Funciones de arrastrar y soltar
+document.querySelectorAll('.ingrediente').forEach(item => {
+    item.addEventListener('dragstart', function (e) {
+        e.dataTransfer.setData('text/plain', e.target.dataset.name);
+    });
+});
+
+let uniqueIdCounter = 1;
+
+// Permitir soltar en los contenedores
+[alergenosIncluidosList, alergenosList].forEach(container => {
+    container.addEventListener('dragover', function (e) {
+        e.preventDefault();
+    });
+
+    container.addEventListener('drop', function (e) {
+        e.preventDefault();
+        const name = e.dataTransfer.getData('text/plain');
+        const draggedElement = document.querySelector(`.ingrediente[data-name="${name}"]`);
+
+        if (draggedElement && !container.contains(draggedElement)) {
+            // Si el alergeno se arrastra a product-ingredients, le asigna un ID único
+            if (container === alergenos) {
+                draggedElement.id = `alergeno-${uniqueIdCounter++}`;
+            } else {
+                // Si el alergeno vuelve a la lista general, elimina el ID
+                draggedElement.removeAttribute('id');
+            }
+            container.appendChild(draggedElement);
+        }
+    });
+});
+
+const photoInput = document.getElementById('foto');
+const removePhotoButton = document.getElementById('remove-photo');
+const previewContainer = document.getElementById('preview');
+const errorMessage = document.getElementById('error-message');
+const MAX_SIZE = 2 * 1024 * 1024; // 2 MB en bytes
+const base64 = '';
+
+ 
+
+
+
+
+photoInput.addEventListener('change', abrirEditor, false);
+
+removePhotoButton.addEventListener('click', () => {
+    // Limpia la vista previa, muestra el input de archivo y oculta el botón de eliminar
+    previewContainer.innerHTML = '';
+    photoInput.value = ''; // Reinicia el valor del input de archivo
+    photoInput.style.display = 'block'; // Muestra el input de archivo
+    removePhotoButton.style.display = 'none'; // Oculta el botón de eliminar
+    errorMessage.textContent = ''; // Limpia cualquier mensaje de error
+});
+
+// MODAL
+// Referencias a elementos
+const modal = document.getElementById('modal');
+const openModalBtn = document.getElementById('openModalBtn');
+const closeModalBtn = document.getElementById('closeModalBtn');
+const listContainer = document.getElementById('listContainer');
+const AllIngredientes = await Ingredientes.getAll();
+
+// Mostrar el modal
+openModalBtn.addEventListener('click', () => {
+    modal.style.display = 'flex';
+});
+
+// Ocultar el modal
+closeModalBtn.addEventListener('click', () => {
+    modal.style.display = 'none';
+});
+
+// Agregar elementos dinámicos a la list
+let photoid = '';
+AllIngredientes.forEach(Ingrediente => {
+    const listItem = document.createElement('div');
+    listItem.className = 'list-item';
+
+
+
+
+    const itemName = document.createElement('span');
+    itemName.textContent = Ingrediente.nombre;
+
+    const chooseButton = document.createElement('button');
+    chooseButton.textContent = 'Elegir';
+    chooseButton.addEventListener('click', () => {
+        name.value = Ingrediente.nombre;
+        precio.value = Ingrediente.precio;
+        id.value = Ingrediente.id;
+        // Limpia el mensaje de error
+        errorMessage.textContent = '';
+
+        photoid = Ingrediente.foto;
         // Crear un elemento canvas
         const canvas = document.createElement('canvas');
         const ctx = canvas.getContext('2d');
@@ -61,217 +215,17 @@ btnClear.addEventListener('click', function () {
             // Dibujar la imagen en el canvas cuando la carga esté completa
             ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
         };
-
         // Establecer el src de la imagen (ruta de la foto)
-        img.src = kebab.foto;
-        // Añadir la imagen al div
-        ingredienteDiv.appendChild(canvas);
-
-        // Añadir el nombre y precio
-        const nombrePrecio = document.createElement('p');
-        nombrePrecio.textContent = ` ${ingrediente.nombre} -> ${ingrediente.precio} €`;
-
-        // Añadir el texto al div
-        ingredienteDiv.appendChild(nombrePrecio);
-
-        ingredienteDiv.draggable = true;
-        ingredienteDiv.dataset.name = ingrediente.id; // Identificador único
-
-        ingredientesList.appendChild(ingredienteDiv);
-    });
-
-    precio.innerHTML = ''; // Borra el precio
-    name.innerHTML = '';
-
-    // NOTA: La sección de "Todos los Ingredientes" se mantendrá intacta
-});
-
-Allingredientes.forEach(ingrediente => {
-    const ingredienteDiv = document.createElement('div');
-    ingredienteDiv.className = "ingrediente";
-    // Crear un elemento canvas
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-    // Crear un objeto de imagen
-    const foto = new Image();
-
-    // Establecer la URL de la imagen usando la propiedad 'Ingrediente.foto'
-    foto.onload = function () {
-        // Dibujar la imagen en el canvas cuando la carga esté completa
-        ctx.drawImage(foto, 0, 0, canvas.width, canvas.height);
-    };
-
-    // Establecer el src de la imagen (ruta de la foto)
-    foto.src = ingrediente.foto;
-    // Crear la imagen
-    foto.alt = ingrediente.nombre;
-    foto.style.width = '40px';  // Opcional: establecer tamaño de la imagen
-    foto.style.height = '40px'; // Opcional: establecer tamaño de la imagen
-    // Añadir la imagen al div
-    ingredienteDiv.appendChild(foto);
-
-    // Añadir el nombre y precio
-    const nombrePrecio = document.createElement('p');
-    nombrePrecio.textContent = ` ${ingrediente.nombre} -> ${ingrediente.precio} €`;
-
-    // Añadir el texto al div
-    ingredienteDiv.appendChild(nombrePrecio);
-
-    ingredienteDiv.draggable = true;
-    ingredienteDiv.dataset.name = ingrediente.id; // Identificador único
-
-    // Añadir el div con todo el contenido a la lista de ingredientes
-    ingredientesList.appendChild(ingredienteDiv);
-});
-
-
-// Funciones de arrastrar y soltar
-document.querySelectorAll('.ingrediente').forEach(item => {
-    item.addEventListener('dragstart', function (e) {
-        e.dataTransfer.setData('text/plain', e.target.dataset.name);
-        calcularPrecio(precioestimado);
-    });
-});
-
-let uniqueIdCounter = 1;
-
-// Permitir soltar en los contenedores
-[ingredientesIncluidosList, ingredientesList].forEach(container => {
-    container.addEventListener('dragover', function (e) {
-        e.preventDefault();
-    });
-
-    container.addEventListener('drop', function (e) {
-        e.preventDefault();
-        const name = e.dataTransfer.getData('text/plain');
-        const draggedElement = document.querySelector(`.ingrediente[data-name="${name}"]`);
-
-        if (draggedElement && !container.contains(draggedElement)) {
-            // Si el ingrediente se arrastra a product-ingredients, le asigna un ID único
-            if (container === ingredientes) {
-                draggedElement.id = `ingrediente-${uniqueIdCounter++}`;
-            } else {
-                // Si el ingrediente vuelve a la lista general, elimina el ID
-                draggedElement.removeAttribute('id');
-            }
-            calcularPrecio(precioestimado);
-            container.appendChild(draggedElement);
-        }
-    });
-});
-
-const photoInput = document.getElementById('foto');
-const removePhotoButton = document.getElementById('remove-photo');
-const previewContainer = document.getElementById('preview');
-const errorMessage = document.getElementById('error-message');
-const MAX_SIZE = 2 * 1024 * 1024; // 2 MB en bytesç
-// Nodo donde estará el editor
-const editor = document.querySelector('#editor');
-// El canvas donde se mostrará la previa
-const miCanvas = document.querySelector('#preview-final');
-// Contexto del canvas
-const contexto = miCanvas.getContext('2d');
-// Ruta de la imagen seleccionada
-let urlImage = undefined;
-const RecortarModal = document.getElementById('imageModal');
-
-photoInput.addEventListener('change', abrirEditor, false);
-
-removePhotoButton.addEventListener('click', () => {
-    // Limpia la vista previa, muestra el input de archivo y oculta el botón de eliminar
-    previewContainer.innerHTML = '';
-    photoInput.value = ''; // Reinicia el valor del input de archivo
-    photoInput.style.display = 'block'; // Muestra el input de archivo
-    removePhotoButton.style.display = 'none'; // Oculta el botón de eliminar
-    errorMessage.textContent = ''; // Limpia cualquier mensaje de error
-});
-
-function calcularPrecio(precio) {
-    const ingredientesIncluidosList = document.getElementById('ingredientes-incluidos-list');
-    const selectedIngredients = [];
-    ingredientesIncluidosList.querySelectorAll('.ingrediente').forEach(ingrediente => {
-        selectedIngredients.push({
-            name: ingrediente.dataset.name,
-            id: ingrediente.id
-        });
-    });
-    let precioTotal = 0;
-    selectedIngredients.forEach(ingrediente => {
-        let precio = ingrediente.name.split(',');
-        precioTotal += parseInt(precio[2]);
-    });
-    precio.value = precioTotal;
-}
-
-// MODAL
-// Referencias a elementos
-import * as Kebab from './Api/KebabApi.js';
-const modal = document.getElementById('modal');
-const openModalBtn = document.getElementById('openModalBtn');
-const closeModalBtn = document.getElementById('closeModalBtn');
-const listContainer = document.getElementById('listContainer');
-const AllKebabs = await Kebab.getAll();
-
-// Mostrar el modal
-openModalBtn.addEventListener('click', () => {
-    modal.style.display = 'flex';
-});
-
-// Ocultar el modal
-closeModalBtn.addEventListener('click', () => {
-    modal.style.display = 'none';
-});
-
-// Agregar elementos dinámicos a la list
-let photoid = '';
-AllKebabs.forEach(kebab => {
-    const listItem = document.createElement('div');
-    listItem.className = 'list-item';
-
-
-
-
-    const itemName = document.createElement('span');
-    itemName.textContent = kebab.nombre;
-
-    const chooseButton = document.createElement('button');
-    chooseButton.textContent = 'Elegir';
-    chooseButton.addEventListener('click', () => {
-        name.value = kebab.nombre;
-        precio.value = kebab.precio;
-        id.value = kebab.id;
-        // Limpia el mensaje de error
-        errorMessage.textContent = '';
-
-        photoid = kebab.foto;
-        // Crear un elemento canvas
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
-
-        // Establecer las dimensiones del canvas
-        canvas.width = 150;
-        canvas.height = 150;
-
-        // Crear un objeto de imagen
-        const img = new Image();
-
-        // Establecer la URL de la imagen usando la propiedad 'Ingrediente.foto'
-        img.onload = function () {
-            // Dibujar la imagen en el canvas cuando la carga esté completa
-            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-        };
-
-        // Establecer el src de la imagen (ruta de la foto)
-        img.src = kebab.foto;
+        img.src = Ingrediente.foto;
 
         // Agregar el canvas al contenedor
         previewContainer.appendChild(canvas);
 
-        ingredientesList.querySelectorAll('.ingrediente').forEach(ingrediente => {
-            kebab.ingredientes.forEach(element => {
-                if (ingrediente.dataset.name[0] == element.id) {
-                    ingredientesList.removeChild(ingrediente);
-                    ingredientesIncluidosList.appendChild(ingrediente);
+        alergenosList.querySelectorAll('.ingrediente').forEach(alergeno => {
+            Ingrediente.alergenos.forEach(element => {
+                if (alergeno.dataset.name[0] == element.id) {
+                    alergenosList.removeChild(alergeno);
+                    alergenosIncluidosList.appendChild(alergeno);
                 }
             });
         });
@@ -289,16 +243,16 @@ AllKebabs.forEach(kebab => {
 
 btnguardar.addEventListener('click', function () {
     if (id.value.length > 0) {
-        AllKebabs.forEach(kebab => {
-            if (kebab.id == id.value) {
-                let ingredientes = [];
-                kebab.nombre = name.value;
-                kebab.precio = precio.value;
-                kebab.foto = imagenEn64;
-                ingredientesIncluidosList.querySelectorAll('.ingrediente').forEach(ingrediente => {
-                    Allingredientes.forEach(element => {
-                        if (ingrediente.dataset.name[0] == element.id) {
-                            ingredientes.push(element);
+        AllIngredientes.forEach(Ingrediente => {
+            if (Ingrediente.id == id.value) {
+                let alergenos = [];
+                Ingrediente.nombre = name.value;
+                Ingrediente.precio = precio.value;
+                Ingrediente.foto = Ingrediente.nombre + '.png';
+                alergenosIncluidosList.querySelectorAll('.ingrediente').forEach(alergeno => {
+                    Allalergenos.forEach(element => {
+                        if (alergeno.dataset.name[0] == element.id) {
+                            alergenos.push(element);
                         }
                     });
                 });
@@ -322,26 +276,28 @@ btnguardar.addEventListener('click', function () {
                     responseDiv.innerHTML = `<p>No has seleccionado ninguna foto.</p>`;
                 }
 
-                kebab.ingredientes = ingredientes;
-                Kebab.updateKebab(kebab);
+                Ingrediente.alergenos = alergenos;
+                Ingredientes.updateIngrediente(Ingrediente);
             }
         });
     } else {
-        let ingredientes = [];
-        ingredientesIncluidosList.querySelectorAll('.ingrediente').forEach(ingrediente => {
-            Allingredientes.forEach(element => {
-                if (ingrediente.dataset.name[0] == element.id) {
-                    ingredientes.push(element);
+        let alergenos = [];
+        alergenosIncluidosList.querySelectorAll('.ingrediente').forEach(alergeno => {
+            Allalergenos.forEach(element => {
+                if (alergeno.dataset.name[0] == element.id) {
+
+                    alergenos.push(element);
                 }
             });
         });
-        Kebab.createKebab(name.value, imagenEn64, ingredientes, precio.value);
+
+        Ingredientes.createIngrediente(name.value, precio.value, alergenos, imagenEn64);
     }
 });
 
 btnEliminar.addEventListener('click', function () {
     if (id.value.length > 0) {
-        Kebab.deleteKebab(id.value);
+        // Ingredientes.deleteKebab(id.value);
 
         // Limpiar todos los campos de texto (input) y áreas de texto (textarea)
         const inputs = document.querySelectorAll('input[type="text"], input[type="file"], textarea');
@@ -362,41 +318,43 @@ btnEliminar.addEventListener('click', function () {
         removePhotoButton.style.display = 'none'; // Oculta el botón de eliminar
         errorMessage.textContent = ''; // Limpia cualquier mensaje de error
 
-        // Limpiar la lista de ingredientes incluidos (si se requiere)
+        // Limpiar la lista de alergenos incluidos (si se requiere)
 
-        ingredientesIncluidosList.innerHTML = ''; // Borra los ingredientes incluidos
-        ingredientesList.innerHTML = ''; // Borra Todos los ingredientes
+        alergenosIncluidosList.innerHTML = ''; // Borra los alergenos incluidos
+        alergenosList.innerHTML = ''; // Borra Todos los alergenos
 
-        Allingredientes.forEach(ingrediente => {
-            const ingredienteDiv = document.createElement('div');
-            ingredienteDiv.className = "ingrediente";
+        Allalergenos.forEach(alergeno => {
+            const alergenosDiv = document.createElement('div');
+            alergenosDiv.className = "ingrediente";
 
-            // Establecer el src de la imagen (ruta de la foto)
-            foto.src = ingrediente.foto;
             // Crear la imagen
-            foto.alt = ingrediente.nombre;
+            const foto = document.createElement('canvas');
+            foto.src = '../../assets/img/alergeno/' + alergeno.foto;
+            foto.alt = alergeno.nombre;
             foto.style.width = '40px';  // Opcional: establecer tamaño de la imagen
             foto.style.height = '40px'; // Opcional: establecer tamaño de la imagen
+
             // Añadir la imagen al div
-            ingredienteDiv.appendChild(foto);
+            alergenosDiv.appendChild(foto);
 
             // Añadir el nombre y precio
             const nombrePrecio = document.createElement('p');
-            nombrePrecio.textContent = ` ${ingrediente.nombre} -> ${ingrediente.precio} €`;
+            nombrePrecio.textContent = ` ${alergeno.nombre}`;
 
             // Añadir el texto al div
-            ingredienteDiv.appendChild(nombrePrecio);
+            alergenosDiv.appendChild(nombrePrecio);
 
-            ingredienteDiv.draggable = true;
-            ingredienteDiv.dataset.name = ingrediente.id; // Identificador único
+            alergenosDiv.draggable = true;
+            alergenosDiv.dataset.name = alergeno.id; // Identificador único
 
-            ingredientesList.appendChild(ingredienteDiv);
+            alergenosList.appendChild(alergenosDiv);
         });
 
         precio.innerHTML = ''; // Borra el precio
         name.innerHTML = '';
     }
 });
+
 
 /**
    * Método que abre el editor con la imagen seleccionada

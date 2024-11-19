@@ -7,9 +7,14 @@ $requesmethod = $_SERVER['REQUEST_METHOD'];
 
 switch ($requesmethod) {
     case 'GET':
-        $id = $_GET['id'];
-        $alergeno = AlergenosRep::getbyId($id);
-        echo json_encode($alergeno);
+        if ($_GET['id'] == 'All') {
+            $alergenos = AlergenosRep::getAll();
+            echo json_encode($alergenos);
+        } else {
+            $id = $_GET['id'];
+            $alergeno = AlergenosRep::getbyId($id);
+            echo json_encode($alergeno);
+        }
         break;
     case 'POST':
         $data = json_decode(file_get_contents('php://input'));

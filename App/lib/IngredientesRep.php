@@ -71,9 +71,9 @@ class IngredientesRep implements ICRUD
             $con->beginTransaction();
 
             // Insertar ingrediente
-            $sql = 'insert into ingredientes(id, nombre, precio, foto) values (?, ?, ?)';
+            $sql = 'insert into ingredientes(nombre, precio, foto) values (?, ?, ?)';
             $stmt = $con->prepare($sql);
-            $stmt->execute([$ingrediente->id, $ingrediente->nombre, $ingrediente->precio, $ingrediente->foto]);
+            $stmt->execute([$ingrediente->nombre, $ingrediente->precio, $ingrediente->foto]);
 
             $nuevoID = $con->lastInsertId();
 
@@ -137,6 +137,8 @@ class IngredientesRep implements ICRUD
         $con = Connection::getConection();
         $sql = 'update ingredientes set nombre=?, precio=?, foto=? where id=?;';
         $stmt = $con->prepare($sql);
+        self::deleteAllAlergenosbyIngrediente($ingrediente);
+        self::addAlergenoIngrediente($ingrediente);
         $stmt->execute([$ingrediente->nombre, $ingrediente->precio, $ingrediente->foto, $ingrediente->id]);
     }
 
@@ -157,5 +159,25 @@ class IngredientesRep implements ICRUD
         }
 
         return $array;
+    }
+
+    static public function addAlergenoIngrediente($ingrediente)
+    {
+        $con = Connection::getConection();
+
+        $sql = 'insert into ingredientes_has_alergenos(id_ingrediente, id_alergenos) values (?, ?)';
+        $stmt = $con->prepare($sql);
+        foreach ($ingrediente->alergenos as $a) {
+            $stmt->execute([$ingrediente->id, $a->id]);
+        }
+    }
+
+    static public function deleteAllAlergenosbyIngrediente($ingrediente)
+    {
+        $con = Connection::getConection();
+
+        $sql = 'delete from  ingredientes_has_alergenos where id_ingrediente=?';
+        $stmt = $con->prepare($sql);
+        $stmt->execute([$ingrediente->id]);
     }
 }

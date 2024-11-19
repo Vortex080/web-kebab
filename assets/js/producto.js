@@ -6,6 +6,8 @@ const precio = document.getElementById('product-price');
 const btnaddcart = document.getElementById('carrito-btn');
 const kebab = JSON.parse(document.getElementById('productosql').value);
 const iduser = document.getElementById('user').value;
+const productimage = document.getElementById('product-image');
+
 
 
 const user = await User.getUser(iduser);
@@ -15,7 +17,7 @@ ingredientesLista.forEach(ingrediente => {
     ingredienteDiv.className = "ingrediente";
     // Crear la imagen
     const foto = document.createElement('img');
-    foto.src = '../../assets/img/ingrediente/' + ingrediente.foto;
+    foto.src = ingrediente.foto;
     foto.alt = ingrediente.nombre;
     foto.style.width = '40px';  // Opcional: establecer tamaño de la imagen
     foto.style.height = '40px'; // Opcional: establecer tamaño de la imagen
@@ -99,8 +101,19 @@ personalizarbtn.addEventListener('click', function () {
                 const divIngrediente = document.createElement("div");
                 divIngrediente.className = "ingrediente";
                 // Crear la imagen
-                const foto = document.createElement('img');
-                foto.src = '../../assets/img/ingrediente/' + all.foto;
+                // Crear un objeto de imagen
+                const foto = new Image();
+
+                // Establecer la URL de la imagen usando la propiedad 'Ingrediente.foto'
+                foto.onload = function () {
+                    // Dibujar la imagen en el canvas cuando la carga esté completa
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                };
+
+                // Establecer el src de la imagen (ruta de la foto)
+                foto.src = all.foto;
+
+
                 foto.alt = all.nombre;
                 foto.style.width = '40px';  // Opcional: establecer tamaño de la imagen
                 foto.style.height = '40px'; // Opcional: establecer tamaño de la imagen
@@ -231,3 +244,24 @@ btnaddcart.addEventListener('click', async function () {
     user.carrito = array;
     User.updateUserUser(user);
 });
+
+
+const canvas = document.createElement('canvas');
+const ctx = canvas.getContext('2d');
+
+// Establecer las dimensiones del canvas (ajústalas a lo que necesites)
+canvas.width = 150;
+canvas.height = 150;
+
+// Crear un objeto de imagen
+const img = new Image();
+
+// Establecer la URL de la imagen usando la propiedad 'Ingrediente.foto'
+img.onload = function () {
+    // Dibujar la imagen en el canvas cuando la carga esté completa
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+};
+// Establecer el src de la imagen (ruta de la foto)
+img.src = kebab.foto;
+
+productimage.appendChild(canvas);

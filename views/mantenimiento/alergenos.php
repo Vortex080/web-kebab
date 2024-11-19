@@ -1,6 +1,4 @@
 <link rel="stylesheet" href="../../assets/css/mantenimiento-kebab.css">
-<script src="https://cdn.jsdelivr.net/gh/jamesssooi/Croppr.js@2.3.0/dist/croppr.min.js"></script>
-<link href="https://cdn.jsdelivr.net/gh/jamesssooi/Croppr.js@2.3.0/dist/croppr.min.css" rel="stylesheet" />
 <style>
     .preview img {
         max-width: 200px;
@@ -46,7 +44,7 @@
     <div id="modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2>Lista de Kebabs</h2>
+                <h2>Lista de Alergenos</h2>
                 <button class="close-btn" id="closeModalBtn">&times;</button>
             </div>
             <div class="list-container" id="listContainer">
@@ -54,29 +52,11 @@
             </div>
         </div>
     </div>
-    <!-- Modal para el editor de imágenes -->
-    <div class="imagemodal" tabindex="-1" id="imageModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">2 Recorta</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-
-                    <div class="editor" id="editor"></div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" id="closeModalBtnPhoto" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="container">
         <!-- Foto y Nombre en la misma línea -->
         <input type="hidden" name="id" id="id">
-        <h2 class="container-title">Mantenimiento Kebab</h2>
-        <button id="openModalBtn">Editar Kebab</button>
+        <h2 class="container-title">Mantenimiento Alergenos</h2>
+        <button id="openModalBtn">Editar Alergeno</button>
         <div class="flex-row">
             <div class="foto-section">
                 <label for="foto">Foto</label>
@@ -85,7 +65,7 @@
                     <input type="file" id="foto" accept="image/*" />
                 </form>
                 <div id="preview" class="preview">
-                    <canvas class="foto" id="preview-final"></canvas>
+                    <!-- La imagen seleccionada aparecerá aquí -->
                 </div>
                 <div id="error-message" class="error"></div>
             </div>
@@ -110,13 +90,13 @@
         <!-- Ingredientes Incluidos y Todos los Ingredientes en la misma línea -->
         <div class="flex-row">
             <div class="ingredientes-incluidos">
-                <label>Ingredientes Incluidos</label>
+                <label>Alergenos incluidos</label>
                 <div class="ingredientes-list" id="ingredientes-incluidos-list">
                     <!-- Aquí se añadirán los ingredientes incluidos -->
                 </div>
             </div>
             <div class="todos-ingredientes">
-                <label>Todos los Ingredientes</label>
+                <label>Todos los Alergenos</label>
                 <div class="ingredientes-list" id="todos-ingredientes-list">
                 </div>
             </div>

@@ -32,7 +32,6 @@ switch ($requesmethod) {
         $id = $_GET['id'];
         $data = json_decode(file_get_contents('php://input'));
         $kebab = new Kebab($data->nombre, $data->foto, $data->ingredientes, $data->precio, $id);
-        var_dump($kebab);
         $result = KebabRep::update($kebab);
         echo json_encode(["success" => $result, "data" => $kebab]);
         break;

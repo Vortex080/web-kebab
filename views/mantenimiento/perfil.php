@@ -1,5 +1,24 @@
 <link rel="stylesheet" href="../../assets/css/perfil.css">
+<script src="https://cdn.jsdelivr.net/gh/jamesssooi/Croppr.js@2.3.0/dist/croppr.min.js"></script>
+<link href="https://cdn.jsdelivr.net/gh/jamesssooi/Croppr.js@2.3.0/dist/croppr.min.css" rel="stylesheet" />
+<!-- Modal para el editor de imágenes -->
+<div class="imagemodal" tabindex="-1" id="imageModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">2 Recorta</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
 
+                <div class="editor" id="editor"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="closeModalBtnPhoto" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="centering-container">
     <div class="container">
         <div class="main">
@@ -29,12 +48,12 @@
                             <button id="cerrarbtn">Cerrar</button>
                         </div>
                     </div>
-                    <div class="form-group" id="profile-picture-container">
+                    <div class="form-group" id="preview">
                         <label for="profile-picture">Foto de Perfil:</label>
                         <input type="file" id="profile-picture" name="profile-picture" disabled />
                     </div>
                     <div class="preview-container">
-                        <img id="preview" src="https://via.placeholder.com/150" alt="Vista previa de la foto de perfil" />
+                        <canvas class="foto" id="preview-final"></canvas>
                     </div>
                     <div class="form-actions">
                         <button type="button" id="editButton" class="btn edit-btn">Editar</button>

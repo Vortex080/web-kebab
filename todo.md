@@ -1,6 +1,7 @@
 # TODO
 
 ## VISTAS KEBAB WEB
+- [ ] Vista de inicio
 - [x] Añadir session user
 - [x] Pantalla producto
     - [x] Coger datos de la base de datos
@@ -15,7 +16,7 @@
     - [x] Actualizar los alergenos cuando se cambien los ingredientes
 - [ ] Mantenimiento de kebab
     - [x] Redistribución html y css
-    - [ ] Botones funcionamiento
+    - [x] Botones funcionamiento
       - [x] Limpiar datos
       - [x] Cancelar
       - [x] Guardar datos
@@ -23,9 +24,9 @@
         - [x] Crear kebabs
     - [x] Coger datos de la base de datos
     - [x] Poder elegir el kebab y editarlo
-- [ ] Menu usuario
+- [x] Menu usuario
     - [x] Monedero
-    - [ ] Mantenimiento usuario
+    - [x] Mantenimiento usuario
     - [x] Entrada a la intranet
 - [ ] Mantenimiento Ingredientes
 - [ ] Mantenimiento Alergenos

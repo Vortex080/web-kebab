@@ -30,10 +30,8 @@ switch ($requesmethod) {
         break;
     case 'PUT':
         $id = $_GET['id'];
-        $nombre = $_GET['nombre'];
-        $precio = $_GET['precio'];
-        $alergenos = AlergenosRep::getAllbyingrediente($id);
-        $ingrediente = new Ingredientes($nombre, $precio, $foto, $id, $alergenos);
+        $data = json_decode(file_get_contents('php://input'));
+        $ingrediente = new Ingredientes($data->nombre, $data->precio, $data->foto, $id, $data->alergenos);
         $result = IngredientesRep::update($ingrediente);
         echo json_encode(["success" => $result, "data" => $ingrediente]);
         break;

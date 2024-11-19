@@ -14,11 +14,12 @@
         $user = $_SESSION['user'];
         echo '
         <input type="hidden" id="user" value=' . $user->id . '>
-        <img id="carrito" class="carrito" src="../../assets/img/carrito.png" alt="user" loading="lazy" >
+        <div>
+            <img id="carrito" class="carrito" src="../../assets/img/carrito.png" alt="user" loading="lazy" >
+        </div>
         <div class="user-menu">
             <button class="user-btn" id="user-btn">
                 <div class="user-photo" id="userphoto">
-                    <img src="../../assets/img/users/' . $user->id . '.jpg" alt="user" loading="lazy">
                 </div>
             </button>
             <div class="submenu">
@@ -45,11 +46,11 @@ switch (LogIn::statusLogin()) {
             echo '
             <nav class="nav2-admin">
                 <ul class="nav-links-admin">
-                    <li><a href="?admin=kebab">Kebabs</a></li>
                     <li><a href="?admin=usuarios">Usuarios</a></li>
-                    <li><a href="?admin=alergenos">Alegenos</a></li>
+                    <li><a href="?admin=kebab">Kebabs</a></li>
                     <li><a href="?admin=ingredientes">Ingredientes</a></li>
-                    <li><a href="?admin=pedidos">pedidos</a></li>
+                    <li><a href="?admin=alergenos">Alegenos</a></li>
+                    <li><a href="?admin=pedidos">Pedidos</a></li>
                 </ul>
             </nav>';
         }

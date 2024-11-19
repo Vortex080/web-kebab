@@ -16,7 +16,7 @@
     justify-content: center;
 }
 
-.product-image img {
+.product-image canvas {
     max-width: 100%;
     border-radius: 5px;
 }
