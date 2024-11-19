@@ -217,8 +217,7 @@ btnaddcart.addEventListener('click', async function () {
         final = preciocaltulado;
     }
 
-    const foto = document.getElementById('foto').src;
-    const producto = JSON.stringify({ nombre: name, precio: parseInt(final), ingredientes: ingredientesjson, foto: foto, cantidad: parseInt(quantity) });
+
     kebab.precio = parseInt(final);
     let ids = [];
     allingredientes.forEach(ingrediente => {
@@ -228,7 +227,6 @@ btnaddcart.addEventListener('click', async function () {
             }
         });
     });
-
     kebab.ingredientes = ids;
     //console.log('kebab modificado');
     //console.log(JSON.stringify(kebab));

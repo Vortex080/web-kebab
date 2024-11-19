@@ -83,7 +83,7 @@ export async function updateUserUser(user) {
         }
 
         // Procesamos la respuesta del servidor
-        const data = await response.json();
+        const data = await response.text();
         console.log('User actualizado:', data);
     } catch (error) {
         console.log('Error al actualizar el user:', error);

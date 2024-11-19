@@ -143,7 +143,16 @@ const errorMessage = document.getElementById('error-message');
 const MAX_SIZE = 2 * 1024 * 1024; // 2 MB en bytes
 const base64 = '';
 
- 
+
+// Nodo donde estará el editor
+const editor = document.querySelector('#editor');
+// El canvas donde se mostrará la previa
+const miCanvas = document.querySelector('#preview-final');
+// Contexto del canvas
+const contexto = miCanvas.getContext('2d');
+// Ruta de la imagen seleccionada
+let urlImage = undefined;
+const RecortarModal = document.getElementById('imageModal');
 
 
 
@@ -248,7 +257,7 @@ btnguardar.addEventListener('click', function () {
                 let alergenos = [];
                 Ingrediente.nombre = name.value;
                 Ingrediente.precio = precio.value;
-                Ingrediente.foto = Ingrediente.nombre + '.png';
+                Ingrediente.foto = imagenEn64;
                 alergenosIncluidosList.querySelectorAll('.ingrediente').forEach(alergeno => {
                     Allalergenos.forEach(element => {
                         if (alergeno.dataset.name[0] == element.id) {

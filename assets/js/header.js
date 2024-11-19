@@ -23,3 +23,10 @@ img.onload = function () {
 img.src = user.foto;
 
 userphoto.appendChild(canvas);
+
+
+const carrito = document.getElementById('carrito');
+
+carrito.addEventListener('click', () => {
+    window.location.href = '?menu=carrito';
+});

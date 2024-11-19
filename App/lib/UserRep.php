@@ -175,15 +175,6 @@ class UserRep implements ICRUD
                 // Limpiar barras invertidas duplicadas
                 $data = stripslashes($data);
             }
-            echo 'carrito ';
-            var_dump($data);
-            echo '<br>';
-            array_push($decode, $user->carrito);
-            echo '<br>';
-
-            array_push($decode, $carrito);
-            echo '<br>';
-            //echo 'decode' . var_dump($decode);
         }
         // Insertar usuario
         $sql = 'update usuario set nombre=?, pass=?, monedero=?, foto=?, direction=?, rol=?, email=?, carrito=? where id=' . $user->id . ';';

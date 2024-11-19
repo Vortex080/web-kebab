@@ -46,11 +46,8 @@ switch (LogIn::statusLogin()) {
             echo '
             <nav class="nav2-admin">
                 <ul class="nav-links-admin">
-                    <li><a href="?admin=usuarios">Usuarios</a></li>
                     <li><a href="?admin=kebab">Kebabs</a></li>
                     <li><a href="?admin=ingredientes">Ingredientes</a></li>
-                    <li><a href="?admin=alergenos">Alegenos</a></li>
-                    <li><a href="?admin=pedidos">Pedidos</a></li>
                 </ul>
             </nav>';
         }

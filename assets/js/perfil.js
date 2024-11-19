@@ -20,14 +20,16 @@ const añadirMonedero = document.getElementById('añadirMonedero');
 
 const dineroinp = document.getElementById('dineroinp');
 const cerrarbtn = document.getElementById('cerrarbtn');
-const previewContainer = document.getElementById('preview');
+const previewContainer = document.getElementById('preview-container');
 let imagenEn64 = '';
 const RecortarModal = document.getElementById('imageModal');
 const closeModal = document.getElementById('closeModalBtnPhoto');
 // Nodo donde estará el editor
 const editor = document.querySelector('#editor');
 // El canvas donde se mostrará la previa
-const miCanvas = document.querySelector('#preview-final');
+const miCanvas = document.createElement('canvas');
+miCanvas.className = 'foto';
+
 // Contexto del canvas
 const contexto = miCanvas.getContext('2d');
 // Ruta de la imagen seleccionada
@@ -54,6 +56,8 @@ img.onload = function () {
 };
 // Establecer el src de la imagen (ruta de la foto)
 img.src = user.foto;
+
+canvas.className = 'foto';
 
 // Agregar el canvas al contenedor
 previewContainer.appendChild(canvas);
@@ -82,7 +86,7 @@ function cancelEditing() {
     password.disabled = true;
     foto.disabled = true;
     inpuitfoto.disabled = true;
-    profilePictureContainer.style.display = 'none'; // Ocultar el campo de foto de perfil
+    //profilePictureContainer.style.display = 'none'; // Ocultar el campo de foto de perfil
     editButton.style.display = 'inline-block'; // Mostrar el botón "Editar"
     saveButton.style.display = 'none'; // Ocultar el botón "Guardar"
     cancelButton.style.display = 'none'; // Ocultar el botón "Cancelar"
@@ -119,7 +123,8 @@ cerrarbtn.addEventListener('click', () => {
 // Asignar eventos a los botones
 editButton.addEventListener('click', enableEditing);
 cancelButton.addEventListener('click', cancelEditing);
-profileForm.addEventListener('submit', saveChanges);
+saveButton.addEventListener('click', saveChanges);
+
 inpuitfoto.addEventListener('change', abrirEditor, false);
 
 const modalOverlay = document.getElementById('modalOverlay');
@@ -199,6 +204,23 @@ function recortarImagen(data) {
 
 closeModal.addEventListener('click', () => {
     RecortarModal.style.display = 'none';
+    previewContainer.innerHTML = '';
+    previewContainer.appendChild(miCanvas);
 
+});
 
+// Seleccionar el botón y el modal
+const openModalButton = document.getElementById('abrirDirecction');
+const modal = document.getElementById('modal-direcction');
+
+// AgrabrirDirecctiongar evento al botón para mostrar el modal
+openModalButton.addEventListener('click', () => {
+    modal.style.display = 'flex'; // Mostrar el modal
+});
+
+// Opción abrirDirecctiondicional: cerrar el modal al hacer clic fuera de él
+modal.addEventListener('click', (event) => {
+    if (event.target === modal) {
+        modal.style.display = 'none'; // Ocultar el modal
+    }
 });
