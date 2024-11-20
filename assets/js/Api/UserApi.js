@@ -22,7 +22,7 @@ export async function createUser(nombre, pass, monedero, foto, direcction, alerg
             const errorMessage = await request.json(); // Obtener texto de la respuesta si hay error
             throw new Error(`Error ${request.status}: ${errorMessage}`);
         }
-        const data = await request.text();
+        const data = await request.json();
         console.log(data);
     } catch (error) {
         console.log('Error al crear el user ', error);
@@ -83,7 +83,7 @@ export async function updateUserUser(user) {
         }
 
         // Procesamos la respuesta del servidor
-        const data = await response.text();
+        const data = await response.json();
         console.log('User actualizado:', data);
     } catch (error) {
         console.log('Error al actualizar el user:', error);
@@ -162,10 +162,10 @@ export async function carritoSession(kebab) {
         });
         // Verificamos si la respuesta fue exitosa
         if (!request.ok) {
-            const errorMessage = await request.text(); // Obtener texto de la respuesta si hay error
+            const errorMessage = await request.json(); // Obtener texto de la respuesta si hay error
             throw new Error(`Error ${request.status}: ${errorMessage}`);
         }
-        const data = await request.text();
+        const data = await request.json();
         console.log(data);
     } catch (error) {
         console.log('Error al crear el user ', error);

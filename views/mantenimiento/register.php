@@ -2,7 +2,7 @@
 <div class="content">
     <div class="caja">
         <h2 class="hiniciosession">Registro</h2>
-        <form action="index.php?menu=session" method="POST" id="form-reg">
+        <form action="index.php?menu=registerr" method="POST" id="form-reg">
             <label for="email">E-mail</label>
             <input type="text" id="email" name="email" placeholder="Introduce tu correo">
             <div class="warning"><p id="ewarning"></p></div>

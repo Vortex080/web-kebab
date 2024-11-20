@@ -28,16 +28,15 @@
     - [x] Monedero
     - [x] Mantenimiento usuario
     - [x] Entrada a la intranet
-- [ ] Mantenimiento Ingredientes
-- [ ] Mantenimiento Alergenos
-- [ ] Vistas Administrador (Plantear)
+- [X] Mantenimiento Ingredientes
+- [x] Vistas Administrador (Plantear)
 - [ ] Vista Contacto para envia correo
 - [x] Descripción producto en menu
-- [ ] Carrito
-  - [ ] Eliminar producto
-  - [ ] Guardar carrito
-  - [ ] Pago carrito
-- [ ] Guardar fotos
+- [x] Carrito
+  - [x] Eliminar producto
+  - [x] Guardar carrito
+  - [x] Pago carrito
+- [x] Guardar fotos
 
 ## Features
 - [x] PHP Mailer

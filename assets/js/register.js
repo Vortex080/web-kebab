@@ -14,6 +14,62 @@ import * as Direction from "./Api/DirectionApi.js";
 
 // Variables temporales
 let temp = 0;
+let warning = "";
+
+email.addEventListener('input', async function (e) {
+    e.preventDefault;
+    warning = "";
+    let regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
+    // Verificar si el email es valido
+    if (!regex.test(emailr.value)) {
+        warning += "El email ingresado no es valido";
+        ewarning.innerHTML = warning;
+
+    } else {
+        ewarning.innerHTML = "";
+        const usuarios = await User.getAll();
+        let val = false;
+        usuarios.forEach((element) => {
+            if (element.email == emailr.value) {
+                val = true;
+            } else {
+                ewarning.innerHTML = "";
+                temp++;
+            }
+        });
+
+        if (val == true) {
+            warning += "El email ya esta en uso";
+            ewarning.innerHTML = warning;
+        }
+    }
+})
+
+password.addEventListener('input', async function (e) {
+    warning = "";
+    // Verificar si la contraseña es valida
+
+    if (password.value.length < 8) {
+        warning += "La contraseña debe tener al menos 8 caracteres";
+        pwarning.innerHTML = warning;
+    } else {
+        pwarning.innerHTML = "";
+        temp++;
+    }
+});
+
+password2.addEventListener('input', function (e) {
+    warning = "";
+    // Verificar si las contraseñas son iguales
+    if (password.value !== password2.value) {
+        warning += "Las contraseñas no coinciden";
+        ppwarning.innerHTML = warning;
+    } else {
+        ppwarning.innerHTML = "";
+        temp++;
+    }
+});
 
 
 nextBtn.addEventListener('click', async function (e) {
@@ -74,8 +130,6 @@ nextBtn.addEventListener('click', async function (e) {
     }
     console.log(temp);
     if (temp >= 4) {
-        let dir = await Direction.getDirection(1);
-        User.createUser(namer.value, password.value, 0.1, 'foto', dir, [], emailr.value, 'usuario')
         form.submit();
     }
 

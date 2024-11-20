@@ -11,7 +11,7 @@ $ingredientes = IngredientesRep::getAll();
     <input type="hidden" id="allingredientes" value='<?php echo json_encode($ingredientes); ?>'>
     <input type="hidden" id="productosql" value='<?php echo json_encode($kebab); ?>'>
     <div class="product-image" id="product-image">
-        
+
     </div>
     <div class="product-details">
         <h1 class="product-title" id="product-title"><?php echo $kebab->nombre; ?></h1>
@@ -30,24 +30,10 @@ $ingredientes = IngredientesRep::getAll();
 
             </div>
         </div>
-
-        <div class="product-options">
-            <label for="quantity">Cantidad:</label>
-            <select id="quantity">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-            </select>
-        </div>
-
         <div class="buy-buttons">
             <button class="add-to-cart" id="carrito-btn">Agregar al carrito</button>
             <button class="buy-now" id="per-btn">Personalizar</button>
         </div>
-
-
-
     </div>
     <div>
         <div class="todos-ingredientes" id='ingredientes-div'>

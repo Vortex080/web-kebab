@@ -40,6 +40,12 @@ if (isset($_GET['menu'])) {
     if ($_GET['menu'] == "perfil") {
         require_once './views/mantenimiento/perfil.php';
     }
+    if ($_GET['menu'] == "compra") {
+        require_once './views/mantenimiento/compra.php';
+    }
+    if ($_GET['menu'] == "registerr") {
+        require_once './App/helpers/createRegister.php';
+    }
 }
 
 if (isset($_GET['admin'])) {

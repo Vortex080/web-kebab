@@ -67,12 +67,10 @@ function alergenos(ingredientesLista) {
         if (element.alergenos.length > 0) {
             element.alergenos.forEach(alerg => {
                 const icon = document.createElement('img');
-                console.log(alerg.foto);
                 icon.src = '../../assets/img/alergenos/' + alerg.foto;
                 icon.alt = alerg.nombre;
                 icon.title = alerg.nombre;
                 allergen.appendChild(icon);
-                console.log(element);
             });
         }
     });
@@ -202,7 +200,7 @@ function calcularPrecio(precio, selectedIngredients) {
 
 btnaddcart.addEventListener('click', async function () {
     const name = document.getElementById('product-title').innerHTML;
-    const quantity = document.getElementById('quantity').value;
+    //const quantity = document.getElementById('quantity').value;
     ingredientes.querySelectorAll('.ingrediente').forEach(ingrediente => {
         selectedIngredients.push({
             id: ingrediente.dataset.name[0],
@@ -228,18 +226,44 @@ btnaddcart.addEventListener('click', async function () {
         });
     });
     kebab.ingredientes = ids;
-    //console.log('kebab modificado');
-    //console.log(JSON.stringify(kebab));
+
     let array = [];
+    let i = 0;
     if (user.carrito.length > 0) {
-        array = JSON.parse(user.carrito);
+        let carrito = JSON.parse(user.carrito);
+        carrito.forEach(element => {
+            if (element.id == kebab.id) {
+                if (element.ingredientes.length == kebab.ingredientes.length) {
+                    element.ingredientes.forEach(ingrediente => {
+                        kebab.ingredientes.forEach(kebabingrediente => {
+                            if (ingrediente.id == kebabingrediente.id) {
+                                i++;
+                            }
+                        });
+
+                    });
+                    if (i == kebab.ingredientes.length) {
+                        element.cantidad = element.cantidad + 1;
+                        user.carrito = carrito;
+                    } else {
+                        element.cantidad = 1;
+                        user.carrito = carrito;
+                    }
+                }
+            } else {
+                kebab.cantidad = 1;
+                array = JSON.parse(user.carrito);
+                array.push(kebab);
+                user.carrito = array;
+
+            }
+        });
+    } else {
+        kebab.cantidad = 1;
         array.push(kebab);
         user.carrito = array;
-    } else {
-        array.push(kebab);
     }
 
-    user.carrito = array;
     User.updateUserUser(user);
 });
 

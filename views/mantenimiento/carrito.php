@@ -9,9 +9,9 @@
         </div>
         <div class="cart-summary">
             <h2>Resumen</h2>
-            <p>Total: <span>50€</span></p>
-            <button class="checkout">Finalizar Compra</button>
-            <button class="close-cart" id="close-cart">Seguir Comprando</button>
+            <p>Total: <span id="precio-total"></span></p>
+            <button class="checkout" id="checkout-btn">Finalizar Compra</button>
+            <button class="close-cart"><a id="close-cart">Seguir Comprando</a></button>
         </div>
     </div>
 </div>

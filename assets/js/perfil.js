@@ -98,43 +98,14 @@ function saveChanges(event) {
 
     user.nombre = username.value;
     user.email = email.value;
-    console.log(password.value);
+
     user.pass = password.value;
     user.monedero = parseInt(monedero.value);
-    console.log(imagenEn64);
+
     user.foto = imagenEn64;
     User.updateUser(user);
 
     cancelEditing(); // Después de guardar, volver al estado de edición desactivado
-}
-
-
-añadirMonedero.addEventListener('click', () => {
-    dineroinp.disabled = false;
-    dineroinp.focus();
-    showModal();
-
-});
-cerrarbtn.addEventListener('click', () => {
-    hideModal();
-    monedero.value = parseInt(dineroinp.value) + parseInt(monedero.value);
-});
-
-// Asignar eventos a los botones
-editButton.addEventListener('click', enableEditing);
-cancelButton.addEventListener('click', cancelEditing);
-saveButton.addEventListener('click', saveChanges);
-
-inpuitfoto.addEventListener('change', abrirEditor, false);
-
-const modalOverlay = document.getElementById('modalOverlay');
-
-function showModal() {
-    modalOverlay.classList.add('active');
-}
-
-function hideModal() {
-    modalOverlay.classList.remove('active');
 }
 
 /**
@@ -201,8 +172,37 @@ function recortarImagen(data) {
     miNuevaImagenTemp.src = urlImage;
 }
 
+añadirMonedero.addEventListener('click', (event) => {
+    event.preventDefault(); // Prevenir el envío del formulario
+    dineroinp.disabled = false;
+    dineroinp.focus();
+    showModal();
+});
+cerrarbtn.addEventListener('click', (event) => {
+    event.preventDefault(); // Prevenir el envío del formulario
+    hideModal();
+    monedero.value = parseInt(dineroinp.value) + parseInt(monedero.value);
+});
 
-closeModal.addEventListener('click', () => {
+// Asignar eventos a los botones
+editButton.addEventListener('click', enableEditing);
+cancelButton.addEventListener('click', cancelEditing);
+saveButton.addEventListener('click', saveChanges);
+
+inpuitfoto.addEventListener('change', abrirEditor, false);
+
+const modalOverlay = document.getElementById('modalOverlay');
+
+function showModal() {
+    modalOverlay.classList.add('active');
+}
+
+function hideModal() {
+    modalOverlay.classList.remove('active');
+}
+
+closeModal.addEventListener('click', (event) => {
+    event.preventDefault(); // Prevenir el envío del formulario
     RecortarModal.style.display = 'none';
     previewContainer.innerHTML = '';
     previewContainer.appendChild(miCanvas);
@@ -211,16 +211,69 @@ closeModal.addEventListener('click', () => {
 
 // Seleccionar el botón y el modal
 const openModalButton = document.getElementById('abrirDirecction');
-const modal = document.getElementById('modal-direcction');
+const modaloverlaydirecction = document.getElementById('modaloverlaydirecction');
+const modaldirection = document.getElementById('modal-direcction');
 
 // AgrabrirDirecctiongar evento al botón para mostrar el modal
 openModalButton.addEventListener('click', () => {
-    modal.style.display = 'flex'; // Mostrar el modal
+    let div = document.createElement('div');
+    let direcction = user.direcction;
+    div.className = 'modal-item';
+
+    let labelname = document.createElement('label');
+    labelname.textContent = 'Dirección';
+    div.appendChild(labelname);
+
+    let br1 = document.createElement('br');
+    div.appendChild(br1);
+
+    let nameinp = document.createElement('input');
+    nameinp.value = direcction.direction;
+    div.appendChild(nameinp);
+
+    let br2 = document.createElement('br');
+    div.appendChild(br2);
+
+    let labelestado = document.createElement('label');
+    labelestado.textContent = 'Estado';
+    div.appendChild(labelestado);
+
+    let br3 = document.createElement('br');
+    div.appendChild(br3);
+
+    let estado = document.createElement('select');
+    estado.options.add(new Option('Desactivado', 'Desactivado'));
+    estado.options.add(new Option('Activo', 'Activo'));
+    if (direcction.status == 1) {
+        estado.value = 'Activo';
+    } else {
+        estado.value = 'Desactivado';
+    }
+    div.appendChild(estado);
+
+    let br4 = document.createElement('br');
+    div.appendChild(br4);
+
+    let button = document.createElement('button');
+    button.textContent = 'Guardar';
+    button.addEventListener('click', (e) => {
+        e.preventDefault();
+        direcction.direction = nameinp.value;
+        if (estado.value == 'Activo') {
+            direcction.status = 1;
+        } else {
+            direcction.status = 0;
+        }
+        modaloverlaydirecction.classList.remove('active');
+        console.log(user);
+        saveChanges(e);
+    });
+
+    div.appendChild(button);
+    modaldirection.appendChild(div);
+    modaloverlaydirecction.classList.add('active');
 });
 
 // Opción abrirDirecctiondicional: cerrar el modal al hacer clic fuera de él
-modal.addEventListener('click', (event) => {
-    if (event.target === modal) {
-        modal.style.display = 'none'; // Ocultar el modal
-    }
-});
+// modaldirecction.addEventListener('click', () => {
+// });

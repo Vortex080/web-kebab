@@ -213,17 +213,20 @@ button {
 
 /* Estilos del contenedor del modal */
 .modal {
+    display: block;
+    margin-bottom: 10px;
+    flex-direction: column;
     background: #fff;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    width: 300px;
+    min-width: 300px;
     text-align: center;
 }
 
 .modal input {
     width: 100%;
-    padding: 10px;
+    padding: 20px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -332,4 +335,13 @@ button {
 .foto {
     max-width: 200px;
     max-width: 200px;
+}
+
+
+/* Estilo de cada fila del modal */
+.modal-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 10px;
 }
