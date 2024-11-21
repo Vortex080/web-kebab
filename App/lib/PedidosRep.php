@@ -26,9 +26,10 @@ class PedidosRep implements ICRUD
     {
         $con = Connection::getConection();
         $array = [];
-        $rest = $con->query('select id, fecha, estado, precio, direcction, user, lineas from pedidos;');
+        $rest = $con->query('select id, fecha, estado, precio, direction, userid from pedidos;');
         while ($row = $rest->fetch()) {
-            $pedido = new Pedido($row['id'], $row['fecha'], $row['estado'], $row['precio'], $row['direcction'], $row['user'], $row['lineas']);
+            $lineas = self::getAllByPedido($row['id']);
+            $pedido = new Pedido($row['fecha'], $row['estado'], $row['precio'], $row['direction'], $row['userid'], $lineas, $row['id']);
             array_push($array, $pedido);
         }
 
@@ -94,8 +95,7 @@ class PedidosRep implements ICRUD
         $con = Connection::getConection();
         $sql = 'update pedidos set fecha=?,estado=?,precio=?,direction=?,userid=? where id=?;';
         $stmt = $con->prepare($sql);
-        $direcction = json_encode($pedido->direcction);
-        $stmt->execute([$pedido->fecha, $pedido->estado, $pedido->precio, $direcction, $pedido->user, $pedido->id]);
+        $stmt->execute([$pedido->fecha, $pedido->estado, $pedido->precio, $pedido->direcction, $pedido->user, $pedido->id]);
         foreach ($pedido->lineas as $linea) {
             var_dump($linea);
             LineaPedidoRep::update($linea);

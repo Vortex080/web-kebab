@@ -69,7 +69,7 @@ if (isset($_GET['admin'])) {
             require_once './views/mantenimiento/alergenos.php';
             break;
         case "pedidos":
-            require_once './views/pedidos.php';
+            require_once './views/mantenimiento/pedidos.php';
             break;
         default:
             require_once './views/index.php';

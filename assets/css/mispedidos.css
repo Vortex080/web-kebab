@@ -49,3 +49,57 @@
 .btn-cancelar:hover {
     background-color: #c0392b;
 }
+
+
+/* Contenedor del select para personalización */
+.select {
+    position: absolute;
+    width: 250px;
+    height: 40px;
+    margin: -60px 550px;
+    border-radius: 10px;
+}
+
+/* Select original ocultado */
+.select select {
+    appearance: none;
+    /* Oculta la flecha por defecto */
+    -webkit-appearance: none;
+    /* Para navegadores basados en Webkit */
+    -moz-appearance: none;
+    /* Para Firefox */
+    background: #ffffff;
+    border: 2px solid #007BFF;
+    border-radius: 8px;
+    padding: 10px 40px 10px 15px;
+    font-size: 16px;
+    color: #333;
+    width: 100%;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* Añadiendo una flecha personalizada */
+.select::after {
+    content: "▼";
+    /* Símbolo de flecha */
+    font-size: 14px;
+    color: #007BFF;
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+/* Efecto hover */
+.select select:hover {
+    border-color: #0056b3;
+}
+
+/* Efecto focus */
+.select select:focus {
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    border-color: #0056b3;
+}

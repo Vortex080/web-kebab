@@ -38,6 +38,12 @@ export async function getPedido(id) {
     return response.json();
 }
 
+export async function getPedidoAll() {
+
+    let response = await fetch(baseUrlPedido + '?id=All');
+    return response.json();
+}
+
 export async function getPedidobyUser(id) {
 
     let response = await fetch(baseUrlPedido + '?iduser=' + id);
