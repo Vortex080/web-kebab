@@ -1,0 +1,51 @@
+.pedidos {
+    max-width: 900px;
+    max-height: 100vh;
+    overflow-y: auto;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    margin: 20px auto;
+}
+
+.pedido {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.pedido h3 {
+    margin: 0 0 10px;
+}
+
+.pedido ul {
+    margin: 0;
+    padding-left: 20px;
+    list-style-type: disc;
+}
+
+.pedido ul li {
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn-cancelar {
+    /* Se muestra solo en ciertos estados */
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.btn-cancelar:hover {
+    background-color: #c0392b;
+}

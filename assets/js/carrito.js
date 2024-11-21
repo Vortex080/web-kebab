@@ -73,7 +73,6 @@ carrito.forEach(producto => {
 
     inputCantidad.addEventListener('change', function () {
         let carritoarray = JSON.parse(user.carrito);
-        console.log(carritoarray);
         for (let z = 0; z < carritoarray.length; z++) {
             if (carritoarray[z].id == producto.id) {
                 console.log(carritoarray[z]);
@@ -113,7 +112,7 @@ carrito.forEach(producto => {
     contenedor.appendChild(productItem);
 
 
-    total = total + parseInt(producto.precio);
+    total = total + (parseInt(producto.precio) * parseInt(producto.cantidad));
 
     precioTotal.innerHTML = `${total} €`;
     i++;

@@ -46,6 +46,12 @@ if (isset($_GET['menu'])) {
     if ($_GET['menu'] == "registerr") {
         require_once './App/helpers/createRegister.php';
     }
+    if ($_GET['menu'] == "pedido") {
+        require_once './App/helpers/pedido.php';
+    }
+    if ($_GET['menu'] == "mispedidos") {
+        require_once './views/mantenimiento/mispedidos.php';
+    }
 }
 
 if (isset($_GET['admin'])) {

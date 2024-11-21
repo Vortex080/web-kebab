@@ -10,7 +10,7 @@
         <div class="cart-summary">
             <h2>Resumen</h2>
             <p>Total: <span id="precio-total"></span></p>
-            <button class="checkout" id="checkout-btn">Finalizar Compra</button>
+            <button class="checkout" id="checkout-btn"><a href="?menu=compra">Finalizar Compra</a></button>
             <button class="close-cart"><a id="close-cart">Seguir Comprando</a></button>
         </div>
     </div>

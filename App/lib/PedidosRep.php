@@ -47,10 +47,10 @@ class PedidosRep implements ICRUD
         try {
             $con->beginTransaction();
 
-            $sql = 'insert into pedidos(id, fecha, estado, precio, direction, userid) values (?, ?, ?, ?, ?, ?)';
+            $sql = 'insert into pedidos(fecha, estado, precio, direction, userid) values (?, ?, ?, ?, ?)';
             $stmt = $con->prepare($sql);
             $direcion = json_encode($pedido->direcction);
-            $stmt->execute([$pedido->id, $pedido->fecha, $pedido->estado, $pedido->precio, $direcion, $pedido->user->id]);
+            $stmt->execute([$pedido->fecha, $pedido->estado, $pedido->precio, $direcion, $pedido->user]);
 
             $nuevoIdPedido = $con->lastInsertId();
             foreach ($pedido->lineas as $a) {
@@ -95,7 +95,7 @@ class PedidosRep implements ICRUD
         $sql = 'update pedidos set fecha=?,estado=?,precio=?,direction=?,userid=? where id=?;';
         $stmt = $con->prepare($sql);
         $direcction = json_encode($pedido->direcction);
-        $stmt->execute([$pedido->fecha, $pedido->estado, $pedido->precio, $direcction, $pedido->user->id, $pedido->id]);
+        $stmt->execute([$pedido->fecha, $pedido->estado, $pedido->precio, $direcction, $pedido->user, $pedido->id]);
         foreach ($pedido->lineas as $linea) {
             var_dump($linea);
             LineaPedidoRep::update($linea);
@@ -113,6 +113,21 @@ class PedidosRep implements ICRUD
         $rest = $con->query('select id, cantidad, producto, precio from lineapedido where pedidoid=' . $id . ';');
         while ($row = $rest->fetch()) {
             $pedido = new LineaPedido($row['cantidad'], $row['producto'], $row['precio'], $id, $row['id']);
+            array_push($array, $pedido);
+        }
+
+        return $array;
+    }
+
+    static public function getbyUser($id)
+    {
+
+        $con = Connection::getConection();
+        $array = [];
+        $rest = $con->query('select id, fecha, estado, precio, direction, userid from pedidos where userid = ' . $id . ';');
+        while ($row = $rest->fetch()) {
+            $lineas = self::getAllByPedido($row['id']);
+            $pedido = new Pedido($row['fecha'], $row['estado'], $row['precio'], $row['direction'], $row['userid'], $lineas, $row['id']);
             array_push($array, $pedido);
         }
 

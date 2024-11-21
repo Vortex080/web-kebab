@@ -25,6 +25,7 @@
             <div class="submenu">
                 <a>Monedero: ' . $user->monedero . ' €</a>
                 <a href="?menu=perfil">Mi perfil</a>
+                <a href="?menu=mispedidos">Mis pedidos</a>
                 <a style="color:red" href="?menu=cierrarsession">Cerrar Sesión</a>
             </div>
         </div>

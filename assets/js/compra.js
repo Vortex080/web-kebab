@@ -8,7 +8,13 @@ const direccionHTML = document.getElementById('direccion');
 const estadoDir = document.getElementById('estado-dir');
 const rightSection = document.getElementById('right-section');
 const cartContainer = document.getElementById('cart-container');
-
+const precioHtml = document.getElementById('total');
+const monedero = document.getElementById('monedero');
+const flujemodero = document.getElementById('flujo-cuenta');
+const checkoutbtn = document.getElementById('checkout-btn');
+const modalOverlay = document.getElementById('modalOverlay');
+monedero.innerHTML = user.monedero + ' €';
+let precioTotal = 0;
 // Botón direción
 //const changeAddress = document.getElementById('change-address');
 console.log(user);
@@ -75,4 +81,30 @@ carrito.forEach(element => {
 
     cartContainer.appendChild(cartitem);
 
+    precioTotal = precioTotal + (parseInt(element.precio) * parseInt(element.cantidad));
+    precioHtml.innerHTML = precioTotal;
+    flujemodero.innerHTML = (user.monedero - parseInt(precioTotal)) + ' €';
+    if (parseInt(flujemodero.innerHTML) >= 0) {
+        flujemodero.style.fontWeight = 'bolder'
+        flujemodero.style.color = 'green';
+        checkoutbtn.classList.add('active');
+        checkoutbtn.style.display = 'flex';
+    } else {
+        flujemodero.style.color = 'red';
+        checkoutbtn.classList.remove('active')
+        const adddinero = document.createElement('button');
+        adddinero.classList.add('address-button');
+        const divdinero = document.getElementById('dinero');
+
+        divdinero.appendChild(adddinero);
+        adddinero.innerHTML = 'Añadir dinero';
+        checkoutbtn.style.display = 'none';
+        adddinero.addEventListener('click', function () {
+            window.location.href = '?menu=perfil';
+        });
+    }
+});
+
+checkoutbtn.addEventListener('click', function () {
+    window.location.href = '?menu=pedido';
 });

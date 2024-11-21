@@ -9,6 +9,7 @@ const inputs = profileForm.querySelectorAll('input');
 const profilePictureContainer = document.getElementById('profile-picture-container');
 const inpuitfoto = document.getElementById('profile-picture');
 
+
 const user = await User.getUser(iduser);
 
 const username = document.getElementById('username');
@@ -101,9 +102,15 @@ function saveChanges(event) {
 
     user.pass = password.value;
     user.monedero = parseInt(monedero.value);
-
-    user.foto = imagenEn64;
+    if (imagenEn64.length > 0) {
+        user.foto = imagenEn64;
+    }
+    let carritoarray = JSON.parse(user.carrito);
+    console.log(carritoarray);
+    user.carrito = carritoarray;
     User.updateUser(user);
+
+
 
     cancelEditing(); // Después de guardar, volver al estado de edición desactivado
 }

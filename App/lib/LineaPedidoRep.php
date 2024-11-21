@@ -82,7 +82,6 @@ class LineaPedidoRep implements ICRUD
 
         $sql = 'insert into lineapedido(cantidad, producto, precio, pedidoid) values (?, ?, ?, ?)';
         $stmt = $con->prepare($sql);
-        $producto = json_encode($l->producto);
-        $stmt->execute([$l->cantidad, $producto, $l->precio, $l->pedidoid]);
+        $stmt->execute([$l->cantidad, $l->producto, $l->precio, $l->pedidoid]);
     }
 }

@@ -30,7 +30,7 @@
     - [x] Entrada a la intranet
 - [X] Mantenimiento Ingredientes
 - [x] Vistas Administrador (Plantear)
-- [ ] Vista Contacto para envia correo
+- [ ] Vista Contacto para enviar correo
 - [x] Descripción producto en menu
 - [x] Carrito
   - [x] Eliminar producto
