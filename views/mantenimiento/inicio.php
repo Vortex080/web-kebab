@@ -8,7 +8,6 @@
             <span class="badge">MÁXIMA CALIDAD</span>
             <h2>Nuestra carne cumple con los estándares</h2>
             <p>En materia de seguridad alimentaria.</p>
-            <button class="btn">LEER MÁS</button>
         </div>
     </div>
     <div class="carousel-item">
@@ -17,26 +16,11 @@
             <span class="badge">MÁXIMA CALIDAD</span>
             <h2>Texto para otra imagen</h2>
             <p>Descripción complementaria.</p>
-            <button class="btn">LEER MÁS</button>
         </div>
     </div>
     <div class="carousel-controls">
         <span class="control prev">&#9664;</span>
         <span class="control next">&#9654;</span>
-    </div>
-</div>
-
-<!-- Sección de productos destacados -->
-<div class="products-section">
-    <div class="product">
-        <img src="pinchos.jpg" alt="Pinchos de Kebab">
-        <h3>PINCHOS DE KEBAB</h3>
-        <p>Filete Pollo Ternera</p>
-    </div>
-    <div class="product">
-        <img src="loncheado.jpg" alt="Loncheado de Kebab">
-        <h3>LONCHEADO DE KEBAB</h3>
-        <p>Carne de Kebab Pollo Ternera</p>
     </div>
 </div>
 
@@ -61,6 +45,33 @@
         <img src="../../assets/img/iconos/reparto.png" class="iconofid" alt="Máxima calidad">
         <h4>Entrega en 48-72 horas</h4>
         <p>Consulta para tu población.</p>
+    </div>
+</div>
+
+
+<div class="page-wrapper">
+    <div class="container-info">
+        <header>
+            <h1>Kebab Delight</h1>
+            <p>Auténtico sabor turco en cada bocado.</p>
+        </header>
+
+        <section class="about">
+            <h2>¿Quiénes Somos?</h2>
+            <p>
+                Kebab Delight nació en 2010 con la misión de ofrecer auténticos kebabs turcos en la región.
+                Utilizamos ingredientes frescos y recetas tradicionales que garantizan una experiencia única.
+            </p>
+        </section>
+
+        <section class="values">
+            <h2>Nuestros Valores</h2>
+            <ul>
+                <li>Calidad superior en cada ingrediente.</li>
+                <li>Respeto por la tradición culinaria turca.</li>
+                <li>Atención al cliente excepcional.</li>
+            </ul>
+        </section>
     </div>
 </div>
 
