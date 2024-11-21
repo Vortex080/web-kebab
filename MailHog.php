@@ -24,7 +24,7 @@ try {
     $mail->isHTML(true);                                  // Establecer formato de correo como HTML
     $mail->Subject = 'Correo de prueba';
 
-    $mail->addEmbeddedImage('./assets/img/laperra.jpg','imagen_cid');
+    $mail->addEmbeddedImage('./assets/img/laperra.jpg', 'imagen_cid');
     $mail->Body    = '<!DOCTYPE html>
 <html lang="es">
 <head>
