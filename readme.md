@@ -1,5 +1,9 @@
-# KEBAB AMIGO
+![Badge en Desarollo](https://img.shields.io/badge/STATUS-DESARROLLO-red)
 
+> [!IMPORTANT]
+> Este proyecto es una aplicación web que permite a los usuarios crear y gestionar sus pedidos de Kebabs.
+
+# KEBAB AMIGO
 ## Indice
 
 - [KEBAB AMIGO](#kebab-amigo)

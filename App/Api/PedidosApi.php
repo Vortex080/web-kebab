@@ -7,9 +7,22 @@ $requesmethod = $_SERVER['REQUEST_METHOD'];
 
 switch ($requesmethod) {
     case 'GET':
-        $id = $_GET['id'];
-        $pedido = PedidosRep::getbyId($id);
-        echo json_encode($pedido);
+
+        if (isset($_GET['iduser'])) {
+            $id = $_GET['iduser'];
+            $pedido = PedidosRep::getbyUser($id);
+            echo json_encode($pedido);
+        } else {
+            $id = $_GET['id'];
+            if ($_GET['id'] == 'All') {
+                $pedido = PedidosRep::getAll();
+                echo json_encode($pedido);
+            } else {
+                $pedido = PedidosRep::getbyId($id);
+                echo json_encode($pedido);
+            }
+        }
+
         break;
     case 'POST':
         $data = json_decode(file_get_contents('php://input'));
@@ -26,7 +39,7 @@ switch ($requesmethod) {
     case 'PUT':
         $id = $_GET['id'];
         $json = json_decode(file_get_contents('php://input'));
-        $pedido = new Pedido($id, $json->fecha, $json->estado, $json->precio, $json->direcction, $json->user, $json->lineas);
+        $pedido = new Pedido($json->fecha, $json->estado, $json->precio, $json->direccion, $json->user, $json->lineas, $id);
         $result = PedidosRep::update($pedido);
         echo json_encode(["success" => $result, "data" => $json]);
         break;

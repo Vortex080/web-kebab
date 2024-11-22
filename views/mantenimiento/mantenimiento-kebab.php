@@ -1,67 +1,134 @@
- <div class="mantenimiento-kebab">
-     <!-- Título principal centrado -->
-     <div class="titulo-container">
-         <h1 class="titulo-principal">Mantenimiento de Kebab</h1>
-     </div>
+<link rel="stylesheet" href="../../assets/css/mantenimiento-kebab.css">
+<script src="https://cdn.jsdelivr.net/gh/jamesssooi/Croppr.js@2.3.0/dist/croppr.min.js"></script>
+<link href="https://cdn.jsdelivr.net/gh/jamesssooi/Croppr.js@2.3.0/dist/croppr.min.css" rel="stylesheet" />
+<style>
+    .preview img {
+        max-width: 200px;
+        max-height: 200px;
+        width: auto;
+        height: auto;
+        display: block;
+        margin-bottom: 10px;
+        border: 2px solid #ccc;
+        /* Borde de la imagen */
+        border-radius: 5px;
+        /* Bordes redondeados para la imagen */
+        object-fit: contain;
+    }
 
-     <div class="container-kebab">
-         <!-- Sección izquierda -->
-         <div class="left-section">
-             <div class="foto">
-                 <p>Foto</p>
-             </div>
-             <div class="precio">
-                 <p>Precio</p>
-             </div>
-             <div class="descripcion">
-                 <p>Descripción</p>
-                 <textarea placeholder="Escribe la descripción aquí..."></textarea>
-             </div>
-         </div>
+    #remove-photo {
+        display: none;
+        background-color: #ff4d4d;
+        /* Color de fondo rojo */
+        color: white;
+        border: none;
+        padding: 8px 12px;
+        margin-top: 10px;
+        /* Margen entre la imagen y el botón */
+        cursor: pointer;
+        border-radius: 5px;
+        font-size: 14px;
+        transition: background-color 0.3s;
+    }
 
-         <!-- Sección central -->
-         <div class="middle-section">
-             <div class="ingredientes">
-                 <p>Ingredientes</p>
-                 <div class="ingredientes-lista">
-                     <div class="ingrediente">
-                         <input type="checkbox" id="ing1">
-                         <label for="ing1">Ingrediente 1</label>
-                     </div>
-                     <div class="ingrediente">
-                         <input type="checkbox" id="ing2">
-                         <label for="ing2">Ingrediente 2</label>
-                     </div>
-                     <div class="ingrediente">
-                         <input type="checkbox" id="ing3">
-                         <label for="ing3">Ingrediente 3</label>
-                     </div>
-                     <!-- Más ingredientes -->
-                 </div>
-             </div>
-             <div class="precio-estimado">
-                 <p>Precio estimado</p>
-             </div>
-         </div>
+    #remove-photo:hover {
+        background-color: #e60000;
+        /* Color al pasar el cursor */
+    }
 
-         <!-- Sección derecha -->
-         <div class="right-section">
-             <div class="filtro">
-                 <p>Filtro</p>
-                 <input type="text" placeholder="Buscar...">
-                 <select>
-                     <option>Añadir</option>
-                     <!-- Más opciones -->
-                 </select>
-             </div>
-         </div>
+    .error {
+        color: red;
+        font-size: 0.9em;
+    }
+</style>
+<div class="centering-container">
+    <!-- Modal -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Lista de Kebabs</h2>
+                <button class="close-btn" id="closeModalBtn">&times;</button>
+            </div>
+            <div class="list-container" id="listContainer">
+                <!-- Los elementos dinámicos se agregarán aquí -->
+            </div>
+        </div>
+    </div>
+    <!-- Modal para el editor de imágenes -->
+    <div class="imagemodal" tabindex="-1" id="imageModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">2 Recorta</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
 
-     </div>
+                    <div class="editor" id="editor"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="closeModalBtnPhoto" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <!-- Foto y Nombre en la misma línea -->
+        <input type="hidden" name="id" id="id">
+        <h2 class="container-title">Mantenimiento Kebab</h2>
+        <button id="openModalBtn">Editar Kebab</button>
+        <div class="flex-row">
+            <div class="foto-section">
+                <label for="foto">Foto</label>
+                <button type="button" id="remove-photo">Eliminar Foto</button>
+                <form action="../../App/Helpers/upload.php" method="POST" enctype="multipart/form-data" id="form-foto">
+                    <input type="file" id="foto" accept="image/*" />
+                </form>
+                <div id="preview" class="preview">
+                    <canvas class="foto" id="preview-final"></canvas>
+                </div>
+                <div id="error-message" class="error"></div>
+            </div>
+            <div class="descripcion-section">
+                <label for="descripcion">Nombre</label>
+                <input type="text" name="name" id="name" placeholder="Escribe el nombre..." />
+            </div>
+        </div>
 
-     <!-- Sección de botones centrados -->
-     <div class="botones-container">
-         <button class="cancelar-btn">Cancelar</button>
-         <button class="guardar-btn">Guardar</button>
-     </div>
- </div>
- 
+        <!-- Precio Estimado y Precio en la misma línea -->
+        <div class="flex-row">
+            <div class="precio-estimado-section">
+                <label for="precio-estimado">Precio Estimado</label>
+                <input type="text" id="precio-estimado" placeholder="0.00" disabled />
+            </div>
+            <div class="precio-section">
+                <label for="precio">Precio</label>
+                <input type="text" id="precio" placeholder="Escribe el precio..." />
+            </div>
+        </div>
+
+        <!-- Ingredientes Incluidos y Todos los Ingredientes en la misma línea -->
+        <div class="flex-row">
+            <div class="ingredientes-incluidos">
+                <label>Ingredientes Incluidos</label>
+                <div class="ingredientes-list" id="ingredientes-incluidos-list">
+                    <!-- Aquí se añadirán los ingredientes incluidos -->
+                </div>
+            </div>
+            <div class="todos-ingredientes">
+                <label>Todos los Ingredientes</label>
+                <div class="ingredientes-list" id="todos-ingredientes-list">
+                </div>
+            </div>
+        </div>
+        <!-- Contenedor para los botones -->
+        <div class="buttons-container">
+            <button type="button" class="btn-save" id="btn-save">Guardar</button>
+            <button type="button" class="btn-clear">Limpiar</button>
+            <button type="button" class="btn-delete" id="btn-delete">Eliminar</button>
+        </div>
+    </div>
+</div>
+
+
+<script type="module" src="../../assets/js/mantenimiento-kebab.js"></script>

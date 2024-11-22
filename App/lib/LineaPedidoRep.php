@@ -71,9 +71,9 @@ class LineaPedidoRep implements ICRUD
     static public function update($linea)
     {
         $con = Connection::getConection();
-        $sql = 'update lineapedido set cantidad=?, producto=?, precio=?, pedidoid=? where id=' . $linea->id . ';';
+        $sql = 'update lineapedido set cantidad=?, producto=?, precio=?, pedidoid=? where id= ? ;';
         $stmt = $con->prepare($sql);
-        $stmt->execute($linea->cantidad, $linea->producto, $linea->precio, $linea->pedidoid);
+        $stmt->execute([$linea->cantidad, $linea->producto, $linea->precio, $linea->pedidoid, $linea->id]);
     }
 
     static public function addpedido($l)
@@ -82,7 +82,6 @@ class LineaPedidoRep implements ICRUD
 
         $sql = 'insert into lineapedido(cantidad, producto, precio, pedidoid) values (?, ?, ?, ?)';
         $stmt = $con->prepare($sql);
-        $producto = json_encode($l->producto);
-        $stmt->execute([$l->cantidad, $producto, $l->precio, $l->pedidoid]);
+        $stmt->execute([$l->cantidad, $l->producto, $l->precio, $l->pedidoid]);
     }
 }

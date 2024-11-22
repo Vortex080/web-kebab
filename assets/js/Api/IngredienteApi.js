@@ -1,7 +1,7 @@
 // Ingredientes
 let baseUrlIngr = '/App/Api/IngredienteApi.php';
 // Función para hacer la solicitud a la API en PHP
-export async function createIngrediente(nombre, precio, alergenos) {
+export async function createIngrediente(nombre, precio, alergenos, foto) {
 
     try {
         // Asegurarnos de que los parámetros no sean undefined o null
@@ -15,7 +15,7 @@ export async function createIngrediente(nombre, precio, alergenos) {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ nombre: nombre, precio: precio, alergenos: alergenos })
+            body: JSON.stringify({ nombre: nombre, precio: precio, alergenos: alergenos, foto: foto })
         });
         // Verificamos si la respuesta fue exitosa
         if (!request.ok) {
@@ -37,12 +37,23 @@ export async function getIngrediente(id) {
     return response.json();
 }
 
+export async function getAll() {
+
+    let response = await fetch(baseUrlIngr + '?id=All');
+    return response.json();
+}
+
+
 // Función para hacer la solicitud a la API en PHP
-export async function updateIngrediente(id, nombre, precio) {
+export async function updateIngrediente(ingrediente) {
     try {
         // Hacemos la solicitud PUT usando fetch
-        const response = await fetch(`${baseUrlIngr}?id=${id}&nombre=${nombre}&precio=${precio}`, {
+        const response = await fetch(`${baseUrlIngr}?id=${ingrediente.id}`, {
             method: 'PUT', // Usamos PUT para actualizar el recurso
+            body: JSON.stringify({ nombre: ingrediente.nombre, precio: ingrediente.precio, foto: ingrediente.foto, alergenos: ingrediente.alergenos }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
         });
 
         // Verificamos si la respuesta es exitosa
@@ -51,7 +62,7 @@ export async function updateIngrediente(id, nombre, precio) {
         }
 
         // Procesamos la respuesta del servidor
-        const data = await response.text();
+        const data = await response.json();
         console.log('Ingrediente actualizado:', data);
     } catch (error) {
         console.log('Error al actualizar el ingrediente:', error);

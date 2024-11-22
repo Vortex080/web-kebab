@@ -24,14 +24,18 @@ export async function createKebab(nombre, foto, ingredientes, precio) {
             throw new Error(`Error ${response.status}: ${errorMessage}`);
         }
 
-        const data = await response.text();
+        const data = await response.json();
         console.log(data);
     } catch (error) {
         console.log('Error al crear el kebab ', error);
     }
 }
 
+export async function getAll() {
 
+    let response = await fetch(baseUrlKebab + '?id=All');
+    return response.json();
+}
 // Función para hacer la solicitud a la API en PHP
 export async function getKebab(id) {
 
@@ -39,11 +43,15 @@ export async function getKebab(id) {
     return response.json();
 }
 // Función para hacer la solicitud a la API en PHP
-export async function updateKebab(id, nombre, foto, ingredientes, precio) {
+export async function updateKebab(kebab) {
     try {
         // Hacemos la solicitud PUT usando fetch
-        const response = await fetch(`${baseUrlKebab}?id=${id}&nombre=${nombre}&foto=${foto}&ingredientes=${ingredientes}&precio=${precio}`, {
-            method: 'PUT', // Usamos PUT para actualizar el recurso
+        const response = await fetch(`${baseUrlKebab}?id=${kebab.id}`, {
+            method: 'PUT', // Usamos PUT para actualizar el recursoç
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ nombre: kebab.nombre, foto: kebab.foto, ingredientes: kebab.ingredientes, precio: kebab.precio })
         });
 
         // Verificamos si la respuesta es exitosa
@@ -52,7 +60,7 @@ export async function updateKebab(id, nombre, foto, ingredientes, precio) {
         }
 
         // Procesamos la respuesta del servidor
-        const data = await response.text();
+        const data = await response.json();
         console.log('Kebab actualizado:', data);
     } catch (error) {
         console.log('Error al actualizar el kebab:', error);

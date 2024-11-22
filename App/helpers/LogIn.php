@@ -1,3 +1,4 @@
+
 <?php
 
 
@@ -8,7 +9,7 @@ class LogIn
      */
     public static function iniciaSession()
     {
-        session_start();
+        @session_start();
     }
 
     /**
@@ -23,9 +24,9 @@ class LogIn
      * Crea la session
      * @var $nombre (para la creacion del $_SESSION)
      */
-    public static function creaLogIn($nombre)
+    public static function creaLogIn($user)
     {
-        $_SESSION['user'] = $nombre;
+        $_SESSION['user'] = $user;
     }
 
     /**

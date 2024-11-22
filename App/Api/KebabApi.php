@@ -8,8 +8,14 @@ $requesmethod = $_SERVER['REQUEST_METHOD'];
 switch ($requesmethod) {
     case 'GET':
         $id = $_GET['id'];
-        $kebab = KebabRep::getbyId($id);
-        echo json_encode($kebab);
+        if ($id == 'All') {
+            $kebabs = KebabRep::getAll();
+            echo json_encode($kebabs);
+        } else {
+            $id = $_GET['id'];
+            $kebab = KebabRep::getbyId($id);
+            echo json_encode($kebab);
+        }
         break;
     case 'POST':
         $data = json_decode(file_get_contents('php://input'));
@@ -24,12 +30,8 @@ switch ($requesmethod) {
         break;
     case 'PUT':
         $id = $_GET['id'];
-        $nombre = $_GET['nombre'];
-        $foto = $_GET['foto'];
-        $ingredientes = $_GET['ingredientes'];
-        $precio = $_GET['precio'];
-        $kebab = new Kebab($nombre, $foto, $ingredientes, $precio, $id);
-        var_dump($kebab);
+        $data = json_decode(file_get_contents('php://input'));
+        $kebab = new Kebab($data->nombre, $data->foto, $data->ingredientes, $data->precio, $id);
         $result = KebabRep::update($kebab);
         echo json_encode(["success" => $result, "data" => $kebab]);
         break;

@@ -20,10 +20,15 @@ export async function createAlergeno(nombre, foto) {
 // Función para hacer la solicitud a la API en PHP
 export async function getAlergeno(id) {
 
-let response = await fetch(baseUrlAleg + '?id=' + id);
-return response.json();
+    let response = await fetch(baseUrlAleg + '?id=' + id);
+    return response.json();
 }
 
+export async function getAll() {
+
+    let response = await fetch(baseUrlAleg + '?id=All');
+    return response.json();
+}
 
 // Función para hacer la solicitud a la API en PHP
 export async function updateAlergeno(id, nombre, foto) {

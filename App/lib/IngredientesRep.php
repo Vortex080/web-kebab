@@ -11,11 +11,11 @@ class IngredientesRep implements ICRUD
     static public function getbyId($id)
     {
         $con = Connection::getConection();
-        $rest = $con->query('select id, nombre, precio from ingredientes where id =' . $id . ';');
+        $rest = $con->query('select id, nombre, precio, foto from ingredientes where id =' . $id . ';');
         while ($row = $rest->fetch()) {
 
             $alergenos = AlergenosRep::getAllbyingrediente($id);
-            $ingrediente = new Ingredientes($row['nombre'], $row['precio'], $row['id'], $alergenos);
+            $ingrediente = new Ingredientes($row['nombre'], $row['precio'], $row['foto'], $row['id'], $alergenos);
         }
 
         return $ingrediente;
@@ -28,11 +28,11 @@ class IngredientesRep implements ICRUD
     static public function getbyName($nombre)
     {
         $con = Connection::getConection();
-        $rest = $con->query('select id, nombre from ingredientes where nombre =' . $nombre . ';');
+        $rest = $con->query('select id, nombre, precio, foto from ingredientes where nombre =' . $nombre . ';');
         while ($row = $rest->fetch()) {
 
             $alergenos = AlergenosRep::getAllbyingrediente($row['id']);
-            $ingrediente = new Ingredientes($row['nombre'], $row['precio'], $row['id'], $alergenos);
+            $ingrediente = new Ingredientes($row['nombre'], $row['precio'], $row['foto'], $row['id'], $alergenos);
         }
 
         return $ingrediente;
@@ -46,10 +46,10 @@ class IngredientesRep implements ICRUD
     {
         $con = Connection::getConection();
         $array = [];
-        $rest = $con->query('select id, nombre, precio from ingredientes;');
+        $rest = $con->query('select id, nombre, precio, foto from ingredientes;');
         while ($row = $rest->fetch()) {
             $alergenos = AlergenosRep::getAllbyingrediente($row['id']);
-            $ingrediente = new Ingredientes($row['nombre'], $row['precio'], $row['id'], $alergenos);
+            $ingrediente = new Ingredientes($row['nombre'], $row['precio'], $row['foto'], $row['id'], $alergenos);
             array_push($array, $ingrediente);
         }
 
@@ -71,9 +71,9 @@ class IngredientesRep implements ICRUD
             $con->beginTransaction();
 
             // Insertar ingrediente
-            $sql = 'insert into ingredientes(id, nombre, precio) values (?, ?, ?)';
+            $sql = 'insert into ingredientes(nombre, precio, foto) values (?, ?, ?)';
             $stmt = $con->prepare($sql);
-            $stmt->execute([$ingrediente->id, $ingrediente->nombre, $ingrediente->precio]);
+            $stmt->execute([$ingrediente->nombre, $ingrediente->precio, $ingrediente->foto]);
 
             $nuevoID = $con->lastInsertId();
 
@@ -135,9 +135,11 @@ class IngredientesRep implements ICRUD
     static public function update($ingrediente)
     {
         $con = Connection::getConection();
-        $sql = 'update ingredientes set nombre=?, precio=? where id=?;';
+        $sql = 'update ingredientes set nombre=?, precio=?, foto=? where id=?;';
         $stmt = $con->prepare($sql);
-        $stmt->execute([$ingrediente->nombre, $ingrediente->precio, $ingrediente->id]);
+        self::deleteAllAlergenosbyIngrediente($ingrediente);
+        self::addAlergenoIngrediente($ingrediente);
+        $stmt->execute([$ingrediente->nombre, $ingrediente->precio, $ingrediente->foto, $ingrediente->id]);
     }
 
 
@@ -157,5 +159,25 @@ class IngredientesRep implements ICRUD
         }
 
         return $array;
+    }
+
+    static public function addAlergenoIngrediente($ingrediente)
+    {
+        $con = Connection::getConection();
+
+        $sql = 'insert into ingredientes_has_alergenos(id_ingrediente, id_alergenos) values (?, ?)';
+        $stmt = $con->prepare($sql);
+        foreach ($ingrediente->alergenos as $a) {
+            $stmt->execute([$ingrediente->id, $a->id]);
+        }
+    }
+
+    static public function deleteAllAlergenosbyIngrediente($ingrediente)
+    {
+        $con = Connection::getConection();
+
+        $sql = 'delete from  ingredientes_has_alergenos where id_ingrediente=?';
+        $stmt = $con->prepare($sql);
+        $stmt->execute([$ingrediente->id]);
     }
 }
