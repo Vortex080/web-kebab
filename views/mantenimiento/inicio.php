@@ -18,6 +18,14 @@
             <p>Descripción complementaria.</p>
         </div>
     </div>
+<<<<<<< HEAD
+<<<<<<< HEAD
+    <BR></BR><BR></BR><BR></BR><BR></BR><BR></BR>
+
+=======
+>>>>>>> 210dbb741fa634f363b4518f975cc5a5dd9283d9
+</div>
+=======
     <div class="carousel-controls">
         <span class="control prev">&#9664;</span>
         <span class="control next">&#9654;</span>
@@ -76,3 +84,4 @@
 </div>
 
 <script src="../../assets/js/inicio.js"></script>
+>>>>>>> 1e74ef7fa02c694034d86286c256a94ce0c435a8
