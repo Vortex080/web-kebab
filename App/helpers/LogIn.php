@@ -9,7 +9,7 @@ class LogIn
      */
     public static function iniciaSession()
     {
-        session_start();
+        @session_start();
     }
 
     /**

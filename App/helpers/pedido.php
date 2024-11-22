@@ -9,6 +9,7 @@ $direccion = $user->direcction;
 $carritoarray = json_decode($user->carrito);
 $total = 0;
 $arraylineas = [];
+echo $carritoarray;
 foreach ($carritoarray as $carrito) {
     $linea = new LineaPedido($carrito->cantidad, json_encode($carrito), $carrito->precio, null);
     $total = $total + $carrito->precio;
@@ -24,64 +25,48 @@ UserRep::update($user);
 
 PedidosRep::create($pedido);
 
-require 'vendor/autoload.php';
+// Incluir la librería PHPMailer
+$dr = $_SERVER['DOCUMENT_ROOT'];
+require $dr . '/vendor/autoload.php'; // Ajusta la ruta según sea necesario
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-$mail = new PHPMailer(true);
+
+// Configuración de PHPMailer
+$mail = new PHPMailer(true); // Usamos PHPMailer con excepciones
 
 try {
-    // Configuración SMTP para MailHog
-    $mail->isSMTP();                                     // Usar SMTP
-    $mail->SMTPDebug = 0;                                 // Desactivar depuración SMTP
-    $mail->Host = 'mailhog';                            // MailHog corre en localhost
-    $mail->Port = 1025;                                   // Puerto de MailHog
-    $mail->SMTPAuth = false;                              // No requiere autenticación
-    // No establecer SMTPSecure ya que MailHog no soporta TLS ni SSL
-    // $mail->SMTPSecure = 'tls';                         // NO es necesario
+    // Configuración del servidor SMTP
+    $mail->isSMTP();
+    $mail->Host = "mailhog";
+    $mail->SMTPDebug = 0;
+    $mail->SMTPAuth = false;
+    $mail->Port = 1025;
 
     // Remitente y destinatario
-    $mail->setFrom('kebabamigo@factura.com', 'Hasin');
+    $mail->setFrom('no-reply@kebabamigo.com', 'Kebab Amigo');
     $mail->addAddress('to@example.com', 'Destinatario'); // Dirección del destinatario (puedes dejar cualquier correo ficticio)
 
-    // Contenido del correo
-    $mail->isHTML(true);                                  // Establecer formato de correo como HTML
-    $mail->Subject = 'Correo de prueba';
-
-    $mail->addEmbeddedImage('./assets/img/laperra.jpg', 'imagen_cid');
-    $mail->Body    = '<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ejemplo de Tabla HTML</title>
-    <style>
-        
-    </style>
-</head>
-<body>
-
-    <h1>Factura</h1>
-
-      
-
-
-</body>
-</html><img src="cid:imagen_cid" alt="Imagen"/>;
-';
-    //
+    // Configuración del contenido del correo
+    $mail->isHTML(true); // Establecer el contenido del correo en formato HTML
+    $mail->Subject = 'Factura de pedido';
+    $mail->Body    = '<h1>Gracias por tu pedido</h1>
+                        <p>¡Esperamos que disfrutes de tu compra!</p>
+                        <p> Total : ' . $total . ' € </p> // Cuerpo en formato HTML
+                        <p>Dirección : ' . $direccion->direction . '</p>';
+    $mail->AltBody = 'factura'; // Cuerpo en texto plano (por si el cliente no soporta HTML)
 
     // Enviar el correo
-    if (!$mail->send()) {
-        echo 'El mensaje no pudo ser enviado.';
-        echo 'Error: ' . $mail->ErrorInfo;
-    } else {
-        echo 'El mensaje ha sido enviado';
-    }
+    $mail->send();
+    http_response_code(200); // Respuesta exitosa
+    echo json_encode(['message' => 'Correo enviado exitosamente']);
 } catch (Exception $e) {
-    echo "El mensaje no pudo ser enviado. Error: {$mail->ErrorInfo}";
+    // En caso de error al enviar el correo
+    http_response_code(500); // Error interno del servidor
+    echo json_encode(['error' => 'Error al enviar el correo', 'details' => $mail->ErrorInfo]);
 }
+
 
 
 echo '<script>window.location="?menu=inicio"</script>';

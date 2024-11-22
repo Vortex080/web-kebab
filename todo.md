@@ -1,7 +1,7 @@
 # TODO
 
 ## VISTAS KEBAB WEB
-- [ ] Vista de inicio
+- [x] Vista de inicio
 - [x] Añadir session user
 - [x] Pantalla producto
     - [x] Coger datos de la base de datos
@@ -40,4 +40,11 @@
 
 ## Features
 - [x] PHP Mailer
-- [ ] Contenedores divididos docker-compose
+- [x] Contenedores divididos docker-compose
+
+
+
+## Versiones a cambiar
+- Seguridad apis
+- Actualización automatica ventanas
+- Corección de boton producto

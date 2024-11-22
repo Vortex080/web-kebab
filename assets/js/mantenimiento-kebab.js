@@ -119,8 +119,9 @@ Allingredientes.forEach(ingrediente => {
 
     ingredienteDiv.draggable = true;
     ingredienteDiv.dataset.name = ingrediente.id; // Identificador único
+    ingredienteDiv.dataset.precio = ingrediente.precio;
 
-    // Añadir el div con todo el contenido a la lista de ingredientes
+    // Añadir el div con todos los contenidos a la lista de ingredientes
     ingredientesList.appendChild(ingredienteDiv);
 });
 
@@ -128,8 +129,8 @@ Allingredientes.forEach(ingrediente => {
 // Funciones de arrastrar y soltar
 document.querySelectorAll('.ingrediente').forEach(item => {
     item.addEventListener('dragstart', function (e) {
-        e.dataTransfer.setData('text/plain', e.target.dataset.name);
         calcularPrecio(precioestimado);
+        e.dataTransfer.setData('text/plain', e.target.dataset.name);
     });
 });
 
@@ -172,7 +173,7 @@ const miCanvas = document.querySelector('#preview-final');
 // Contexto del canvas
 const contexto = miCanvas.getContext('2d');
 // Ruta de la imagen seleccionada
-let urlImage = undefined;
+let urlImage = null;
 const RecortarModal = document.getElementById('imageModal');
 
 photoInput.addEventListener('change', abrirEditor, false);
@@ -187,18 +188,19 @@ removePhotoButton.addEventListener('click', () => {
 });
 
 function calcularPrecio(precio) {
+    let precioTotal = 0;
     const ingredientesIncluidosList = document.getElementById('ingredientes-incluidos-list');
     const selectedIngredients = [];
     ingredientesIncluidosList.querySelectorAll('.ingrediente').forEach(ingrediente => {
         selectedIngredients.push({
             name: ingrediente.dataset.name,
-            id: ingrediente.id
+            precio: ingrediente.dataset.precio,
         });
     });
-    let precioTotal = 0;
+    console.log(selectedIngredients);
     selectedIngredients.forEach(ingrediente => {
-        let precio = ingrediente.name.split(',');
-        precioTotal += parseInt(precio[2]);
+        let precio = ingrediente.precio;
+        precioTotal += parseInt(precio);
     });
     precio.value = precioTotal;
 }

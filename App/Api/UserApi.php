@@ -1,5 +1,5 @@
 <?php
-
+LogIn::iniciaSession();
 $dr = $_SERVER['DOCUMENT_ROOT'];
 include_once $dr . "/routes/__autoload.php";
 
